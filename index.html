@@ -161,7 +161,7 @@
     }
     .stat-item span { color: var(--primary); font-weight: bold; }
 
-    /* --- VIDEO PREVIEW --- */
+    /* --- VIDEO PREVIEW GRID --- */
     .section { padding: 80px 0; }
     
     .section-title {
@@ -174,56 +174,115 @@
 
     .video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 25px;
     }
 
-    /* Video Wrapper for the 'Tap for Sound' badge */
-    .video-wrapper {
+    /* Thumbnail Wrapper */
+    .video-thumbnail {
         position: relative;
         border-radius: 16px;
         overflow: hidden;
         border: 1px solid var(--border);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        transition: transform 0.3s ease;
+        cursor: pointer;
+        transition: transform 0.3s, border-color 0.3s;
     }
     
-    .video-wrapper:hover {
+    .video-thumbnail:hover {
         transform: scale(1.03);
         border-color: var(--primary);
     }
 
-    video {
+    /* The muted preview video */
+    .video-thumbnail video {
         width: 100%;
         display: block;
-        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s;
     }
 
-    /* The Badge */
-    .sound-badge {
+    .video-thumbnail:hover video {
+        opacity: 1;
+    }
+
+    /* "Click to Watch" Overlay Icon */
+    .play-icon {
         position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(0,0,0,0.8);
-        color: #fff;
-        font-size: 11px;
-        text-transform: uppercase;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        pointer-events: none; 
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(34, 197, 94, 0.9);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        gap: 6px;
-        transition: all 0.3s;
-        border: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    /* When active (sound on), make badge green */
-    .video-wrapper.active .sound-badge {
-        background: var(--primary);
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        font-size: 24px;
         color: #000;
-        border-color: var(--primary);
+        z-index: 2;
+    }
+
+    /* --- VIDEO MODAL (POP UP) --- */
+    .video-modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        backdrop-filter: blur(10px);
+    }
+
+    .video-modal.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+        position: relative;
+        width: 90%;
+        max-width: 400px; /* Optimized for vertical video size */
+        box-shadow: 0 0 50px rgba(34, 197, 94, 0.2);
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .modal-content video {
+        width: 100%;
+        display: block;
+        border-radius: 16px;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10001;
+        transition: background 0.2s;
+    }
+
+    .close-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     /* --- FEATURES CARD --- */
@@ -342,8 +401,6 @@
         .hero-grid { text-align: center; }
         .bundle-wrapper img { order: -1; }
         .sticky-cta { bottom: 10px; width: 95%; }
-        /* Hide hover instructions on mobile since they touch to play */
-        .sound-badge { content: "Tap for Sound"; }
     }
 </style>
 </head>
@@ -380,24 +437,24 @@
 <section class="section">
     <div class="container">
         <div class="section-title">
-            <h2>🎬 Preview The Quality</h2>
-            <p>Hover over videos to listen. Auto-mutes when you leave.</p>
+            <h2>🎬 Watch Samples</h2>
+            <p>Click any video to play with sound.</p>
         </div>
         
         <div class="video-grid">
-            <div class="video-wrapper">
+            <div class="video-thumbnail" onclick="openModal('assets/preview1.MP4')">
                 <video src="assets/preview1.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Hover / Tap</div>
+                <div class="play-icon">▶</div>
             </div>
             
-            <div class="video-wrapper">
+            <div class="video-thumbnail" onclick="openModal('assets/preview2.MP4')">
                 <video src="assets/preview2.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Hover / Tap</div>
+                <div class="play-icon">▶</div>
             </div>
 
-            <div class="video-wrapper">
+            <div class="video-thumbnail" onclick="openModal('assets/preview3.MP4')">
                 <video src="assets/preview3.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Hover / Tap</div>
+                <div class="play-icon">▶</div>
             </div>
         </div>
     </div>
@@ -489,49 +546,42 @@
     </a>
 </div>
 
+<div class="video-modal" id="videoModal">
+    <div class="close-btn" onclick="closeModal()">✕</div>
+    <div class="modal-content">
+        <video id="popupPlayer" controls playsinline></video>
+    </div>
+    <p style="color: #fff; margin-top: 15px; font-size: 0.9rem;">Tap background to close</p>
+</div>
+
 <script>
-    document.querySelectorAll('.video-wrapper').forEach(wrapper => {
-        const video = wrapper.querySelector('video');
-        const badge = wrapper.querySelector('.sound-badge');
+    const modal = document.getElementById('videoModal');
+    const popupPlayer = document.getElementById('popupPlayer');
 
-        // Function to Unmute
-        const unmute = () => {
-            // Mute all other videos first
-            document.querySelectorAll('video').forEach(v => {
-                if (v !== video) {
-                    v.muted = true;
-                    v.closest('.video-wrapper').classList.remove('active');
-                    v.closest('.video-wrapper').querySelector('.sound-badge').textContent = "🔇 Hover / Tap";
-                }
-            });
+    // 1. OPEN POPUP & PLAY SOUND
+    function openModal(videoSource) {
+        modal.classList.add('active'); // Show modal
+        popupPlayer.src = videoSource; // Load the specific video
+        popupPlayer.play(); // Auto Play
+        popupPlayer.muted = false; // Turn on Sound
+    }
 
-            // Unmute current
-            video.muted = false;
-            wrapper.classList.add('active');
-            badge.textContent = "🔊 Sound On";
-        };
+    // 2. CLOSE POPUP & STOP SOUND
+    function closeModal() {
+        modal.classList.remove('active'); // Hide modal
+        popupPlayer.pause(); // Stop video
+        popupPlayer.src = ""; // Reset source to stop buffering
+    }
 
-        // Function to Mute
-        const mute = () => {
-            video.muted = true;
-            wrapper.classList.remove('active');
-            badge.textContent = "🔇 Hover / Tap";
-        };
+    // 3. CLOSE ON BACKGROUND CLICK or DOUBLE CLICK
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
 
-        // EVENT 1: Desktop Hover In
-        wrapper.addEventListener('mouseenter', unmute);
-
-        // EVENT 2: Desktop Hover Out
-        wrapper.addEventListener('mouseleave', mute);
-
-        // EVENT 3: Mobile Tap (Toggle)
-        wrapper.addEventListener('click', () => {
-            if (video.muted) {
-                unmute();
-            } else {
-                mute();
-            }
-        });
+    modal.addEventListener('dblclick', (e) => {
+        closeModal();
     });
 </script>
 
