@@ -185,29 +185,45 @@
         overflow: hidden;
         border: 1px solid var(--border);
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+    }
+    
+    .video-wrapper:hover {
+        transform: scale(1.03);
+        border-color: var(--primary);
     }
 
     video {
         width: 100%;
         display: block;
-        cursor: pointer; /* Shows hand cursor to indicate clickability */
+        cursor: pointer;
     }
 
-    /* The "Tap for Sound" Badge */
+    /* The Badge */
     .sound-badge {
         position: absolute;
         bottom: 20px;
         right: 20px;
-        background: rgba(0,0,0,0.7);
+        background: rgba(0,0,0,0.8);
         color: #fff;
-        font-size: 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+        font-weight: 600;
         padding: 6px 12px;
         border-radius: 20px;
-        pointer-events: none; /* Allows click to pass through to video */
+        pointer-events: none; 
         display: flex;
         align-items: center;
         gap: 6px;
-        transition: opacity 0.3s;
+        transition: all 0.3s;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    /* When active (sound on), make badge green */
+    .video-wrapper.active .sound-badge {
+        background: var(--primary);
+        color: #000;
+        border-color: var(--primary);
     }
 
     /* --- FEATURES CARD --- */
@@ -326,6 +342,8 @@
         .hero-grid { text-align: center; }
         .bundle-wrapper img { order: -1; }
         .sticky-cta { bottom: 10px; width: 95%; }
+        /* Hide hover instructions on mobile since they touch to play */
+        .sound-badge { content: "Tap for Sound"; }
     }
 </style>
 </head>
@@ -363,23 +381,23 @@
     <div class="container">
         <div class="section-title">
             <h2>🎬 Preview The Quality</h2>
-            <p>High-definition, vertical format. Tap video to hear sound.</p>
+            <p>Hover over videos to listen. Auto-mutes when you leave.</p>
         </div>
         
         <div class="video-grid">
             <div class="video-wrapper">
                 <video src="assets/preview1.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Tap for Sound</div>
+                <div class="sound-badge">🔇 Hover / Tap</div>
             </div>
             
             <div class="video-wrapper">
                 <video src="assets/preview2.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Tap for Sound</div>
+                <div class="sound-badge">🔇 Hover / Tap</div>
             </div>
 
             <div class="video-wrapper">
                 <video src="assets/preview3.MP4" autoplay muted loop playsinline></video>
-                <div class="sound-badge">🔇 Tap for Sound</div>
+                <div class="sound-badge">🔇 Hover / Tap</div>
             </div>
         </div>
     </div>
@@ -476,21 +494,42 @@
         const video = wrapper.querySelector('video');
         const badge = wrapper.querySelector('.sound-badge');
 
+        // Function to Unmute
+        const unmute = () => {
+            // Mute all other videos first
+            document.querySelectorAll('video').forEach(v => {
+                if (v !== video) {
+                    v.muted = true;
+                    v.closest('.video-wrapper').classList.remove('active');
+                    v.closest('.video-wrapper').querySelector('.sound-badge').textContent = "🔇 Hover / Tap";
+                }
+            });
+
+            // Unmute current
+            video.muted = false;
+            wrapper.classList.add('active');
+            badge.textContent = "🔊 Sound On";
+        };
+
+        // Function to Mute
+        const mute = () => {
+            video.muted = true;
+            wrapper.classList.remove('active');
+            badge.textContent = "🔇 Hover / Tap";
+        };
+
+        // EVENT 1: Desktop Hover In
+        wrapper.addEventListener('mouseenter', unmute);
+
+        // EVENT 2: Desktop Hover Out
+        wrapper.addEventListener('mouseleave', mute);
+
+        // EVENT 3: Mobile Tap (Toggle)
         wrapper.addEventListener('click', () => {
             if (video.muted) {
-                // Unmute and turn volume up
-                video.muted = false;
-                video.volume = 1.0;
-                // Update badge text
-                badge.textContent = "🔊 Sound On";
-                badge.style.opacity = "0"; // Hide badge after 1 second
-                setTimeout(() => { badge.style.display = 'none'; }, 500);
+                unmute();
             } else {
-                // Mute again if clicked
-                video.muted = true;
-                badge.style.display = 'flex';
-                badge.style.opacity = "1";
-                badge.textContent = "🔇 Tap for Sound";
+                mute();
             }
         });
     });
