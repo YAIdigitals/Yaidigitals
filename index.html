@@ -197,31 +197,12 @@
     .video-thumbnail video {
         width: 100%;
         display: block;
-        opacity: 0.8;
+        opacity: 0.9;
         transition: opacity 0.3s;
     }
 
     .video-thumbnail:hover video {
         opacity: 1;
-    }
-
-    /* "Click to Watch" Overlay Icon */
-    .play-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(34, 197, 94, 0.9);
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-        font-size: 24px;
-        color: #000;
-        z-index: 2;
     }
 
     /* --- VIDEO MODAL (POP UP) --- */
@@ -438,23 +419,20 @@
     <div class="container">
         <div class="section-title">
             <h2>🎬 Watch Samples</h2>
-            <p>Click any video to play with sound.</p>
+            <p>Tap any video to play full screen with sound.</p>
         </div>
         
         <div class="video-grid">
             <div class="video-thumbnail" onclick="openModal('assets/preview1.MP4')">
                 <video src="assets/preview1.MP4" autoplay muted loop playsinline></video>
-                <div class="play-icon">▶</div>
             </div>
             
             <div class="video-thumbnail" onclick="openModal('assets/preview2.MP4')">
                 <video src="assets/preview2.MP4" autoplay muted loop playsinline></video>
-                <div class="play-icon">▶</div>
             </div>
 
             <div class="video-thumbnail" onclick="openModal('assets/preview3.MP4')">
                 <video src="assets/preview3.MP4" autoplay muted loop playsinline></video>
-                <div class="play-icon">▶</div>
             </div>
         </div>
     </div>
