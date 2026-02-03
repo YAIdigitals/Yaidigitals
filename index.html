@@ -59,7 +59,7 @@
 
     .highlight { color: var(--primary); }
 
-    /* --- NAVIGATION / LOGO --- */
+    /* --- NAVIGATION BAR (UPDATED) --- */
     .navbar {
         padding: 25px 0 10px 0;
         display: flex;
@@ -67,6 +67,7 @@
         align-items: center;
     }
 
+    /* Logo Styling */
     .logo {
         font-family: 'Outfit', sans-serif;
         font-size: 24px;
@@ -75,10 +76,24 @@
         letter-spacing: -0.5px;
         display: flex;
         align-items: center;
-        gap: 5px;
     }
 
-    .logo span {
+    .logo span { color: var(--primary); }
+
+    /* Menu Links Styling */
+    .nav-links {
+        display: flex;
+        gap: 30px; /* Space between links */
+    }
+
+    .nav-links a {
+        color: var(--text-muted);
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
         color: var(--primary);
     }
 
@@ -225,9 +240,7 @@
         transition: opacity 0.3s;
     }
 
-    .video-thumbnail:hover video {
-        opacity: 1;
-    }
+    .video-thumbnail:hover video { opacity: 1; }
 
     /* --- VIDEO MODAL (POP UP) --- */
     .video-modal {
@@ -406,6 +419,10 @@
         .hero-grid { text-align: center; }
         .bundle-wrapper img { order: -1; }
         .sticky-cta { bottom: 10px; width: 95%; }
+        /* Mobile Menu Adjustment */
+        .navbar { flex-direction: row; }
+        .nav-links { gap: 15px; }
+        .nav-links a { font-size: 14px; }
     }
 </style>
 </head>
@@ -415,7 +432,12 @@
 <header class="hero">
     <div class="container">
         <nav class="navbar">
-            <a href="#" class="logo">YAI<span>digitals.</span></a>
+            <a href="index.html" class="logo">YAI<span>digitals.</span></a>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#">Store</a> <a href="#">Contact</a>
+            </div>
         </nav>
 
         <div class="hero-grid">
