@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Successful | Cartoon Bundle</title>
+<title>Protected Download | Cartoon Bundle</title>
 <meta name="robots" content="noindex, nofollow">
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -11,13 +11,11 @@
 <style>
     :root {
         --primary: #22c55e;
-        --primary-glow: rgba(34, 197, 94, 0.4);
         --bg-dark: #050505;
         --bg-card: #121212;
         --text-main: #ffffff;
         --text-muted: #a3a3a3;
         --border: #262626;
-        --gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     }
 
     body {
@@ -43,22 +41,6 @@
         box-shadow: 0 0 60px rgba(34, 197, 94, 0.1);
         position: relative;
         overflow: hidden;
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    /* Glow effect at top */
-    .card::before {
-        content: '';
-        position: absolute;
-        top: -50px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 200px;
-        height: 100px;
-        background: var(--primary);
-        filter: blur(80px);
-        opacity: 0.3;
-        pointer-events: none;
     }
 
     .icon-circle {
@@ -72,79 +54,116 @@
         margin: 0 auto 25px auto;
         border: 2px solid var(--primary);
         font-size: 35px;
-        box-shadow: 0 0 20px var(--primary-glow);
     }
 
-    h1 {
-        font-family: 'Outfit', sans-serif;
-        margin: 0 0 10px 0;
-        font-size: 28px;
-    }
+    h1 { font-family: 'Outfit', sans-serif; margin: 0 0 10px 0; font-size: 28px; }
+    p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6; }
 
-    p {
-        color: var(--text-muted);
-        margin-bottom: 30px;
-        font-size: 0.95rem;
-        line-height: 1.6;
+    /* PASSWORD INPUT STYLES */
+    .input-group { margin-bottom: 20px; }
+    
+    input[type="text"] {
+        padding: 15px;
+        width: 80%;
+        border-radius: 10px;
+        border: 1px solid #333;
+        background: #000;
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        outline: none;
     }
+    input[type="text"]:focus { border-color: var(--primary); }
 
     .btn {
-        background: var(--gradient);
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
         color: #000;
-        padding: 18px 40px;
+        padding: 15px 40px;
         font-size: 18px;
         border-radius: 50px;
         font-weight: 700;
         text-decoration: none;
         display: block;
         width: 100%;
-        box-shadow: 0 0 20px var(--primary-glow);
+        cursor: pointer;
+        border: none;
         transition: transform 0.2s;
     }
-    
     .btn:hover { transform: translateY(-3px); }
 
-    .receipt-box {
-        background: #000;
-        border: 1px dashed #333;
-        padding: 15px;
-        border-radius: 12px;
-        margin-top: 30px;
-        font-size: 0.8rem;
-        color: #666;
-    }
-
-    .receipt-box span {
-        color: #fff;
-        font-family: monospace;
-        letter-spacing: 1px;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    /* HIDDEN DOWNLOAD SECTION */
+    #download-section { display: none; }
+    
+    .error-msg { color: #ef4444; font-size: 14px; margin-top: 10px; display: none; }
 </style>
 
 </head>
 <body>
 
 <div class="card">
-    <div class="icon-circle">🎨</div>
+    <div class="icon-circle">🔒</div>
     
-    <h1>Success! Cartoon Bundle Ready</h1>
-    <p>Thank you for your purchase! You now have instant access to <strong>250+ Cartoon Hindi Shorts</strong>.</p>
-
-    <a href="https://drive.google.com/drive/folders/1dHDKZe6HIDnDpX4jXMfow3VEXYxRJgY5" class="btn" target="_blank">
-        Download Cartoon Bundle 📥
-    </a>
-
-    <div class="receipt-box">
-        Status: <span style="color: #22c55e;">Payment Verified ✅</span>
-        <br><br>
-        Please save your files locally.
+    <h1>Restricted Access</h1>
+    
+    <div id="login-section">
+        <p>Please enter the access password sent to you after payment.</p>
+        <div class="input-group">
+            <input type="text" id="passwordInput" placeholder="Enter Password">
+            <div id="error" class="error-msg">Incorrect Password</div>
+        </div>
+        <button onclick="checkPassword()" class="btn">Unlock Bundle</button>
     </div>
+
+    <div id="download-section">
+        <p style="color:#22c55e;"><strong>Access Granted! ✅</strong></p>
+        <p>You can now download your <strong>250+ Cartoon Hindi Shorts</strong>.</p>
+        
+        <a href="https://drive.google.com/drive/folders/1dHDKZe6HIDnDpX4jXMfow3VEXYxRJgY5" class="btn" target="_blank">
+            Download Now 📥
+        </a>
+    </div>
+
 </div>
+
+<script>
+    function checkPassword() {
+        const input = document.getElementById('passwordInput').value;
+        const sectionLogin = document.getElementById('login-section');
+        const sectionDownload = document.getElementById('download-section');
+        const errorMsg = document.getElementById('error');
+
+        // --- SET YOUR PASSWORD HERE ---
+        const correctPassword = "YAI2026"; 
+        // ------------------------------
+
+        if (input === correctPassword) {
+            sectionLogin.style.display = "none"; // Hide Login
+            sectionDownload.style.display = "block"; // Show Download
+            document.querySelector('.icon-circle').innerHTML = "🔓"; // Change Icon
+            document.querySelector('h1').innerText = "Access Unlocked";
+        } else {
+            errorMsg.style.display = "block";
+            // Shake animation effect
+            document.querySelector('.card').style.animation = "none";
+            setTimeout(() => document.querySelector('.card').style.animation = "shake 0.5s", 10);
+        }
+    }
+
+    // Allow "Enter" key to submit
+    document.getElementById("passwordInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") { checkPassword(); }
+    });
+</script>
+
+<style>
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+</style>
 
 </body>
 </html>
