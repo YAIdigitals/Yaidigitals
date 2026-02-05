@@ -60,20 +60,22 @@
 
     .highlight { color: var(--primary); }
 
-    /* --- DISCOUNT BADGE STYLE --- */
+    /* --- DISCOUNT BADGE (UPDATED) --- */
     .discount-tag {
         background: var(--accent-yellow);
         color: #000;
-        font-size: 0.5em; /* Scales with parent font size */
+        font-family: 'Outfit', sans-serif;
         font-weight: 800;
-        padding: 4px 8px;
-        border-radius: 6px;
-        margin-left: 10px;
-        vertical-align: middle;
-        position: relative;
-        top: -6px;
-        box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+        padding: 6px 12px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        box-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
         letter-spacing: 0.5px;
+        font-size: 16px; /* Fixed readable size */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
     }
 
     /* --- NAVIGATION BAR --- */
@@ -392,15 +394,16 @@
 
     .pricing-box .old-price { font-size: 1.5rem; text-decoration: line-through; color: #666; }
     
-    /* Updated Pricing Layout */
+    /* Updated Pricing Layout: Perfectly Aligned */
     .pricing-box .new-price { 
+        display: flex;
+        align-items: center; /* Vertical Center */
+        justify-content: center; /* Horizontal Center */
+        gap: 15px; /* Space between Price and Tag */
         font-size: 4rem; 
         color: var(--primary); 
         font-weight: 800; 
         margin: 10px 0 30px 0; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .guarantee { margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); }
@@ -435,7 +438,15 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     
-    .sticky-price { padding-left: 15px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .sticky-price { 
+        padding-left: 15px; 
+        font-weight: 700; 
+        font-size: 1.2rem; 
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
     .sticky-cta .btn { padding: 12px 25px; font-size: 16px; }
 
     /* --- RESPONSIVE --- */
@@ -449,6 +460,8 @@
         .navbar { flex-direction: row; }
         .nav-links { gap: 15px; }
         .nav-links a { font-size: 14px; }
+        
+        .pricing-box .new-price { font-size: 3rem; } /* Smaller font on mobile */
     }
 </style>
 </head>
@@ -473,7 +486,7 @@
                 <p>Dominate Instagram Reels, TikTok & Shorts with ready-made, high-retention AI Hulk transformation videos. No editing skills required.</p>
                 
                 <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn btn-pulse">
-                    Get Access for ₹49 (98% OFF)
+                    Get Access for ₹49
                 </a>
                 <p style="font-size: 0.85rem; margin-top: 15px; opacity: 0.7;">⚡ Instant Download via Email</p>
             </div>
@@ -587,20 +600,17 @@
 
 <footer style="background: #000; border-top: 1px solid #222; padding: 40px 20px; text-align: center; margin-top: 60px;">
     <div class="container">
-        
         <div style="margin-bottom: 20px;">
             <a href="#" style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; text-decoration: none;">
                 YAI<span style="color: #22c55e;">digitals.</span>
             </a>
         </div>
-
         <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
             <a href="legal.html#terms" style="color: #a3a3a3; text-decoration: none; font-size: 0.9rem;">Terms & Conditions</a>
             <a href="legal.html#privacy" style="color: #a3a3a3; text-decoration: none; font-size: 0.9rem;">Privacy Policy</a>
             <a href="legal.html#refunds" style="color: #a3a3a3; text-decoration: none; font-size: 0.9rem;">Refunds & Cancellations</a>
             <a href="legal.html#contact" style="color: #a3a3a3; text-decoration: none; font-size: 0.9rem;">Contact Us</a>
         </div>
-
         <p style="color: #555; font-size: 0.8rem; margin: 0;">
             © 2026 YAIdigitals. All Rights Reserved.
         </p>
@@ -610,7 +620,7 @@
 <div class="sticky-cta">
     <div class="sticky-price">
         <span style="font-size:0.8rem; color:#aaa; text-decoration:line-through; font-weight:400;">₹2999</span> ₹49
-        <span class="discount-tag" style="background: #fff; color:#000; font-size:0.4em;">98% OFF</span>
+        <span class="discount-tag" style="background: #fff; color:#000; font-size: 12px; padding: 3px 8px;">98% OFF</span>
     </div>
     <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn">
         Buy Now
