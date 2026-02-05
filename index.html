@@ -12,6 +12,7 @@
     :root {
         --primary: #22c55e; /* Hulk Green */
         --primary-glow: rgba(34, 197, 94, 0.4);
+        --accent-yellow: #facc15; /* Discount Yellow */
         --bg-dark: #050505;
         --bg-card: #121212;
         --text-main: #ffffff;
@@ -59,7 +60,23 @@
 
     .highlight { color: var(--primary); }
 
-    /* --- NAVIGATION BAR (UPDATED) --- */
+    /* --- DISCOUNT BADGE STYLE --- */
+    .discount-tag {
+        background: var(--accent-yellow);
+        color: #000;
+        font-size: 0.5em; /* Scales with parent font size */
+        font-weight: 800;
+        padding: 4px 8px;
+        border-radius: 6px;
+        margin-left: 10px;
+        vertical-align: middle;
+        position: relative;
+        top: -6px;
+        box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+        letter-spacing: 0.5px;
+    }
+
+    /* --- NAVIGATION BAR --- */
     .navbar {
         padding: 25px 0 10px 0;
         display: flex;
@@ -67,7 +84,6 @@
         align-items: center;
     }
 
-    /* Logo Styling */
     .logo {
         font-family: 'Outfit', sans-serif;
         font-size: 24px;
@@ -80,10 +96,9 @@
 
     .logo span { color: var(--primary); }
 
-    /* Menu Links Styling */
     .nav-links {
         display: flex;
-        gap: 30px; /* Space between links */
+        gap: 30px;
     }
 
     .nav-links a {
@@ -376,7 +391,18 @@
     }
 
     .pricing-box .old-price { font-size: 1.5rem; text-decoration: line-through; color: #666; }
-    .pricing-box .new-price { font-size: 4rem; color: var(--primary); font-weight: 800; margin: 10px 0 30px 0; }
+    
+    /* Updated Pricing Layout */
+    .pricing-box .new-price { 
+        font-size: 4rem; 
+        color: var(--primary); 
+        font-weight: 800; 
+        margin: 10px 0 30px 0; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .guarantee { margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); }
 
     /* --- FOOTER --- */
@@ -419,7 +445,7 @@
         .hero-grid { text-align: center; }
         .bundle-wrapper img { order: -1; }
         .sticky-cta { bottom: 10px; width: 95%; }
-        /* Mobile Menu Adjustment */
+        
         .navbar { flex-direction: row; }
         .nav-links { gap: 15px; }
         .nav-links a { font-size: 14px; }
@@ -433,10 +459,10 @@
     <div class="container">
         <nav class="navbar">
             <a href="index.html" class="logo">YAI<span>digitals.</span></a>
-            
             <div class="nav-links">
                 <a href="index.html" class="active">Home</a>
-                <a href="#">Store</a> <a href="#">Contact</a>
+                <a href="store.html">Store</a>
+                <a href="legal.html#contact">Contact</a>
             </div>
         </nav>
 
@@ -445,8 +471,9 @@
                 <div class="badge">🔥 Trending Now on Instagram</div>
                 <h1>Go Viral With <span class="highlight">500+ AI Hulk</span> Reels Bundle</h1>
                 <p>Dominate Instagram Reels, TikTok & Shorts with ready-made, high-retention AI Hulk transformation videos. No editing skills required.</p>
+                
                 <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn btn-pulse">
-                    Get Access for ₹49
+                    Get Access for ₹49 (98% OFF)
                 </a>
                 <p style="font-size: 0.85rem; margin-top: 15px; opacity: 0.7;">⚡ Instant Download via Email</p>
             </div>
@@ -476,11 +503,9 @@
             <div class="video-thumbnail" onclick="openModal('assets/preview1.MP4')">
                 <video src="assets/preview1.MP4" autoplay muted loop playsinline></video>
             </div>
-            
             <div class="video-thumbnail" onclick="openModal('assets/preview2.MP4')">
                 <video src="assets/preview2.MP4" autoplay muted loop playsinline></video>
             </div>
-
             <div class="video-thumbnail" onclick="openModal('assets/preview3.MP4')">
                 <video src="assets/preview3.MP4" autoplay muted loop playsinline></video>
             </div>
@@ -529,15 +554,13 @@
                     <p>High Quality (HD) MP4 Files</p>
                     <p>No Watermarks</p>
                     <p>Lifetime Access</p>
-                    <p>Instant Delivery</p>
+                    <p>Instant Delivery via Email</p>
                 </div>
-                
                 <div style="text-align: center; margin-top: 30px;">
                     <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn">
                         Download Bundle Now
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -549,7 +572,11 @@
             <div class="badge" style="background: #fff; color: #000; border:none;">⚠️ Limited Time Offer</div>
             <h2>Unlock The Full Bundle</h2>
             <div class="old-price">₹2,999</div>
-            <div class="new-price">₹49</div>
+            
+            <div class="new-price">
+                ₹49 <span class="discount-tag">98% OFF</span>
+            </div>
+
             <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn btn-pulse" style="width: 100%; max-width: 300px;">
                 Buy Now for ₹49
             </a>
@@ -580,11 +607,10 @@
     </div>
 </footer>
 
-
-
 <div class="sticky-cta">
     <div class="sticky-price">
         <span style="font-size:0.8rem; color:#aaa; text-decoration:line-through; font-weight:400;">₹2999</span> ₹49
+        <span class="discount-tag" style="background: #fff; color:#000; font-size:0.4em;">98% OFF</span>
     </div>
     <a href="https://rzp.io/rzp/H6vQ84J" target="_blank" class="btn">
         Buy Now
@@ -603,31 +629,24 @@
     const modal = document.getElementById('videoModal');
     const popupPlayer = document.getElementById('popupPlayer');
 
-    // 1. OPEN POPUP & PLAY SOUND
     function openModal(videoSource) {
-        modal.classList.add('active'); // Show modal
-        popupPlayer.src = videoSource; // Load the specific video
-        popupPlayer.play(); // Auto Play
-        popupPlayer.muted = false; // Turn on Sound
+        modal.classList.add('active');
+        popupPlayer.src = videoSource;
+        popupPlayer.play();
+        popupPlayer.muted = false;
     }
 
-    // 2. CLOSE POPUP & STOP SOUND
     function closeModal() {
-        modal.classList.remove('active'); // Hide modal
-        popupPlayer.pause(); // Stop video
-        popupPlayer.src = ""; // Reset source to stop buffering
+        modal.classList.remove('active');
+        popupPlayer.pause();
+        popupPlayer.src = "";
     }
 
-    // 3. CLOSE ON BACKGROUND CLICK or DOUBLE CLICK
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
+        if (e.target === modal) closeModal();
     });
 
-    modal.addEventListener('dblclick', (e) => {
-        closeModal();
-    });
+    modal.addEventListener('dblclick', (e) => closeModal());
 </script>
 
 </body>
