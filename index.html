@@ -57,18 +57,28 @@
 
         a { text-decoration: none; }
 
-        /* --- NAVBAR --- */
-        .navbar {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- NAVBAR (FIXED SPACING) --- */
+        .navbar-wrapper {
             background: rgba(5,5,5,0.95);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
+        }
+
+        .navbar {
+            padding: 20px 0; /* Matches the container padding of old site */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
@@ -191,7 +201,7 @@
             font-size: 0.9rem;
         }
         
-        /* --- STICKY CTA (UPDATED FOR STORE) --- */
+        /* --- STICKY CTA --- */
         .sticky-cta {
             position: fixed;
             bottom: 20px;
@@ -219,21 +229,25 @@
         }
 
         @media(max-width: 768px) {
-            .navbar { padding: 15px 20px; }
             .hero h1 { font-size: 2.5rem; }
+            .nav-links { gap: 15px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <a href="index.html" class="logo">YAI<span>digitals.</span></a>
-    <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="store.html">Store</a>
-        <a href="legal.html#contact">Contact</a>
+<div class="navbar-wrapper">
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">YAI<span>digitals.</span></a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="store.html">Store</a>
+                <a href="legal.html#contact">Contact</a>
+            </div>
+        </nav>
     </div>
-</nav>
+</div>
 
 <div class="hero">
     <h1>Unlock Viral Growth with<br><span>Premium Digital Assets</span></h1>
