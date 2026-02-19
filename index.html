@@ -20,18 +20,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>YAIdigitals | 500+ Viral AI Hulk Reels Bundle</title>
-    <meta name="description" content="Download the viral 500+ AI Hulk Reels Bundle. High retention, ready-to-post videos for Instagram & YouTube. Grow your page fast.">
-    <meta name="keywords" content="hulk reels, ai hulk bundle, viral instagram reels, motivation reels download, yaidigitals">
+    <title>YAIdigitals | Premium Viral Content Assets for Creators</title>
+    <meta name="description" content="The #1 Digital Store for Viral Content. Download AI Hulk Reels, 3D Shorts, Cartoon Stories, and Movie Explained videos. Grow your social media fast.">
+    <meta name="keywords" content="viral reels, ai video bundle, content creation assets, instagram growth, youtube shorts download, yaidigitals">
     <meta name="author" content="YAIdigitals">
+
+    <meta property="og:title" content="Unlock Viral Growth with YAIdigitals 🚀">
+    <meta property="og:description" content="Get 1000+ Ready-to-post Viral Reels. No editing needed. Start growing today!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yaidigitals.vercel.app">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary: #22c55e;
-            --primary-glow: rgba(34, 197, 94, 0.5);
+            --primary-glow: rgba(34, 197, 94, 0.4);
+            --accent-yellow: #facc15;
             --bg-dark: #050505;
+            --bg-card: #121212;
             --text-main: #ffffff;
             --text-muted: #a3a3a3;
             --border: #262626;
@@ -57,7 +64,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border);
-            background: rgba(5,5,5,0.9);
+            background: rgba(5,5,5,0.95);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -70,68 +77,109 @@
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- HERO SECTION (HULK THEME) --- */
+        /* --- HERO SECTION --- */
         .hero {
             text-align: center;
-            padding: 80px 20px;
-            max-width: 800px;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 50%);
+            max-width: 1000px;
             margin: 0 auto;
-        }
-
-        .badge-pill {
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         .hero h1 {
             font-family: 'Outfit', sans-serif;
             font-size: 3.5rem;
             line-height: 1.1;
-            margin: 0 0 20px 0;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #fff; /* Fallback */
         }
-        .hero h1 span { color: var(--primary); }
+        
+        .hero h1 span {
+            color: var(--primary);
+            -webkit-text-fill-color: var(--primary);
+        }
 
         .hero p {
             color: var(--text-muted);
             font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
             line-height: 1.6;
-            margin-bottom: 40px;
         }
 
         .cta-btn {
-            background: var(--gradient);
+            background: var(--primary);
             color: #000;
-            padding: 18px 50px;
-            font-size: 1.2rem;
+            padding: 16px 40px;
             border-radius: 50px;
             font-weight: 700;
+            font-size: 1.1rem;
             display: inline-block;
-            box-shadow: 0 0 30px var(--primary-glow);
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px var(--primary-glow);
         }
-        .cta-btn:hover { transform: translateY(-3px); opacity: 0.9; }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px var(--primary-glow);
+        }
 
-        /* --- HERO IMAGE --- */
-        .hero-img-container {
-            margin-top: 50px;
-            position: relative;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        /* --- FEATURES GRID --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        
-        .hero-img {
-            width: 100%;
-            border-radius: 20px;
+
+        .feature-box {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            box-shadow: 0 0 50px rgba(34, 197, 94, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
         }
+        .feature-icon { font-size: 30px; margin-bottom: 15px; }
+        .feature-box h3 { margin: 10px 0; font-family: 'Outfit', sans-serif; }
+        .feature-box p { font-size: 0.9rem; color: #888; }
+
+        /* --- CATEGORY PREVIEW --- */
+        .preview-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .section-title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; margin-bottom: 40px; }
+        
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .preview-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            text-align: left;
+            transition: 0.3s;
+            position: relative;
+        }
+        .preview-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        
+        .preview-img { width: 100%; height: 200px; object-fit: cover; opacity: 0.8; }
+        
+        .preview-content { padding: 25px; }
+        .preview-content h3 { margin: 0 0 10px 0; font-family: 'Outfit', sans-serif; }
+        .preview-content p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .text-link { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
 
         /* --- FOOTER --- */
         footer {
@@ -139,7 +187,34 @@
             padding: 40px;
             text-align: center;
             color: #666;
-            margin-top: 80px;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+        
+        /* --- STICKY CTA (UPDATED FOR STORE) --- */
+        .sticky-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .sticky-cta a {
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-size: 0.9rem;
         }
 
@@ -161,20 +236,63 @@
 </nav>
 
 <div class="hero">
-    <div class="badge-pill">🔥 Trending Now on Instagram</div>
-    
-    <h1>Go Viral With 500+<br><span>AI Hulk</span> Reels Bundle</h1>
-    
-    <p>Dominate Instagram Reels, TikTok & Shorts with ready-made, high-retention AI Hulk transformation videos. No editing skills required.</p>
+    <h1>Unlock Viral Growth with<br><span>Premium Digital Assets</span></h1>
+    <p>The ultimate marketplace for content creators. Download high-retention AI Reels, 3D Animations, and Storytelling bundles to skyrocket your views.</p>
+    <a href="store.html" class="cta-btn">Explore All Bundles 🚀</a>
+</div>
 
-    <a href="store.html" class="cta-btn">GET ACCESS FOR ₹49</a>
-
-    <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-        ⚡ Instant Download via Email
+<div class="features">
+    <div class="feature-box">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Download</h3>
+        <p>Get your files immediately after payment via email.</p>
     </div>
+    <div class="feature-box">
+        <div class="feature-icon">💎</div>
+        <h3>High Quality</h3>
+        <p>4K and HD vertical videos optimized for Reels & Shorts.</p>
+    </div>
+    <div class="feature-box">
+        <div class="feature-icon">🔓</div>
+        <h3>Copyright Free</h3>
+        <p>Unbranded content ready for your logo and voiceover.</p>
+    </div>
+</div>
 
-    <div class="hero-img-container">
-        <img src="assets/Hulk500.PNG" class="hero-img" alt="Hulk Bundle Preview">
+<div class="preview-section">
+    <h2 class="section-title">Trending Collections</h2>
+    
+    <div class="preview-grid">
+        <div class="preview-card">
+            <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral">
+            <div class="preview-content">
+                <h3>3D Viral Shorts</h3>
+                <p>Oddly satisfying and funny 3D animations that glue viewers to the screen.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <img src="assets/Hulk500.PNG" class="preview-img" alt="Hulk AI">
+            <div class="preview-content">
+                <h3>AI Hulk Transformation</h3>
+                <p>The classic viral niche. High energy transformation edits for motivation pages.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <img src="assets/500-movie-explain.PNG" class="preview-img" alt="Movies">
+            <div class="preview-content">
+                <h3>Movie Explained</h3>
+                <p>Suspenseful movie recaps split into parts. Perfect for series retention.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 50px;">
+        <a href="store.html" class="cta-btn" style="background: transparent; border: 1px solid #333; color: #fff;">View Full Store</a>
     </div>
 </div>
 
@@ -183,6 +301,10 @@
     <br>
     <a href="legal.html" style="color: #444;">Legal Policies</a>
 </footer>
+
+<div class="sticky-cta">
+    <a href="store.html">Shop All Bundles →</a>
+</div>
 
 </body>
 </html>
