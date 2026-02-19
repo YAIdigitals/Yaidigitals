@@ -103,26 +103,25 @@
             font-size: 1.1rem;
         }
 
-        /* --- TRUST STRIP (SINGLE LINE) --- */
+        /* --- TRUST STRIP (CLEAN & CENTERED) --- */
         .trust-strip {
             display: flex;
             justify-content: center;
-            gap: 15px; /* Reduced gap to fit */
+            gap: 20px;
             margin-bottom: 60px;
-            flex-wrap: nowrap; /* Forces single line */
-            overflow-x: auto; /* Prevents breaking on tiny screens */
+            flex-wrap: wrap;
         }
         .trust-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             color: var(--text-muted);
-            font-size: 0.8rem; /* Smaller font to fit */
+            font-size: 0.85rem;
             background: rgba(255,255,255,0.05);
-            padding: 6px 12px; /* Smaller padding */
+            padding: 8px 16px;
             border-radius: 50px;
             border: 1px solid #333;
-            white-space: nowrap; /* Keeps text together */
+            white-space: nowrap;
         }
         .trust-item span { color: var(--primary); }
 
@@ -243,7 +242,7 @@
             color: #666; 
             margin-top: 6px; 
             display: block;
-            text-align: center; /* Ensures text is centered */
+            text-align: center;
         }
 
         /* --- INTERACTIVE FAQ --- */
@@ -317,9 +316,10 @@
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
             .store-header h1 { font-size: 2.2rem; }
-            /* Ensure single line on mobile */
+            
+            /* Clean Mobile Trust Strip */
             .trust-strip { gap: 10px; }
-            .trust-item { font-size: 0.7rem; padding: 5px 10px; }
+            .trust-item { font-size: 0.75rem; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -343,9 +343,8 @@
     <p>Everything you need to grow your social media.</p>
 
     <div class="trust-strip">
+        <div class="trust-item"><span>⚡</span> Instant Digital Delivery</div>
         <div class="trust-item"><span>🔒</span> Secure Payment</div>
-        <div class="trust-item"><span>⚡</span> Instant Delivery</div>
-        <div class="trust-item"><span>✅</span> 100% Virus Free</div>
     </div>
 </div>
 
@@ -491,14 +490,14 @@
         question.addEventListener('click', () => {
             const item = question.parentElement;
             
-            // Close other items (Optional - remove this block if you want multiple open)
+            // Close others
             document.querySelectorAll('.faq-item').forEach(otherItem => {
                 if (otherItem !== item) {
                     otherItem.classList.remove('active');
                 }
             });
 
-            // Toggle current item
+            // Toggle current
             item.classList.toggle('active');
         });
     });
