@@ -59,7 +59,7 @@
             padding: 0 20px;
         }
 
-        /* --- NAVBAR (FIXED SPACING - MATCHES HOME) --- */
+        /* --- NAVBAR (FIXED SPACING) --- */
         .navbar-wrapper {
             background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
@@ -70,28 +70,22 @@
         }
 
         .navbar {
-            padding: 20px 0; /* Aligned with container */
+            padding: 20px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
-        }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
         .logo span { color: var(--primary); }
-
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- STORE HEADER WITH GLOW --- */
+        /* --- STORE HEADER --- */
         .store-header {
             text-align: center;
-            padding: 80px 20px 60px 20px;
+            padding: 60px 20px 40px 20px;
             background: radial-gradient(circle at center top, var(--primary-glow) 0%, transparent 60%);
         }
         .store-header h1 { 
@@ -109,6 +103,27 @@
             font-size: 1.1rem;
         }
 
+        /* --- TRUST STRIP (NEW) --- */
+        .trust-strip {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid #333;
+        }
+        .trust-item span { color: var(--primary); }
+
         /* --- PRODUCT GRID --- */
         .product-grid {
             display: grid;
@@ -117,7 +132,6 @@
             padding-bottom: 80px;
         }
 
-        /* --- PRODUCT CARD --- */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -135,7 +149,6 @@
             box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15);
         }
 
-        /* FIXED IMAGE STYLE */
         .card-img {
             width: 100%;
             height: 250px; 
@@ -185,32 +198,11 @@
             border-top: 1px solid #222;
         }
 
-        .price-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .current-price {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .meta-price {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .old-price {
-            font-size: 0.85rem;
-            text-decoration: line-through;
-            color: #666;
-        }
-
+        .price-wrapper { display: flex; flex-direction: column; align-items: flex-start; }
+        .current-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 5px; }
+        .meta-price { display: flex; align-items: center; gap: 8px; }
+        .old-price { font-size: 0.85rem; text-decoration: line-through; color: #666; }
+        
         .discount-tag {
             font-size: 0.75rem;
             font-weight: 700;
@@ -232,8 +224,24 @@
             cursor: pointer;
             transition: 0.2s;
             white-space: nowrap;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
         .buy-btn:hover { opacity: 0.9; transform: scale(1.05); }
+
+        /* --- FAQ SECTION (NEW) --- */
+        .faq-section {
+            border-top: 1px solid var(--border);
+            padding: 60px 0;
+            background: #080808;
+        }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .faq-item h4 { color: #fff; margin: 0 0 10px 0; font-family: 'Outfit', sans-serif; }
+        .faq-item p { color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.6; }
 
         /* --- FOOTER --- */
         footer {
@@ -245,10 +253,10 @@
         }
 
         @media(max-width: 768px) {
-            .navbar { padding: 15px 0; } /* Keep aligned */
-            .store-header { padding-top: 60px; }
+            .navbar { padding: 15px 0; }
             .store-header h1 { font-size: 2.2rem; }
-            .nav-links { gap: 15px; font-size: 14px; }
+            .trust-strip { gap: 10px; }
+            .trust-item { font-size: 0.8rem; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -270,6 +278,12 @@
 <div class="store-header">
     <h1>Premium Digital Assets</h1>
     <p>Everything you need to grow your social media.</p>
+
+    <div class="trust-strip">
+        <div class="trust-item"><span>🔒</span> Secure Payment</div>
+        <div class="trust-item"><span>⚡</span> Instant Delivery</div>
+        <div class="trust-item"><span>✅</span> 100% Virus Free</div>
+    </div>
 </div>
 
 <div class="container">
@@ -280,7 +294,7 @@
             <img src="assets/viralvideos.PNG" class="card-img" alt="3D Viral Bundle">
             <div class="card-content">
                 <h3 class="card-title">250+ Premium 3D Viral Shorts Bundle</h3>
-                <p class="card-desc">Get 250+ unbranded, viral-ready 3D animated videos. Includes Comedy, Storytelling, and Lifestyle content. Add your logo, post, and watch your views skyrocket! 🚀</p>
+                <p class="card-desc">Get 250+ unbranded, viral-ready 3D animated videos. Includes Comedy, Storytelling, and Lifestyle content.</p>
                 <div class="price-row">
                     <div class="price-wrapper">
                         <span class="current-price">₹99</span>
@@ -289,7 +303,10 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <a href="https://superprofile.bio/vp/250-viralvideos" target="_blank" class="buy-btn">Buy Now</a>
+                    <div style="text-align: right;">
+                        <a href="https://superprofile.bio/vp/3d-shorts-payment" target="_blank" class="buy-btn">Buy Now</a>
+                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -308,7 +325,10 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <a href="https://superprofile.bio/vp/Payment-hulk" target="_blank" class="buy-btn">Buy Now</a>
+                    <div style="text-align: right;">
+                        <a href="https://superprofile.bio/vp/Payment-hulk" target="_blank" class="buy-btn">Buy Now</a>
+                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -327,7 +347,10 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <a href="https://superprofile.bio/vp/cartoon-payment" target="_blank" class="buy-btn">Buy Now</a>
+                    <div style="text-align: right;">
+                        <a href="https://superprofile.bio/vp/cartoon-payment" target="_blank" class="buy-btn">Buy Now</a>
+                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -346,11 +369,34 @@
                             <span class="discount-tag">97% OFF</span>
                         </div>
                     </div>
-                   <a href="https://superprofile.bio/vp/movies-payment" target="_blank" class="buy-btn">Buy Now</a>
+                    <div style="text-align: right;">
+                        <a href="https://superprofile.bio/vp/movies-payment" target="_blank" class="buy-btn">Buy Now</a>
+                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                    </div>
                 </div>
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="faq-section">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h4>📥 How do I get the files?</h4>
+                <p>Immediately after payment, you will receive an email with a Google Drive download link. It's instant!</p>
+            </div>
+            <div class="faq-item">
+                <h4>📱 Does this work on Mobile?</h4>
+                <p>Yes! All files are standard MP4 format. You can download and save them directly to your iPhone or Android gallery.</p>
+            </div>
+            <div class="faq-item">
+                <h4>©️ Is there a Copyright issue?</h4>
+                <p>No. These videos are edited to be "transformative" and safe for social media use. They are unbranded, so you can add your own logo.</p>
+            </div>
+        </div>
     </div>
 </div>
 
