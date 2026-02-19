@@ -30,7 +30,7 @@
     <style>
         :root {
             --primary: #22c55e;
-            --primary-glow: rgba(34, 197, 94, 0.3); /* Added Glow Color */
+            --primary-glow: rgba(34, 197, 94, 0.3);
             --accent-yellow: #facc15;
             --bg-dark: #050505;
             --bg-card: #121212;
@@ -47,24 +47,33 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            /* This ensures the page doesn't jump horizontally */
-            overflow-x: hidden; 
+            overflow-x: hidden;
         }
 
         a { text-decoration: none; }
 
-        /* --- NAVBAR (Standardized to match Home) --- */
-        .navbar {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- NAVBAR (FIXED SPACING - MATCHES HOME) --- */
+        .navbar-wrapper {
+            background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
-            background: rgba(5,5,5,0.95); /* Slightly darker for better contrast */
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
+        }
+
+        .navbar {
+            padding: 20px 0; /* Aligned with container */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
@@ -83,18 +92,15 @@
         .store-header {
             text-align: center;
             padding: 80px 20px 60px 20px;
-            /* This creates the Green Glow Effect behind the text */
             background: radial-gradient(circle at center top, var(--primary-glow) 0%, transparent 60%);
         }
         .store-header h1 { 
             font-family: 'Outfit', sans-serif; 
             font-size: 3.5rem; 
             margin: 0; 
-            /* Subtle gradient on text for premium feel */
             background: linear-gradient(to bottom, #ffffff 0%, #cccccc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Fallback for browsers that don't support text fill */
             color: white; 
         }
         .store-header p { 
@@ -104,12 +110,6 @@
         }
 
         /* --- PRODUCT GRID --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -245,22 +245,27 @@
         }
 
         @media(max-width: 768px) {
-            .navbar { padding: 15px 20px; }
+            .navbar { padding: 15px 0; } /* Keep aligned */
             .store-header { padding-top: 60px; }
             .store-header h1 { font-size: 2.2rem; }
+            .nav-links { gap: 15px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <a href="index.html" class="logo">YAI<span>digitals.</span></a>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="store.html" class="active">Store</a>
-        <a href="legal.html#contact">Contact</a>
+<div class="navbar-wrapper">
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">YAI<span>digitals.</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="store.html" class="active">Store</a>
+                <a href="legal.html#contact">Contact</a>
+            </div>
+        </nav>
     </div>
-</nav>
+</div>
 
 <div class="store-header">
     <h1>Premium Digital Assets</h1>
@@ -284,7 +289,7 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <a href="https://superprofile.bio/vp/250-viralvideos" target="_blank" class="buy-btn">Buy Now</a>
+                    <a href="https://superprofile.bio/vp/3d-shorts-payment" target="_blank" class="buy-btn">Buy Now</a>
                 </div>
             </div>
         </div>
