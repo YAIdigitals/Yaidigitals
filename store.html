@@ -59,7 +59,7 @@
             padding: 0 20px;
         }
 
-        /* --- NAVBAR (FIXED SPACING) --- */
+        /* --- NAVBAR (IDENTICAL TO HOME) --- */
         .navbar-wrapper {
             background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
@@ -103,7 +103,7 @@
             font-size: 1.1rem;
         }
 
-        /* --- TRUST STRIP (NEW) --- */
+        /* --- TRUST STRIP --- */
         .trust-strip {
             display: flex;
             justify-content: center;
@@ -212,6 +212,12 @@
             border-radius: 4px;
         }
 
+        .buy-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
         .buy-btn {
             background: var(--gradient);
             color: #000;
@@ -228,20 +234,72 @@
         }
         .buy-btn:hover { opacity: 0.9; transform: scale(1.05); }
 
-        /* --- FAQ SECTION (NEW) --- */
+        .instant-text {
+            font-size: 10px; 
+            color: #666; 
+            margin-top: 6px; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px;
+        }
+
+        /* --- INTERACTIVE FAQ --- */
         .faq-section {
             border-top: 1px solid var(--border);
             padding: 60px 0;
             background: #080808;
         }
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        .faq-item h4 { color: #fff; margin: 0 0 10px 0; font-family: 'Outfit', sans-serif; }
-        .faq-item p { color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.6; }
+
+        .faq-item {
+            border-bottom: 1px solid #222;
+            padding: 15px 0;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 10px 0;
+            font-size: 1.1rem;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover { color: var(--primary); }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active .faq-question::after { content: '-'; color: var(--primary); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding-right: 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust if answer is very long */
+            padding-bottom: 15px;
+        }
 
         /* --- FOOTER --- */
         footer {
@@ -254,9 +312,8 @@
 
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
+            .nav-links { gap: 15px; font-size: 14px; }
             .store-header h1 { font-size: 2.2rem; }
-            .trust-strip { gap: 10px; }
-            .trust-item { font-size: 0.8rem; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -303,9 +360,9 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <div style="text-align: right;">
+                    <div class="buy-action">
                         <a href="https://superprofile.bio/vp/3d-shorts-payment" target="_blank" class="buy-btn">Buy Now</a>
-                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                        <span class="instant-text">⚡ Instant Access</span>
                     </div>
                 </div>
             </div>
@@ -325,9 +382,9 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <div style="text-align: right;">
+                    <div class="buy-action">
                         <a href="https://superprofile.bio/vp/Payment-hulk" target="_blank" class="buy-btn">Buy Now</a>
-                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                        <span class="instant-text">⚡ Instant Access</span>
                     </div>
                 </div>
             </div>
@@ -347,9 +404,9 @@
                             <span class="discount-tag">98% OFF</span>
                         </div>
                     </div>
-                    <div style="text-align: right;">
+                    <div class="buy-action">
                         <a href="https://superprofile.bio/vp/cartoon-payment" target="_blank" class="buy-btn">Buy Now</a>
-                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                        <span class="instant-text">⚡ Instant Access</span>
                     </div>
                 </div>
             </div>
@@ -369,9 +426,9 @@
                             <span class="discount-tag">97% OFF</span>
                         </div>
                     </div>
-                    <div style="text-align: right;">
+                    <div class="buy-action">
                         <a href="https://superprofile.bio/vp/movies-payment" target="_blank" class="buy-btn">Buy Now</a>
-                        <div style="font-size: 10px; color: #666; margin-top: 5px;">⚡ Instant Access</div>
+                        <span class="instant-text">⚡ Instant Access</span>
                     </div>
                 </div>
             </div>
@@ -381,22 +438,37 @@
 </div>
 
 <div class="faq-section">
-    <div class="container">
-        <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h4>📥 How do I get the files?</h4>
-                <p>Immediately after payment, you will receive an email with a Google Drive download link. It's instant!</p>
-            </div>
-            <div class="faq-item">
-                <h4>📱 Does this work on Mobile?</h4>
-                <p>Yes! All files are standard MP4 format. You can download and save them directly to your iPhone or Android gallery.</p>
-            </div>
-            <div class="faq-item">
-                <h4>©️ Is there a Copyright issue?</h4>
-                <p>No. These videos are edited to be "transformative" and safe for social media use. They are unbranded, so you can add your own logo.</p>
+    <div class="container faq-container">
+        <h2 style="text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <button class="faq-question">📥 How do I get the files?</button>
+            <div class="faq-answer">
+                Immediately after payment, you will receive an email with a Google Drive download link. It is instant and automatic.
             </div>
         </div>
+
+        <div class="faq-item">
+            <button class="faq-question">📱 Does this work on iPhone/Android?</button>
+            <div class="faq-answer">
+                Yes! All files are standard MP4 format. You can download and save them directly to your phone gallery to post on Instagram.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">©️ Is there a Copyright issue?</button>
+            <div class="faq-answer">
+                No. These videos are edited to be "transformative" and safe for social media. They are unbranded, so you can add your own logo.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">💳 Is the payment safe?</button>
+            <div class="faq-answer">
+                Yes, we use Razorpay/Cosmofeed, which are India's most trusted payment gateways. We do not store your card details.
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -405,6 +477,26 @@
     <br>
     <a href="legal.html" style="color: #444;">Legal Policies</a>
 </footer>
+
+<script>
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            
+            // Close other items (Optional - remove this block if you want multiple open)
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    });
+</script>
 
 </body>
 </html>
