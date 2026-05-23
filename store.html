@@ -21,8 +21,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Store | YAIdigitals - Premium Viral Video Bundles</title>
-    <meta name="description" content="Shop the best AI Viral Reels, Cartoon Shorts, and Movie Explained bundles. Instant download starting at ₹49.">
-    <meta name="keywords" content="viral reels bundle, buy ai shorts, hulk reels download, movie explained clips, cartoon hindi shorts, digital store">
+    <meta name="description" content="Shop the best AI Viral Reels, Stickman Animations, Cartoon Shorts, and Movie Explained bundles. Instant download starting at ₹49.">
+    <meta name="keywords" content="viral reels bundle, buy stickman reels, buy ai shorts, hulk reels download, movie explained clips, cartoon hindi shorts, digital store">
     <meta name="author" content="YAIdigitals">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@
             padding: 0 20px;
         }
 
-        /* --- NAVBAR (IDENTICAL TO HOME) --- */
+        /* --- NAVBAR --- */
         .navbar-wrapper {
             background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
@@ -103,7 +103,7 @@
             font-size: 1.1rem;
         }
 
-        /* --- TRUST STRIP (CLEAN & CENTERED) --- */
+        /* --- TRUST STRIP --- */
         .trust-strip {
             display: flex;
             justify-content: center;
@@ -213,11 +213,10 @@
             border-radius: 4px;
         }
 
-        /* --- BUY ACTION (CENTERED) --- */
         .buy-action {
             display: flex;
             flex-direction: column;
-            align-items: center; /* MIDDLE ALIGN WITH BUTTON */
+            align-items: center;
             justify-content: center;
         }
 
@@ -316,8 +315,6 @@
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
             .store-header h1 { font-size: 2.2rem; }
-            
-            /* Clean Mobile Trust Strip */
             .trust-strip { gap: 10px; }
             .trust-item { font-size: 0.75rem; padding: 6px 12px; }
         }
@@ -352,6 +349,28 @@
     <div class="product-grid">
 
         <div class="product-card">
+            <div class="badge" style="background: #ef4444; color: #fff;">🔥 MEGA BUNDLE</div>
+            <img src="assets/stickman.PNG" class="card-img" alt="Stickman Viral Bundle">
+            <div class="card-content">
+                <h3 class="card-title">2300+ Viral Stickman Reels Bundle</h3>
+                <p class="card-desc">Scale your faceless page fast! Premium, ready-to-post, unbranded, and copyright-free stickman animation reels. High retention guaranteed.</p>
+                <div class="price-row">
+                    <div class="price-wrapper">
+                        <span class="current-price">₹99</span>
+                        <div class="meta-price">
+                            <span class="old-price">₹4999</span>
+                            <span class="discount-tag">98% OFF</span>
+                        </div>
+                    </div>
+                    <div class="buy-action">
+                        <a href="https://superprofile.bio/vp/stickman-payment" target="_blank" class="buy-btn">Buy Now</a>
+                        <span class="instant-text">⚡ Instant Access</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
             <div class="badge" style="background: #facc15; color: #000;">NEW ARRIVAL</div>
             <img src="assets/viralvideos.PNG" class="card-img" alt="3D Viral Bundle">
             <div class="card-content">
@@ -366,7 +385,7 @@
                         </div>
                     </div>
                     <div class="buy-action">
-                        <a href="https://superprofile.bio/vp/250-viralvideos" target="_blank" class="buy-btn">Buy Now</a>
+                        <a href="https://superprofile.bio/vp/3d-shorts-payment" target="_blank" class="buy-btn">Buy Now</a>
                         <span class="instant-text">⚡ Instant Access</span>
                     </div>
                 </div>
@@ -490,14 +509,12 @@
         question.addEventListener('click', () => {
             const item = question.parentElement;
             
-            // Close others
             document.querySelectorAll('.faq-item').forEach(otherItem => {
                 if (otherItem !== item) {
                     otherItem.classList.remove('active');
                 }
             });
 
-            // Toggle current
             item.classList.toggle('active');
         });
     });
