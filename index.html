@@ -27,13 +27,13 @@
 
     <style>
         :root {
-            --primary: #22c55e; /* Signature Brand Green */
+            --primary: #22c55e;
             --primary-dark: #16a34a;
             --primary-glow: rgba(34, 197, 94, 0.4);
-            --bg-dark: #030303; /* Deepest black for contrast */
-            --bg-card: #0a0a0a; /* Subtle elevation */
+            --bg-dark: #030303; 
+            --bg-card: #0a0a0a; 
             --text-main: #ffffff;
-            --text-muted: #888888; /* Softer grey for less eye strain */
+            --text-muted: #888888; 
             --border: #1f1f1f;
         }
 
@@ -50,7 +50,6 @@
 
         a { text-decoration: none; }
 
-        /* Offset for anchor links */
         .anchor { scroll-margin-top: 100px; }
 
         /* --- LAYOUT UTILITIES --- */
@@ -80,11 +79,25 @@
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 15px; }
         .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
 
-        /* --- PREMIUM HERO SECTION --- */
+        /* --- OLD NEON HERO SECTION --- */
         .hero {
             padding: 100px 20px 80px 20px;
             text-align: center;
-            background: radial-gradient(circle at center top, rgba(34, 197, 94, 0.12) 0%, transparent 60%);
+            position: relative; /* Needed for the neon orb */
+        }
+
+        /* This is the classic concentrated Neon Orb effect from the old homepage */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .trust-pill {
@@ -112,7 +125,7 @@
         }
         .hero h1 span { 
             color: var(--primary); 
-            text-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+            text-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
         }
 
         .hero p {
@@ -128,7 +141,7 @@
             background: #ffffff;
             color: #000000;
             padding: 18px 45px;
-            border-radius: 8px; /* Slightly squared for premium feel */
+            border-radius: 8px; 
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
             font-size: 1.2rem;
@@ -349,7 +362,7 @@
         .step-content h3 { margin: 0 0 8px 0; font-family: 'Outfit', sans-serif; font-size: 1.3rem; color: #fff; }
         .step-content p { margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
 
-        /* --- LIVE SALES POPUP (REFINED) --- */
+        /* --- LIVE SALES POPUP --- */
         .sales-popup {
             position: fixed; bottom: 25px; left: 25px;
             background: rgba(15, 15, 15, 0.98);
@@ -397,6 +410,7 @@
             .navbar { padding: 15px 0; }
             .nav-links { gap: 20px; font-size: 14px; }
             .hero { padding: 80px 20px 40px 20px; }
+            .hero::before { top: -50px; width: 600px; height: 600px; } /* Adjust orb for mobile */
             .hero h1 { font-size: 3rem; letter-spacing: -1px; }
             .hero p { font-size: 1.05rem; }
             .timer-box { width: 70px; height: 70px; }
