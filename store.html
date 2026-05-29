@@ -22,9 +22,7 @@
     
     <title>Store | YAIdigitals - Premium Viral Video Bundles</title>
     <meta name="description" content="Shop the best AI Viral Reels, Stickman Animations, Cartoon Shorts, and Movie Explained bundles. Instant download starting at ₹49.">
-    <meta name="keywords" content="viral reels bundle, buy stickman reels, buy ai shorts, hulk reels download, movie explained clips, cartoon hindi shorts, digital store">
-    <meta name="author" content="YAIdigitals">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -88,7 +86,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- STICKY NAVBAR (EXACT MATCH TO HOME) --- */
+        /* --- STICKY NAVBAR --- */
         .navbar-wrapper {
             background: rgba(5, 5, 5, 0.85);
             border-bottom: 1px solid var(--border);
@@ -112,21 +110,21 @@
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 16px; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- STORE HEADER (NEON BREATHING ORB) --- */
+        /* --- STORE HEADER (COMPACT) --- */
         .store-header {
             text-align: center;
-            padding: 80px 20px 60px 20px;
+            padding: 50px 20px 30px 20px; /* Greatly reduced padding so products show instantly */
             position: relative;
         }
         .store-header::before {
             content: '';
             position: absolute;
-            top: -50px;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
             width: 700px;
             height: 700px;
-            background: radial-gradient(circle, rgba(34,197,94,0.18) 0%, rgba(0,0,0,0) 65%);
+            background: radial-gradient(circle, rgba(34,197,94,0.15) 0%, rgba(0,0,0,0) 65%);
             z-index: -1;
             pointer-events: none;
             animation: breathe 6s infinite ease-in-out;
@@ -138,23 +136,23 @@
         }
 
         .store-header h1 { 
-            font-family: 'Outfit', sans-serif; font-size: 4rem; margin: 0 0 15px 0; font-weight: 900; letter-spacing: -1px;
-            color: #fff;
-            text-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+            font-family: 'Outfit', sans-serif; font-size: 3.2rem; /* Reduced font size */
+            margin: 0 0 10px 0; font-weight: 900; letter-spacing: -1px;
+            color: #fff; text-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
         }
-        .store-header p { color: var(--text-muted); margin: 0 auto 30px auto; font-size: 1.2rem; max-width: 600px; }
+        .store-header p { color: var(--text-muted); margin: 0 auto 20px auto; font-size: 1.1rem; max-width: 600px; }
 
-        /* --- TRUST STRIP --- */
+        /* --- TRUST STRIP (COMPACT) --- */
         .trust-strip {
-            display: flex; justify-content: center; gap: 20px; margin-bottom: 60px; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;
         }
         .trust-item {
-            display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 0.95rem;
-            background: var(--bg-glass); backdrop-filter: blur(10px); padding: 10px 25px;
+            display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 0.9rem;
+            background: var(--bg-glass); backdrop-filter: blur(10px); padding: 8px 20px;
             border-radius: 50px; border: 1px solid var(--border); white-space: nowrap; font-weight: 500;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .trust-item span { color: var(--primary); font-size: 1.2rem;}
+        .trust-item span { color: var(--primary); font-size: 1.1rem;}
 
         /* --- PRODUCT GRID --- */
         .product-grid {
@@ -228,10 +226,13 @@
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
+            /* Mobile tweaks for visibility above fold */
+            .store-header { padding: 30px 20px 20px 20px; }
             .store-header::before { top: -50px; width: 500px; height: 500px; }
-            .store-header h1 { font-size: 3rem; }
-            .trust-strip { gap: 10px; }
-            .trust-item { font-size: 0.85rem; padding: 8px 16px; }
+            .store-header h1 { font-size: 2.2rem; margin-bottom: 5px; }
+            .store-header p { font-size: 0.95rem; margin-bottom: 15px; }
+            .trust-strip { gap: 10px; margin-bottom: 25px; }
+            .trust-item { font-size: 0.8rem; padding: 6px 12px; }
             .current-price { font-size: 1.8rem; }
         }
     </style>
