@@ -25,22 +25,26 @@
     <meta name="keywords" content="viral reels bundle, buy stickman reels, buy ai shorts, hulk reels download, movie explained clips, cartoon hindi shorts, digital store">
     <meta name="author" content="YAIdigitals">
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary: #22c55e;
-            --primary-glow: rgba(34, 197, 94, 0.3);
-            --accent-yellow: #facc15;
-            --bg-dark: #050505;
-            --bg-card: #121212;
+            --primary-dark: #16a34a;
+            --primary-glow: rgba(34, 197, 94, 0.4);
+            --bg-dark: #030303; 
+            --bg-card: #0a0a0a; 
+            --bg-glass: rgba(20, 20, 20, 0.6);
             --text-main: #ffffff;
-            --text-muted: #a3a3a3;
-            --border: #262626;
+            --text-muted: #a3a3a3; 
+            --border: rgba(255, 255, 255, 0.08);
             --gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --accent-yellow: #facc15;
+            --danger: #ef4444;
         }
 
         * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -48,282 +52,194 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         a { text-decoration: none; }
 
-        /* --- LAYOUT UTILITIES --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* --- SCROLL REVEAL ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* --- HERO ENTRY ANIMATIONS --- */
+        .hero-load {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .load-1 { animation-delay: 0.1s; }
+        .load-2 { animation-delay: 0.2s; }
+        .load-3 { animation-delay: 0.3s; }
+
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- NAVBAR --- */
+        /* --- LAYOUT UTILITIES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- STICKY NAVBAR (EXACT MATCH TO HOME) --- */
         .navbar-wrapper {
-            background: rgba(5,5,5,0.95);
+            background: rgba(5, 5, 5, 0.85);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .navbar {
-            padding: 20px 0;
+            padding: 18px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px;}
         .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; }
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 16px; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- STORE HEADER --- */
+        /* --- STORE HEADER (NEON BREATHING ORB) --- */
         .store-header {
             text-align: center;
-            padding: 60px 20px 40px 20px;
-            background: radial-gradient(circle at center top, var(--primary-glow) 0%, transparent 60%);
+            padding: 80px 20px 60px 20px;
+            position: relative;
         }
+        .store-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(34,197,94,0.18) 0%, rgba(0,0,0,0) 65%);
+            z-index: -1;
+            pointer-events: none;
+            animation: breathe 6s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+
         .store-header h1 { 
-            font-family: 'Outfit', sans-serif; 
-            font-size: 3.5rem; 
-            margin: 0; 
-            background: linear-gradient(to bottom, #ffffff 0%, #cccccc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: white; 
+            font-family: 'Outfit', sans-serif; font-size: 4rem; margin: 0 0 15px 0; font-weight: 900; letter-spacing: -1px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
         }
-        .store-header p { 
-            color: var(--text-muted); 
-            margin-top: 15px; 
-            font-size: 1.1rem;
-        }
+        .store-header p { color: var(--text-muted); margin: 0 auto 30px auto; font-size: 1.2rem; max-width: 600px; }
 
         /* --- TRUST STRIP --- */
         .trust-strip {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 20px; margin-bottom: 60px; flex-wrap: wrap;
         }
         .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 16px;
-            border-radius: 50px;
-            border: 1px solid #333;
-            white-space: nowrap;
+            display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 0.95rem;
+            background: var(--bg-glass); backdrop-filter: blur(10px); padding: 10px 25px;
+            border-radius: 50px; border: 1px solid var(--border); white-space: nowrap; font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .trust-item span { color: var(--primary); }
+        .trust-item span { color: var(--primary); font-size: 1.2rem;}
 
         /* --- PRODUCT GRID --- */
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding-bottom: 80px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding-bottom: 80px;
         }
 
         .product-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            display: flex;
-            flex-direction: column; 
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+            overflow: hidden; transition: all 0.3s ease; position: relative; display: flex; flex-direction: column; 
         }
+        .product-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); transform: translateY(-5px); }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 250px; 
-            object-fit: contain; 
-            background: #000; 
-            border-bottom: 1px solid var(--border);
-        }
-
-        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-img { width: 100%; height: 260px; object-fit: contain; background: #000; border-bottom: 1px solid var(--border); }
+        .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
 
         .badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--accent-yellow);
-            color: #000;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 4px;
-            z-index: 10;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: absolute; top: 15px; left: 15px; background: var(--accent-yellow); color: #000;
+            font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 6px; z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        .card-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.4rem;
-            margin: 0 0 10px 0;
-            line-height: 1.3;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            line-height: 1.6;
-            flex-grow: 1; 
-        }
+        .card-title { font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin: 0 0 12px 0; line-height: 1.3; font-weight: 800; }
+        .card-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; flex-grow: 1; }
 
         /* --- PRICE ROW --- */
         .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto; 
-            padding-top: 20px;
-            border-top: 1px solid #222;
+            display: flex; justify-content: space-between; align-items: center; margin-top: auto; 
+            padding-top: 25px; border-top: 1px solid #1a1a1a;
         }
-
         .price-wrapper { display: flex; flex-direction: column; align-items: flex-start; }
-        .current-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 5px; }
+        .current-price { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 5px; }
         .meta-price { display: flex; align-items: center; gap: 8px; }
-        .old-price { font-size: 0.85rem; text-decoration: line-through; color: #666; }
-        
-        .discount-tag {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #000;
-            background: var(--accent-yellow);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
+        .old-price { font-size: 0.9rem; text-decoration: line-through; color: #666; font-weight: 500;}
+        .discount-tag { font-size: 0.75rem; font-weight: 700; color: #000; background: var(--accent-yellow); padding: 3px 8px; border-radius: 4px; }
 
-        .buy-action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        .buy-action { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
+        /* --- ROUNDED BUY BUTTON (PULSE HOVER) --- */
         .buy-btn {
-            background: var(--gradient);
-            color: #000;
-            text-align: center;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            box-shadow: 0 0 10px var(--primary-glow);
+            background: var(--gradient); color: #000; text-align: center; padding: 14px 30px;
+            border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem;
+            border: none; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 0 15px var(--primary-glow);
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .buy-btn:hover { opacity: 0.9; transform: scale(1.05); }
+        .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5); }
 
-        .instant-text {
-            font-size: 10px; 
-            color: #666; 
-            margin-top: 6px; 
-            display: block;
-            text-align: center;
-        }
+        .instant-text { font-size: 11px; color: #888; margin-top: 8px; display: block; text-align: center; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         /* --- INTERACTIVE FAQ --- */
-        .faq-section {
-            border-top: 1px solid var(--border);
-            padding: 60px 0;
-            background: #080808;
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid #222;
-        }
-
+        .faq-section { padding: 80px 0; background: #050505; border-top: 1px solid var(--border); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid #1a1a1a; }
         .faq-question {
-            width: 100%;
-            background: none;
-            border: none;
-            text-align: left;
-            padding: 20px 0;
-            font-size: 1.1rem;
-            color: #fff;
-            font-family: 'Outfit', sans-serif;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: color 0.3s;
+            width: 100%; background: none; border: none; text-align: left; padding: 25px 0;
+            font-size: 1.15rem; color: #fff; font-family: 'Outfit', sans-serif; font-weight: 600;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s;
         }
-
         .faq-question:hover { color: var(--primary); }
-
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
+        .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--text-muted); font-weight: 300; }
         .faq-item.active .faq-question::after { content: '-'; color: var(--primary); }
-
         .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding-right: 20px;
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;
+            color: var(--text-muted); font-size: 1rem; line-height: 1.6; padding-right: 20px;
         }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding-bottom: 20px;
-        }
+        .faq-item.active .faq-answer { max-height: 200px; padding-bottom: 25px; }
 
         /* --- FOOTER --- */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-        }
+        footer { padding: 50px 20px 80px 20px; text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid var(--border); }
+        footer a { color: #888; transition: 0.3s; } footer a:hover { color: #fff; }
 
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
-            .store-header h1 { font-size: 2.2rem; }
+            .store-header::before { top: -50px; width: 500px; height: 500px; }
+            .store-header h1 { font-size: 3rem; }
             .trust-strip { gap: 10px; }
-            .trust-item { font-size: 0.75rem; padding: 6px 12px; }
+            .trust-item { font-size: 0.85rem; padding: 8px 16px; }
+            .current-price { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="navbar-wrapper">
-    <div class="container">
+    <div class="nav-container">
         <nav class="navbar">
             <a href="index.html" class="logo">YAI<span>digitals.</span></a>
             <div class="nav-links">
@@ -336,10 +252,10 @@
 </div>
 
 <div class="store-header">
-    <h1>Premium Digital Assets</h1>
-    <p>Everything you need to grow your social media.</p>
+    <h1 class="hero-load load-1">Premium Digital Assets</h1>
+    <p class="hero-load load-2">Everything you need to automate your social income.</p>
 
-    <div class="trust-strip">
+    <div class="trust-strip hero-load load-3">
         <div class="trust-item"><span>⚡</span> Instant Digital Delivery</div>
         <div class="trust-item"><span>🔒</span> Secure Payment</div>
     </div>
@@ -348,7 +264,7 @@
 <div class="container">
     <div class="product-grid">
 
-        <div class="product-card">
+        <div class="product-card reveal delay-1">
             <div class="badge" style="background: #ef4444; color: #fff;">🔥 MEGA BUNDLE</div>
             <img src="assets/stickman.PNG" class="card-img" alt="Stickman Viral Bundle">
             <div class="card-content">
@@ -370,7 +286,7 @@
             </div>
         </div>
 
-        <div class="product-card">
+        <div class="product-card reveal delay-2">
             <div class="badge" style="background: #facc15; color: #000;">NEW ARRIVAL</div>
             <img src="assets/viralvideos.PNG" class="card-img" alt="3D Viral Bundle">
             <div class="card-content">
@@ -392,7 +308,7 @@
             </div>
         </div>
 
-        <div class="product-card">
+        <div class="product-card reveal delay-3">
             <div class="badge">BEST SELLER</div>
             <img src="assets/Hulk500.PNG" class="card-img" alt="Hulk Bundle">
             <div class="card-content">
@@ -414,7 +330,7 @@
             </div>
         </div>
 
-        <div class="product-card">
+        <div class="product-card reveal delay-4">
             <div class="badge" style="background:#22c55e; color:#fff;">POPULAR</div>
             <img src="assets/250-cartoon-bundle.PNG" class="card-img" alt="Cartoon Bundle">
             <div class="card-content">
@@ -436,7 +352,7 @@
             </div>
         </div>
 
-        <div class="product-card">
+        <div class="product-card reveal delay-5">
             <div class="badge" style="background:#3b82f6; color:#fff;">TRENDING</div>
             <img src="assets/500-movie-explain.PNG" class="card-img" alt="Movie Bundle">
             <div class="card-content">
@@ -461,36 +377,28 @@
     </div>
 </div>
 
-<div class="faq-section">
+<div class="faq-section reveal">
     <div class="container faq-container">
-        <h2 style="text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
+        <h2 style="text-align: center; margin-bottom: 40px; font-family: 'Outfit'; font-size: 2.5rem; font-weight: 800;">Frequently Asked Questions</h2>
         
-        <div class="faq-item">
+        <div class="faq-item reveal delay-1">
             <button class="faq-question">📥 How do I get the files?</button>
-            <div class="faq-answer">
-                Immediately after payment, you will receive an email with a Google Drive download link. It is instant and automatic.
-            </div>
+            <div class="faq-answer">Immediately after payment, you will receive an email with a Google Drive download link. It is instant and automatic.</div>
         </div>
 
-        <div class="faq-item">
+        <div class="faq-item reveal delay-2">
             <button class="faq-question">📱 Does this work on iPhone/Android?</button>
-            <div class="faq-answer">
-                Yes! All files are standard MP4 format. You can download and save them directly to your phone gallery to post on Instagram.
-            </div>
+            <div class="faq-answer">Yes! All files are standard MP4 format. You can download and save them directly to your phone gallery to post on Instagram.</div>
         </div>
 
-        <div class="faq-item">
+        <div class="faq-item reveal delay-3">
             <button class="faq-question">©️ Is there a Copyright issue?</button>
-            <div class="faq-answer">
-                No. These videos are edited to be "transformative" and safe for social media. They are unbranded, so you can add your own logo.
-            </div>
+            <div class="faq-answer">No. These videos are edited to be "transformative" and safe for social media. They are unbranded, so you can add your own logo.</div>
         </div>
         
-        <div class="faq-item">
+        <div class="faq-item reveal delay-4">
             <button class="faq-question">💳 Is the payment safe?</button>
-            <div class="faq-answer">
-                Yes, we use Razorpay/Cosmofeed, which are India's most trusted payment gateways. We do not store your card details.
-            </div>
+            <div class="faq-answer">Yes, we use Razorpay/Cosmofeed, which are India's most trusted payment gateways. We do not store your card details.</div>
         </div>
 
     </div>
@@ -499,25 +407,33 @@
 <footer>
     <p>© 2026 YAIdigitals. All Rights Reserved.</p>
     <br>
-    <a href="legal.html" style="color: #444;">Legal Policies</a>
+    <a href="legal.html">Legal & Privacy Policies</a>
 </footer>
 
 <script>
+    // FAQ Toggle Logic
     const faqQuestions = document.querySelectorAll('.faq-question');
-
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const item = question.parentElement;
-            
             document.querySelectorAll('.faq-item').forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
+                if (otherItem !== item) { otherItem.classList.remove('active'); }
             });
-
             item.classList.toggle('active');
         });
     });
+
+    // Scroll Reveal Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); 
+            }
+        });
+    }, { rootMargin: "0px 0px -50px 0px" });
+    revealElements.forEach(el => revealObserver.observe(el));
 </script>
 
 </body>
