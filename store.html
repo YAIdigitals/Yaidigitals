@@ -22,7 +22,9 @@
     
     <title>Store | YAIdigitals - Premium Viral Video Bundles</title>
     <meta name="description" content="Shop the best AI Viral Reels, Stickman Animations, Cartoon Shorts, and Movie Explained bundles. Instant download starting at ₹49.">
-    
+    <meta name="keywords" content="viral reels bundle, buy stickman reels, buy ai shorts, hulk reels download, movie explained clips, cartoon hindi shorts, digital store">
+    <meta name="author" content="YAIdigitals">
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -86,7 +88,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- STICKY NAVBAR --- */
+        /* --- STICKY NAVBAR (EXACT MATCH TO HOME) --- */
         .navbar-wrapper {
             background: rgba(5, 5, 5, 0.85);
             border-bottom: 1px solid var(--border);
@@ -110,10 +112,10 @@
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 16px; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- STORE HEADER (COMPACT) --- */
+        /* --- STORE HEADER (NEON BREATHING ORB & COMPACT) --- */
         .store-header {
             text-align: center;
-            padding: 50px 20px 30px 20px; /* Greatly reduced padding so products show instantly */
+            padding: 50px 20px 30px 20px;
             position: relative;
         }
         .store-header::before {
@@ -136,15 +138,16 @@
         }
 
         .store-header h1 { 
-            font-family: 'Outfit', sans-serif; font-size: 3.2rem; /* Reduced font size */
-            margin: 0 0 10px 0; font-weight: 900; letter-spacing: -1px;
+            font-family: 'Outfit', sans-serif; font-size: 3.2rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: -1px;
             color: #fff; text-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
         }
         .store-header p { color: var(--text-muted); margin: 0 auto 20px auto; font-size: 1.1rem; max-width: 600px; }
 
-        /* --- TRUST STRIP (COMPACT) --- */
+        /* --- TRUST STRIP (FORCED SINGLE LINE) --- */
         .trust-strip {
-            display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;
+            display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 30px;
+            flex-wrap: nowrap; /* Forces a strict single line */
+            width: 100%;
         }
         .trust-item {
             display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 0.9rem;
@@ -223,16 +226,22 @@
         footer { padding: 50px 20px 80px 20px; text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid var(--border); }
         footer a { color: #888; transition: 0.3s; } footer a:hover { color: #fff; }
 
+        /* --- RESPONSIVE MOBILE --- */
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
-            /* Mobile tweaks for visibility above fold */
+            
+            /* Compact mobile header */
             .store-header { padding: 30px 20px 20px 20px; }
             .store-header::before { top: -50px; width: 500px; height: 500px; }
             .store-header h1 { font-size: 2.2rem; margin-bottom: 5px; }
             .store-header p { font-size: 0.95rem; margin-bottom: 15px; }
-            .trust-strip { gap: 10px; margin-bottom: 25px; }
-            .trust-item { font-size: 0.8rem; padding: 6px 12px; }
+            
+            /* Forced single-line trust strip for mobile */
+            .trust-strip { gap: 8px; margin-bottom: 25px; flex-wrap: nowrap; overflow: hidden;}
+            .trust-item { font-size: 0.75rem; padding: 6px 12px; gap: 5px;}
+            .trust-item span { font-size: 0.9rem; }
+            
             .current-price { font-size: 1.8rem; }
         }
     </style>
