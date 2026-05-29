@@ -37,10 +37,10 @@
             --text-muted: #a3a3a3; 
             --border: rgba(255, 255, 255, 0.08);
             --gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --accent-yellow: #facc15;
         }
 
         * { box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -59,16 +59,13 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- SCROLL REVEAL ANIMATIONS (PREMIUM FEEL) --- */
+        /* --- SCROLL REVEAL ANIMATIONS --- */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
@@ -84,6 +81,7 @@
         .load-2 { animation-delay: 0.2s; }
         .load-3 { animation-delay: 0.3s; }
         .load-4 { animation-delay: 0.4s; }
+        .load-5 { animation-delay: 0.5s; }
 
         @keyframes heroFadeUp {
             to { opacity: 1; transform: translateY(0); }
@@ -120,7 +118,6 @@
             position: relative;
         }
 
-        /* Breathing Neon Orb */
         .hero::before {
             content: '';
             position: absolute;
@@ -182,7 +179,7 @@
 
         /* --- PREMIUM GLOWING TIMER --- */
         .timer-container { 
-            margin: 30px auto 40px auto; 
+            margin: 30px auto 25px auto; /* Reduced bottom margin */
             max-width: 350px;
             background: var(--bg-glass);
             border: 1px solid var(--border);
@@ -214,7 +211,17 @@
         }
 
         .timer-boxes { display: flex; justify-content: center; gap: 20px; }
-        .timer-box { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .timer-box { 
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 80px;
+            height: 80px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+        }
         .timer-num {
             font-family: 'Outfit', sans-serif;
             font-size: 3rem;
@@ -230,6 +237,35 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 8px;
+        }
+
+        /* --- HERO PRICING (NEW) --- */
+        .hero-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .hero-price .old-price {
+            text-decoration: line-through;
+            color: #666;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .hero-price .new-price {
+            color: #fff;
+            font-size: 2.8rem;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-price .new-price span {
+            color: var(--primary);
         }
 
         /* --- ROUNDED BUTTONS --- */
@@ -276,11 +312,7 @@
             padding: 35px 0;
         }
         .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            text-align: center;
+            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; text-align: center;
         }
         .stat-item h3 { font-family: 'Outfit', sans-serif; font-size: 2.2rem; margin: 0; color: #fff; font-weight: 800; }
         .stat-item p { margin: 5px 0 0 0; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;}
@@ -289,56 +321,31 @@
         /* --- SECTIONS HEADERS --- */
         .section-header { text-align: center; margin: 100px 0 50px 0; }
         .section-header h2 { 
-            font-family: 'Outfit', sans-serif; 
-            font-size: 3rem; 
-            margin: 0 0 15px 0; 
-            font-weight: 800; 
-            line-height: 1.1;
-            letter-spacing: -1px;
+            font-family: 'Outfit', sans-serif; font-size: 3rem; margin: 0 0 15px 0; 
+            font-weight: 800; line-height: 1.1; letter-spacing: -1px;
         }
         .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin: 0 auto; }
         .highlight-text { color: var(--primary); }
 
         /* --- GLASSY PAIN POINTS --- */
-        .pain-points-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 650px;
-            margin: 0 auto;
-        }
+        .pain-points-grid { display: flex; flex-direction: column; gap: 15px; max-width: 650px; margin: 0 auto; }
         .pain-point-card {
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 22px 30px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 1.05rem;
-            color: #e0e0e0;
-            transition: all 0.3s ease;
+            background: var(--bg-glass); border: 1px solid var(--border);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 22px 30px; border-radius: 16px; display: flex; align-items: center; gap: 20px;
+            font-size: 1.05rem; color: #e0e0e0; transition: all 0.3s ease;
         }
-        .pain-point-card:hover { 
-            border-color: rgba(34, 197, 94, 0.4); 
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
+        .pain-point-card:hover { border-color: rgba(34, 197, 94, 0.4); transform: translateX(5px); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
         .pain-icon { 
             font-size: 1.2rem; color: #000; background: var(--primary);
             width: 35px; height: 35px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: bold;
         }
 
         /* --- EARNING PROOF GRID --- */
         .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .proof-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
+            background: var(--bg-glass); backdrop-filter: blur(10px); border: 1px solid var(--border);
             padding: 20px; border-radius: 20px; text-align: center; transition: 0.3s;
         }
         .proof-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); }
@@ -349,9 +356,8 @@
         /* --- COLLECTIONS PREVIEW --- */
         .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         .preview-card {
-            background: #0a0a0a; border-radius: 20px; overflow: hidden;
-            border: 1px solid var(--border); text-align: left; transition: all 0.3s ease;
-            display: flex; flex-direction: column;
+            background: #0a0a0a; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); 
+            text-align: left; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative;
         }
         .preview-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); transform: translateY(-5px); }
         .preview-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
@@ -361,6 +367,12 @@
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 15px; }
         .card-price { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; }
         .text-link { color: var(--primary); font-weight: 600; font-size: 0.95rem; }
+
+        .badge {
+            position: absolute; top: 15px; left: 15px; background: var(--accent-yellow); color: #000;
+            font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 6px; z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 0.5px;
+        }
 
         /* --- 3 SIMPLE STEPS --- */
         .steps-grid { display: flex; flex-direction: column; gap: 20px; max-width: 650px; margin: 0 auto; }
@@ -381,7 +393,7 @@
 
         /* --- LIVE SALES POPUP --- */
         .sales-popup {
-            position: fixed; bottom: 25px; left: 25px;
+            position: fixed; bottom: 85px; left: 25px; /* Moved slightly up to avoid footer overlap */
             background: rgba(10, 10, 10, 0.98); border: 1px solid #333;
             padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8);
@@ -402,10 +414,13 @@
         .sticky-footer {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: rgba(5, 5, 5, 0.95); border-top: 1px solid var(--border);
-            padding: 15px 20px; display: flex; justify-content: center; align-items: center;
+            padding: 12px 20px; display: flex; justify-content: center; align-items: center; gap: 20px;
             z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.8); backdrop-filter: blur(10px);
         }
-        .sticky-footer .cta-btn { padding: 14px 40px; font-size: 1.1rem; max-width: 500px; margin: 0; }
+        .sticky-price { font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; align-items: flex-end;}
+        .sticky-price .old { text-decoration: line-through; color: #888; font-size: 0.85rem; font-weight: 500; line-height: 1;}
+        .sticky-price .new { color: #fff; font-size: 1.3rem; font-weight: 800; line-height: 1.2;}
+        .sticky-footer .cta-btn { padding: 12px 30px; font-size: 1.1rem; max-width: 300px; margin: 0; }
 
         /* --- FOOTER --- */
         footer { margin-top: 100px; padding: 50px 20px 120px 20px; text-align: center; border-top: 1px solid #111; color: #555; font-size: 0.9rem;}
@@ -424,15 +439,25 @@
             .hero::before { top: -50px; width: 500px; height: 500px; } 
             .hero h1 { font-size: 3.2rem; letter-spacing: -1px; }
             .hero p { font-size: 1.05rem; }
+            
             .timer-container { padding: 15px; }
-            .timer-num { font-size: 2.5rem; }
+            .timer-num { font-size: 2rem; }
+            .timer-box { width: 70px; height: 70px; }
+            
+            .hero-price .old-price { font-size: 1.2rem; }
+            .hero-price .new-price { font-size: 2.2rem; }
+            
             .cta-btn { font-size: 1.1rem; padding: 16px 30px; }
             .section-header h2 { font-size: 2.2rem; }
             .stats-grid { flex-direction: column; gap: 30px; }
             .pain-point-card { padding: 18px 20px; font-size: 0.95rem; gap: 15px;}
             .step-card { flex-direction: column; align-items: center; text-align: center; padding: 25px; gap: 15px;}
-            .sales-popup { bottom: 100px; left: 15px; right: 15px; padding: 12px;}
+            
+            .sales-popup { bottom: 90px; left: 15px; right: 15px; padding: 12px;}
             .hero-guarantee { flex-direction: column; gap: 10px; align-items: center; }
+            
+            .sticky-footer { flex-direction: row; justify-content: space-between; padding: 10px 15px;}
+            .sticky-footer .cta-btn { padding: 10px 20px; font-size: 1rem; width: auto; flex-grow: 1;}
         }
     </style>
 </head>
@@ -464,7 +489,7 @@
                 <span class="timer-num" id="minutes">11</span>
                 <span class="timer-label">Minutes</span>
             </div>
-            <div class="timer-box" style="width: 20px; border: none; background: none; font-size: 2rem; color: var(--primary); font-weight: 800; padding-bottom: 15px;">:</div>
+            <div style="width: 10px; border: none; background: none; font-size: 2rem; color: var(--primary); font-weight: 800; display: flex; align-items: center; padding-bottom: 15px;">:</div>
             <div class="timer-box">
                 <span class="timer-num" id="seconds">39</span>
                 <span class="timer-label">Seconds</span>
@@ -472,9 +497,14 @@
         </div>
     </div>
 
-    <a href="store.html" class="cta-btn hero-load load-4">Unlock Premium Assets →</a>
+    <div class="hero-price hero-load load-4">
+        <span class="old-price">₹1,999</span>
+        <span class="new-price">Only <span>₹199</span></span>
+    </div>
+
+    <a href="store.html" class="cta-btn hero-load load-5">Unlock Premium Assets →</a>
     
-    <div class="hero-guarantee hero-load load-4">
+    <div class="hero-guarantee hero-load load-5">
         <span>🔒 Secure Checkout</span>
         <span>⚡ Instant Access</span>
         <span>♾️ Lifetime Updates</span>
@@ -562,6 +592,7 @@
     
     <div class="preview-grid">
         <div class="preview-card reveal delay-1">
+            <div class="badge" style="background: #ef4444; color: #fff;">🔥 MEGA BUNDLE</div>
             <img src="assets/stickman.PNG" class="preview-img" alt="Stickman Animations">
             <div class="preview-content">
                 <h3>2300+ Stickman Reels</h3>
@@ -574,6 +605,7 @@
         </div>
 
         <div class="preview-card reveal delay-2">
+            <div class="badge" style="background: #facc15; color: #000;">NEW ARRIVAL</div>
             <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral Shorts">
             <div class="preview-content">
                 <h3>250+ 3D Viral Shorts</h3>
@@ -648,7 +680,11 @@
 </footer>
 
 <div class="sticky-footer">
-    <a href="store.html" class="cta-btn">Access The Store 🚀</a>
+    <div class="sticky-price">
+        <span class="old">₹1,999</span>
+        <span class="new">Only ₹199</span>
+    </div>
+    <a href="store.html" class="cta-btn">Get Instant Access</a>
 </div>
 
 <div class="sales-popup" id="salesPopup">
@@ -667,11 +703,11 @@
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Trigger only once
+                observer.unobserve(entry.target); 
             }
         });
     }, {
-        rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits bottom
+        rootMargin: "0px 0px -50px 0px"
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
