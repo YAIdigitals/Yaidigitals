@@ -23,20 +23,22 @@
     <title>YAIdigitals | Ready-Made Viral Video Bundles to Earn Online</title>
     <meta name="description" content="Want to make money online? Get 4,000+ Faceless Viral Videos. Post them. Grow. Earn. Algorithm-friendly assets for explosive growth.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary: #22c55e;
             --primary-dark: #16a34a;
             --primary-glow: rgba(34, 197, 94, 0.4);
-            --bg-dark: #030303; 
-            --bg-card: #0a0a0a; 
+            --bg-dark: #050505; 
+            --bg-card: #121212; 
             --bg-glass: rgba(20, 20, 20, 0.6);
             --text-main: #ffffff;
-            --text-muted: #888888; 
-            --border: rgba(255, 255, 255, 0.08);
+            --text-muted: #a3a3a3; 
+            --border: #262626;
             --gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --danger: #ef4444;
+            --accent-yellow: #facc15;
         }
 
         * { box-sizing: border-box; }
@@ -57,15 +59,14 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- STICKY NAVBAR --- */
+        /* --- STICKY NAVBAR (IDENTICAL TO STORE.HTML) --- */
         .navbar-wrapper {
-            background: rgba(3, 3, 3, 0.95);
+            background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
         }
 
         .navbar {
@@ -75,12 +76,10 @@
             align-items: center;
         }
 
-        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px;}
+        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
         .logo span { color: var(--primary); }
         .nav-links { display: flex; gap: 30px; }
-        
-        /* Fixed Navbar Font Size & Active State */
-        .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 16px; }
+        .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; font-size: 16px; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
         /* --- NEON HERO SECTION --- */
@@ -330,8 +329,8 @@
             margin-bottom: 20px;
             display: block;
         }
-        .proof-caption { font-weight: 700; color: #fff; font-size: 1.1rem; display: block; font-family: 'Outfit', sans-serif;}
-        .proof-source { color: var(--primary); font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500; }
+        .proof-caption { font-weight: 700; color: #fff; font-size: 1.2rem; display: block; font-family: 'Outfit', sans-serif;}
+        .proof-source { color: var(--primary); font-size: 0.9rem; margin-top: 4px; display: block; font-weight: 500; }
 
         /* --- COLLECTIONS PREVIEW --- */
         .preview-grid {
@@ -442,8 +441,10 @@
 
         /* --- RESPONSIVE --- */
         @media(max-width: 768px) {
+            /* EXACT MATCH TO STORE.HTML MOBILE NAVBAR */
             .navbar { padding: 15px 0; }
-            .nav-links { gap: 15px; }
+            .nav-links { gap: 15px; font-size: 14px; }
+            
             .hero { padding: 80px 20px 40px 20px; }
             .hero::before { top: -50px; width: 500px; height: 500px; } 
             .hero h1 { font-size: 3.2rem; letter-spacing: -1px; }
@@ -560,17 +561,17 @@
     <div class="proof-grid">
         <div class="proof-card">
             <img src="assets/earnings1.PNG" alt="YouTube Earning Proof" class="proof-img">
-            <span class="proof-caption">₹1,32,000+ In 28 Days</span>
+            <span class="proof-caption">$18,730+ In 28 Days</span>
             <span class="proof-source">Faceless Theme Channel</span>
         </div>
         <div class="proof-card">
             <img src="assets/earnings2.PNG" alt="Instagram Earning Proof" class="proof-img">
-            <span class="proof-caption">Brand Deal: ₹45,000</span>
+            <span class="proof-caption">$16,843+ Last Month</span>
             <span class="proof-source">Cartoon Network Page</span>
         </div>
         <div class="proof-card">
             <img src="assets/earnings3.PNG" alt="Creator Studio Proof" class="proof-img">
-            <span class="proof-caption">₹18,500+ This Week</span>
+            <span class="proof-caption">$13,902+ Generated</span>
             <span class="proof-source">Stickman Animation Account</span>
         </div>
     </div>
