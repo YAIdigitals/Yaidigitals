@@ -23,7 +23,7 @@
     <title>YAIdigitals | Ready-Made Viral Video Bundles to Earn Online</title>
     <meta name="description" content="Want to make money online? Get 4,000+ Faceless Viral Videos. Post them. Grow. Earn. Algorithm-friendly assets for explosive growth.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -31,17 +31,17 @@
             --primary-dark: #16a34a;
             --primary-glow: rgba(34, 197, 94, 0.4);
             --bg-dark: #050505; 
-            --bg-card: #121212; 
+            --bg-card: #0a0a0a; 
             --bg-glass: rgba(20, 20, 20, 0.6);
             --text-main: #ffffff;
             --text-muted: #a3a3a3; 
-            --border: #262626;
+            --border: rgba(255, 255, 255, 0.08);
             --gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            --danger: #ef4444;
-            --accent-yellow: #facc15;
         }
 
         * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -59,27 +59,58 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- STICKY NAVBAR (IDENTICAL TO STORE.HTML) --- */
+        /* --- SCROLL REVEAL ANIMATIONS (PREMIUM FEEL) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* --- HERO ENTRY ANIMATIONS --- */
+        .hero-load {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .load-1 { animation-delay: 0.1s; }
+        .load-2 { animation-delay: 0.2s; }
+        .load-3 { animation-delay: 0.3s; }
+        .load-4 { animation-delay: 0.4s; }
+
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- STICKY NAVBAR --- */
         .navbar-wrapper {
-            background: rgba(5,5,5,0.95);
+            background: rgba(5, 5, 5, 0.85);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .navbar {
-            padding: 20px 0;
+            padding: 18px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px;}
         .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; font-size: 16px; }
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; font-size: 16px; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
         /* --- NEON HERO SECTION --- */
@@ -89,7 +120,7 @@
             position: relative;
         }
 
-        /* The Concentrated Neon Orb */
+        /* Breathing Neon Orb */
         .hero::before {
             content: '';
             position: absolute;
@@ -101,6 +132,12 @@
             background: radial-gradient(circle, rgba(34,197,94,0.18) 0%, rgba(0,0,0,0) 65%);
             z-index: -1;
             pointer-events: none;
+            animation: breathe 6s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
         }
 
         .trust-pill {
@@ -177,12 +214,7 @@
         }
 
         .timer-boxes { display: flex; justify-content: center; gap: 20px; }
-        .timer-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        .timer-box { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .timer-num {
             font-family: 'Outfit', sans-serif;
             font-size: 3rem;
@@ -200,7 +232,7 @@
             margin-top: 8px;
         }
 
-        /* --- RESTORED ROUNDED BUTTONS (PULSE HOVER) --- */
+        /* --- ROUNDED BUTTONS --- */
         .cta-btn {
             background: var(--gradient);
             color: #000;
@@ -236,7 +268,7 @@
             margin-top: 25px;
         }
 
-        /* --- STATS BAR (80,000+) --- */
+        /* --- STATS BAR --- */
         .stats-section {
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
@@ -295,101 +327,53 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
         .pain-icon { 
-            font-size: 1.2rem; 
-            color: #000; 
-            background: var(--primary);
-            width: 35px; height: 35px; 
-            border-radius: 50%; 
+            font-size: 1.2rem; color: #000; background: var(--primary);
+            width: 35px; height: 35px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            font-weight: bold;
+            flex-shrink: 0; font-weight: bold;
         }
 
         /* --- EARNING PROOF GRID --- */
-        .proof-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
+        .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .proof-card {
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            transition: 0.3s;
+            padding: 20px; border-radius: 20px; text-align: center; transition: 0.3s;
         }
         .proof-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); }
-        .proof-img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            border: 1px solid #222;
-            margin-bottom: 20px;
-            display: block;
-        }
+        .proof-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid #222; margin-bottom: 20px; display: block; }
         .proof-caption { font-weight: 700; color: #fff; font-size: 1.2rem; display: block; font-family: 'Outfit', sans-serif;}
         .proof-source { color: var(--primary); font-size: 0.9rem; margin-top: 4px; display: block; font-weight: 500; }
 
         /* --- COLLECTIONS PREVIEW --- */
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-        }
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         .preview-card {
-            background: #0a0a0a;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            text-align: left;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            background: #0a0a0a; border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--border); text-align: left; transition: all 0.3s ease;
+            display: flex; flex-direction: column;
         }
         .preview-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); transform: translateY(-5px); }
         .preview-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
         .preview-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .preview-content h3 { margin: 0 0 10px 0; font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; }
         .preview-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; flex-grow: 1; }
-        
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 15px; }
         .card-price { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; }
         .text-link { color: var(--primary); font-weight: 600; font-size: 0.95rem; }
 
         /* --- 3 SIMPLE STEPS --- */
-        .steps-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 650px;
-            margin: 0 auto;
-        }
+        .steps-grid { display: flex; flex-direction: column; gap: 20px; max-width: 650px; margin: 0 auto; }
         .step-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-            display: flex;
-            gap: 25px;
-            align-items: flex-start;
+            background: var(--bg-glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); padding: 30px; border-radius: 20px;
+            display: flex; gap: 25px; align-items: flex-start;
         }
         .step-number-box {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            flex-shrink: 0;
+            background: rgba(34, 197, 94, 0.1); color: var(--primary);
+            border: 1px solid var(--primary); width: 55px; height: 55px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; flex-shrink: 0;
             box-shadow: 0 0 15px var(--primary-glow);
         }
         .step-content h3 { margin: 0 0 8px 0; font-family: 'Outfit', sans-serif; font-size: 1.4rem; color: #fff; }
@@ -398,15 +382,10 @@
         /* --- LIVE SALES POPUP --- */
         .sales-popup {
             position: fixed; bottom: 25px; left: 25px;
-            background: rgba(10, 10, 10, 0.98);
-            border: 1px solid #333;
-            padding: 15px 20px;
-            border-radius: 12px;
-            display: flex; align-items: center; gap: 15px;
+            background: rgba(10, 10, 10, 0.98); border: 1px solid #333;
+            padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            transform: translateY(150%); opacity: 0;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 9999;
+            transform: translateY(150%); opacity: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
         }
         .sales-popup.show { transform: translateY(0); opacity: 1; }
         .popup-icon {
@@ -424,12 +403,9 @@
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: rgba(5, 5, 5, 0.95); border-top: 1px solid var(--border);
             padding: 15px 20px; display: flex; justify-content: center; align-items: center;
-            z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.8); backdrop-filter: blur(10px);
         }
-        .sticky-footer .cta-btn { 
-            padding: 14px 40px; font-size: 1.1rem; max-width: 500px; margin: 0;
-        }
+        .sticky-footer .cta-btn { padding: 14px 40px; font-size: 1.1rem; max-width: 500px; margin: 0; }
 
         /* --- FOOTER --- */
         footer { margin-top: 100px; padding: 50px 20px 120px 20px; text-align: center; border-top: 1px solid #111; color: #555; font-size: 0.9rem;}
@@ -441,7 +417,6 @@
 
         /* --- RESPONSIVE --- */
         @media(max-width: 768px) {
-            /* EXACT MATCH TO STORE.HTML MOBILE NAVBAR */
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
             
@@ -477,12 +452,12 @@
 </div>
 
 <div class="hero">
-    <div class="trust-pill">🔥 <span>Trending Now:</span> Join 80,000+ Satisfied Customers</div>
+    <div class="trust-pill hero-load load-1">🔥 <span>Trending Now:</span> Join 80,000+ Satisfied Customers</div>
     
-    <h1>The Secret To Automated<br><span>Social Income.</span></h1>
-    <p>Unlock 4,000+ premium, ready-made viral videos. Simply download, post, and watch your channels grow—zero editing required.</p>
+    <h1 class="hero-load load-2">The Secret To Automated<br><span>Social Income.</span></h1>
+    <p class="hero-load load-3">Unlock 4,000+ premium, ready-made viral videos. Simply download, post, and watch your channels grow—zero editing required.</p>
 
-    <div class="timer-container">
+    <div class="timer-container hero-load load-4">
         <div class="timer-header"><span></span> Limited Time Pricing Ends In</div>
         <div class="timer-boxes">
             <div class="timer-box">
@@ -497,30 +472,30 @@
         </div>
     </div>
 
-    <a href="store.html" class="cta-btn">Unlock Premium Assets →</a>
+    <a href="store.html" class="cta-btn hero-load load-4">Unlock Premium Assets →</a>
     
-    <div class="hero-guarantee">
+    <div class="hero-guarantee hero-load load-4">
         <span>🔒 Secure Checkout</span>
         <span>⚡ Instant Access</span>
         <span>♾️ Lifetime Updates</span>
     </div>
 </div>
 
-<div class="stats-section">
+<div class="stats-section reveal">
     <div class="container stats-grid">
-        <div class="stat-item">
+        <div class="stat-item reveal delay-1">
             <h3>80,000<span>+</span></h3>
             <p>Satisfied Customers</p>
         </div>
-        <div class="stat-item">
+        <div class="stat-item reveal delay-2">
             <h3>4,000<span>+</span></h3>
             <p>Ready Assets</p>
         </div>
-        <div class="stat-item">
+        <div class="stat-item reveal delay-3">
             <h3>4.9<span>/5</span></h3>
             <p>Creator Rating</p>
         </div>
-        <div class="stat-item">
+        <div class="stat-item reveal delay-4">
             <h3>100M<span>+</span></h3>
             <p>Views Generated</p>
         </div>
@@ -529,65 +504,64 @@
 
 <div class="container">
     
-    <div class="section-header">
+    <div class="section-header reveal">
         <h2>Stop Wasting Time.<br>Start <span class="highlight-text">Scaling.</span></h2>
         <p>If you are struggling with any of these, this platform is for you.</p>
     </div>
     
     <div class="pain-points-grid">
-        <div class="pain-point-card">
+        <div class="pain-point-card reveal delay-1">
             <div class="pain-icon">✓</div> 
             I want to build an audience, but I have no idea what videos to post.
         </div>
-        <div class="pain-point-card">
+        <div class="pain-point-card reveal delay-2">
             <div class="pain-icon">✓</div> 
             I want to monetize social media, but I refuse to show my face on camera.
         </div>
-        <div class="pain-point-card">
+        <div class="pain-point-card reveal delay-3">
             <div class="pain-icon">✓</div> 
             I have a full-time job and don't have hours every day to edit videos.
         </div>
-        <div class="pain-point-card">
+        <div class="pain-point-card reveal delay-4">
             <div class="pain-icon">✓</div> 
             I post content regularly, but I am stuck at zero views and engagement.
         </div>
     </div>
 
-    <div class="section-header anchor" id="proof" style="margin-top: 120px;">
+    <div class="section-header anchor reveal" id="proof" style="margin-top: 120px;">
         <h2>My YouTube Results After Posting This <span class="highlight-text">Premium Content</span> 💰</h2>
         <p>I don't just sell these bundles—I actively use them. Here is the automated income generated by my own faceless theme channels.</p>
     </div>
 
     <div class="proof-grid">
-        <div class="proof-card">
+        <div class="proof-card reveal delay-1">
             <img src="assets/earnings1.PNG" alt="YouTube Earning Proof" class="proof-img">
             <span class="proof-caption">$18,730+ In 28 Days</span>
             <span class="proof-source">Faceless Theme Channel</span>
         </div>
-        <div class="proof-card">
+        <div class="proof-card reveal delay-2">
             <img src="assets/earnings2.PNG" alt="Instagram Earning Proof" class="proof-img">
             <span class="proof-caption">$16,843+ Last Month</span>
             <span class="proof-source">Cartoon Network Page</span>
         </div>
-        <div class="proof-card">
+        <div class="proof-card reveal delay-3">
             <img src="assets/earnings3.PNG" alt="Creator Studio Proof" class="proof-img">
             <span class="proof-caption">$13,902+ Generated</span>
             <span class="proof-source">Stickman Animation Account</span>
         </div>
     </div>
     
-    <div style="text-align: center; margin-top: 50px;">
+    <div style="text-align: center; margin-top: 50px;" class="reveal">
         <a href="store.html" class="cta-btn" style="padding: 16px 40px; font-size: 1.1rem; max-width: 350px;">I Want These Results</a>
     </div>
 
-    <div class="section-header" style="margin-top: 120px;">
+    <div class="section-header reveal" style="margin-top: 120px;">
         <h2>Premium <span class="highlight-text">Collections</span></h2>
         <p>Select the niche that fits your vision and start posting today.</p>
     </div>
     
     <div class="preview-grid">
-        
-        <div class="preview-card">
+        <div class="preview-card reveal delay-1">
             <img src="assets/stickman.PNG" class="preview-img" alt="Stickman Animations">
             <div class="preview-content">
                 <h3>2300+ Stickman Reels</h3>
@@ -599,7 +573,7 @@
             </div>
         </div>
 
-        <div class="preview-card">
+        <div class="preview-card reveal delay-2">
             <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral Shorts">
             <div class="preview-content">
                 <h3>250+ 3D Viral Shorts</h3>
@@ -611,7 +585,7 @@
             </div>
         </div>
 
-        <div class="preview-card">
+        <div class="preview-card reveal delay-3">
             <img src="assets/Hulk500.PNG" class="preview-img" alt="Hulk AI Reels">
             <div class="preview-content">
                 <h3>500+ AI Hulk Edits</h3>
@@ -623,7 +597,7 @@
             </div>
         </div>
 
-        <div class="preview-card">
+        <div class="preview-card reveal delay-4">
             <img src="assets/500-movie-explain.PNG" class="preview-img" alt="Movie Explained">
             <div class="preview-content">
                 <h3>500+ Movie Explained</h3>
@@ -634,15 +608,14 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <div class="section-header" style="margin-top: 120px;">
+    <div class="section-header reveal" style="margin-top: 120px;">
         <h2>The Framework For Success.<br><span class="highlight-text">3 Simple Steps.</span></h2>
     </div>
     
     <div class="steps-grid">
-        <div class="step-card">
+        <div class="step-card reveal delay-1">
             <div class="step-number-box">1</div>
             <div class="step-content">
                 <h3>Download The Assets</h3>
@@ -650,7 +623,7 @@
             </div>
         </div>
 
-        <div class="step-card">
+        <div class="step-card reveal delay-2">
             <div class="step-number-box">2</div>
             <div class="step-content">
                 <h3>Post Consistently</h3>
@@ -658,7 +631,7 @@
             </div>
         </div>
 
-        <div class="step-card">
+        <div class="step-card reveal delay-3">
             <div class="step-number-box">3</div>
             <div class="step-content">
                 <h3>Grow Your Channel</h3>
@@ -688,10 +661,24 @@
 </div>
 
 <script>
-    // 1. FOMO COUNTDOWN TIMER
+    // 1. SCROLL REVEAL ANIMATION OBSERVER
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Trigger only once
+            }
+        });
+    }, {
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits bottom
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // 2. FOMO COUNTDOWN TIMER
     function startTimer() {
         let totalSeconds = (11 * 60) + 39; 
-        
         const minEl = document.getElementById('minutes');
         const secEl = document.getElementById('seconds');
 
@@ -699,19 +686,17 @@
             if(totalSeconds <= 0) {
                 totalSeconds = (11 * 60) + 39; 
             }
-            
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
 
             minEl.textContent = minutes.toString().padStart(2, '0');
             secEl.textContent = seconds.toString().padStart(2, '0');
-            
             totalSeconds--;
         }, 1000);
     }
     startTimer();
 
-    // 2. LIVE SALES POPUP
+    // 3. LIVE SALES POPUP
     const purchasers = [
         { name: "Siddharth (Delhi)", item: "purchased Mega Stickman Bundle" },
         { name: "Neha K. (Bangalore)", item: "purchased 3D Shorts Bundle" },
@@ -729,7 +714,7 @@
 
     function showRandomSale() {
         const randomPerson = purchasers[Math.floor(Math.random() * purchasers.length)];
-        const randomMin = Math.floor(Math.random() * 5) + 1; // 1-5 mins ago
+        const randomMin = Math.floor(Math.random() * 5) + 1;
 
         popupIcon.textContent = randomPerson.name.charAt(0);
         popupName.textContent = randomPerson.name;
@@ -740,12 +725,12 @@
 
         setTimeout(() => {
             popup.classList.remove('show');
-        }, 4000); // Hide after 4 seconds
+        }, 4000);
     }
 
     setTimeout(() => {
         showRandomSale();
-        setInterval(showRandomSale, 15000); // Popup every 15 seconds
+        setInterval(showRandomSale, 15000);
     }, 3000);
 </script>
 
