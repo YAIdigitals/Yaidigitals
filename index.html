@@ -30,13 +30,14 @@
         :root {
             --primary: #22c55e;
             --primary-dark: #16a34a;
-            --primary-glow: rgba(34, 197, 94, 0.3);
+            --primary-glow: rgba(34, 197, 94, 0.4);
             --bg-dark: #050505;
             --bg-card: #121212;
             --text-main: #ffffff;
             --text-muted: #a3a3a3;
             --border: #262626;
             --danger: #ef4444;
+            --accent-yellow: #facc15;
         }
 
         * { box-sizing: border-box; }
@@ -54,8 +55,10 @@
         /* --- LAYOUT UTILITIES --- */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* Offset for anchor links so they don't hide under the sticky navbar */
+        .anchor { scroll-margin-top: 100px; }
 
-        /* --- NAVBAR (IDENTICAL TO STORE) --- */
+        /* --- NAVBAR --- */
         .navbar-wrapper {
             background: rgba(5,5,5,0.95);
             border-bottom: 1px solid var(--border);
@@ -78,7 +81,7 @@
         .nav-links a { color: var(--text-muted); font-weight: 500; transition: 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* --- HERO SECTION (AGGRESSIVE) --- */
+        /* --- HERO SECTION --- */
         .hero {
             padding: 80px 20px 60px 20px;
             text-align: center;
@@ -110,9 +113,7 @@
         }
 
         /* --- COUNTDOWN TIMER --- */
-        .timer-container {
-            margin: 40px 0;
-        }
+        .timer-container { margin: 40px 0; }
         .timer-header {
             color: var(--danger);
             font-weight: 700;
@@ -127,11 +128,7 @@
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .timer-boxes {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+        .timer-boxes { display: flex; justify-content: center; gap: 15px; }
         .timer-box {
             background: #111;
             border: 1px solid #333;
@@ -159,7 +156,7 @@
             margin-top: 5px;
         }
 
-        /* --- MAIN CTA BUTTON --- */
+        /* --- CTA BUTTONS --- */
         .cta-btn {
             background: var(--primary);
             color: #000;
@@ -182,21 +179,37 @@
         .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(34, 197, 94, 0.6); }
         .price-increase { color: var(--danger); font-size: 0.9rem; font-weight: 600; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-        /* --- PAIN POINTS (DOES THIS SOUND LIKE YOU?) --- */
-        .section-title {
-            text-align: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            margin: 80px 0 20px 0;
-            font-weight: 800;
-        }
-        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 40px; }
+        /* --- SECTIONS TEXT --- */
+        .section-header { text-align: center; margin: 80px 0 40px 0; }
+        .section-header h2 { font-family: 'Outfit', sans-serif; font-size: 2.8rem; margin: 0 0 10px 0; font-weight: 800; line-height: 1.1;}
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
+        /* --- BENEFITS & FEATURES GRID --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px auto;
+        }
+        .feature-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .feature-box:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .feature-icon { font-size: 30px; margin-bottom: 15px; }
+        .feature-box h3 { margin: 10px 0; font-family: 'Outfit', sans-serif; }
+        .feature-box p { font-size: 0.9rem; color: #888; }
+
+        /* --- PAIN POINTS --- */
         .pain-points-grid {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
         }
         .pain-point-card {
@@ -213,6 +226,66 @@
         }
         .pain-point-card:hover { border-color: var(--primary); background: #151515; }
         .pain-icon { font-size: 1.5rem; }
+
+        /* --- COLLECTIONS PREVIEW --- */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .preview-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            text-align: left;
+            transition: 0.3s;
+            position: relative;
+        }
+        .preview-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .preview-img { width: 100%; height: 220px; object-fit: cover; opacity: 0.85; }
+        .preview-content { padding: 25px; }
+        .preview-content h3 { margin: 0 0 10px 0; font-family: 'Outfit', sans-serif; }
+        .preview-content p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        .text-link { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
+
+        /* --- NEW EARNING PROOF GRID --- */
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .proof-card {
+            background: #080808;
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .proof-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .proof-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .proof-caption {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.95rem;
+            display: block;
+            font-family: 'Outfit', sans-serif;
+        }
+        .proof-source {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 3px;
+            display: block;
+        }
 
         /* --- 3 SIMPLE STEPS --- */
         .steps-grid {
@@ -262,7 +335,27 @@
         .step-card h3 { font-family: 'Outfit', sans-serif; margin: 0 0 10px 0; font-size: 1.5rem; }
         .step-card p { color: var(--text-muted); margin: 0; font-size: 0.95rem; line-height: 1.6; }
 
-        /* --- LIVE SALES POPUP (THE CRAZY FEATURE) --- */
+        /* --- TESTIMONIALS --- */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .review-card {
+            background: #111;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .stars { color: var(--accent-yellow); margin-bottom: 10px; }
+        .review-text { font-size: 0.95rem; line-height: 1.6; color: #ddd; font-style: italic; }
+        .reviewer { margin-top: 15px; display: flex; align-items: center; gap: 10px; }
+        .reviewer-avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; }
+        .reviewer-info h4 { margin: 0; font-size: 0.9rem; }
+        .reviewer-info span { font-size: 0.8rem; color: var(--primary); }
+
+        /* --- LIVE SALES POPUP --- */
         .sales-popup {
             position: fixed;
             bottom: 20px;
@@ -281,10 +374,7 @@
             z-index: 9999;
             backdrop-filter: blur(10px);
         }
-        .sales-popup.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .sales-popup.show { transform: translateY(0); opacity: 1; }
         .popup-icon {
             background: rgba(34, 197, 94, 0.2);
             color: var(--primary);
@@ -318,11 +408,7 @@
             z-index: 1000;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
         }
-        .sticky-footer .cta-btn {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            max-width: 600px;
-        }
+        .sticky-footer .cta-btn { padding: 12px 30px; font-size: 1.1rem; max-width: 600px; }
         .sticky-price-strip {
             display: flex;
             align-items: center;
@@ -336,11 +422,14 @@
         /* --- FOOTER --- */
         footer { margin-top: 80px; padding: 40px 20px 100px 20px; text-align: center; border-top: 1px solid var(--border); color: #666; }
 
+        /* --- RESPONSIVE --- */
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
             .hero h1 { font-size: 2.8rem; }
-            .sales-popup { bottom: 100px; left: 10px; right: 10px; } /* Above sticky footer */
+            .section-header h2 { font-size: 2.2rem; }
+            .stats-grid { flex-direction: column; gap: 30px; }
+            .sales-popup { bottom: 100px; left: 10px; right: 10px; }
         }
     </style>
 </head>
@@ -360,6 +449,8 @@
 </div>
 
 <div class="hero">
+    <div class="trust-pill">✅ Trusted by 15,000+ Creators</div>
+    
     <h1>Want to Make Money Online?<br><span>We Made It Super Easy.</span></h1>
     <p>Get 4,000+ Ready-Made Viral Videos. Post Them. Grow Your Channel. Earn Money — Without Showing Your Face.</p>
     <div class="hero-subtext">No camera. No editing. No experience needed. Everything is done for you.</div>
@@ -378,7 +469,7 @@
         </div>
     </div>
 
-    <a href="store.html" class="cta-btn">👉 Get Started Now</a>
+    <a href="store.html" class="cta-btn">👉 Explore Premium Assets 💎</a>
     <div class="price-increase">⚡ Prices increase by ₹4,000 when timer hits zero.</div>
     
     <div style="margin-top: 25px; color: #555; font-size: 0.85rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
@@ -388,10 +479,123 @@
     </div>
 </div>
 
-<div class="container">
+<div class="stats-section">
+    <div class="container stats-grid">
+        <div class="stat-item">
+            <h3>15,000<span>+</span></h3>
+            <p>Happy Creators</p>
+        </div>
+        <div class="stat-item">
+            <h3>4,000<span>+</span></h3>
+            <p>Premium Assets</p>
+        </div>
+        <div class="stat-item">
+            <h3>4.9<span>/5</span></h3>
+            <p>Average Rating</p>
+        </div>
+        <div class="stat-item">
+            <h3>100M<span>+</span></h3>
+            <p>Views Generated</p>
+        </div>
+    </div>
+</div>
 
-    <h2 class="section-title">Does This Sound Like You?</h2>
-    <p class="section-subtitle">Tap any point that describes you right now 👇</p>
+<div class="container">
+    
+    <div class="features">
+        <div class="feature-box">
+            <div class="feature-icon">🚀</div>
+            <h3>Algorithm Friendly</h3>
+            <p>Content designed specifically to trigger retention and engagement on Reels & Shorts.</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">💎</div>
+            <h3>4K Quality</h3>
+            <p>Crystal clear vertical videos. No blurry, low-quality reposts here.</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">♾️</div>
+            <h3>Lifetime Access</h3>
+            <p>Pay once, keep forever. Download the files to your device instantly.</p>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Premium Collections</h2>
+        <p>Choose your niche and start dominating.</p>
+    </div>
+    
+    <div class="preview-grid">
+        
+        <div class="preview-card">
+            <div class="badge" style="position:absolute; top:15px; left:15px; background:#ef4444; color:#fff; padding:5px 10px; border-radius:5px; font-weight:bold; font-size:0.8rem;">🔥 MEGA BUNDLE</div>
+            <img src="assets/stickman.PNG" class="preview-img" alt="Stickman Viral Bundle">
+            <div class="preview-content">
+                <h3>2300+ Stickman Reels</h3>
+                <p>Scale your faceless page fast! Premium, unbranded stickman animations guaranteed to hook viewers.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <div class="badge" style="position:absolute; top:15px; left:15px; background:#facc15; color:#000; padding:5px 10px; border-radius:5px; font-weight:bold; font-size:0.8rem;">NEW</div>
+            <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral">
+            <div class="preview-content">
+                <h3>3D Viral Shorts</h3>
+                <p>Oddly satisfying 3D loops. The easiest way to get views without showing your face.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <img src="assets/Hulk500.PNG" class="preview-img" alt="Hulk AI">
+            <div class="preview-content">
+                <h3>AI Hulk Transformation</h3>
+                <p>High-energy motivation edits. Proven to boost engagement on male-focused pages.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <img src="assets/500-movie-explain.PNG" class="preview-img" alt="Movies">
+            <div class="preview-content">
+                <h3>Movie Explained</h3>
+                <p>The "series" format that keeps people coming back for Part 2.</p>
+                <a href="store.html" class="text-link">View Bundle →</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section-header anchor" id="proof" style="margin-top: 100px;">
+        <div class="badge" style="background: rgba(34, 197, 94, 0.1); color: var(--primary); padding: 5px 12px; border-radius: 50px; font-weight: 600; font-size: 0.8rem; display: inline-block; margin-bottom: 10px; border: 1px solid var(--primary);">SOCIAL PROOF</div>
+        <h2>See The Results: This Content literally 'Prints Money' 💰</h2>
+        <p>These are real results from creators using this exact style of faceless content. *Imagine waking up to these numbers.*</p>
+    </div>
+
+    <div class="proof-grid">
+        <div class="proof-card">
+            <img src="assets/earnings1.PNG" alt="YouTube Earning Proof" class="proof-img">
+            <span class="proof-caption">₹1,32,000+ In 28 Days</span>
+            <span class="proof-source">Faceless Motivation Channel (Hulk Assets)</span>
+        </div>
+        <div class="proof-card">
+            <img src="assets/earnings2.PNG" alt="Instagram Earning Proof" class="proof-img">
+            <span class="proof-caption">Brand Deal: ₹45,000</span>
+            <span class="proof-source">Cartoon Theme Page (25k Followers)</span>
+        </div>
+        <div class="proof-card">
+            <img src="assets/earnings3.PNG" alt="YouTube Studio Proof" class="proof-img">
+            <span class="proof-caption">₹18,500+ This Week</span>
+            <span class="proof-source">Stickman Animation Channel (New)</span>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="store.html" class="cta-btn" style="padding: 15px 30px; font-size: 1.1rem; max-width: 350px;">I Want These Results Too</a>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 120px;">Does This Sound Like You?</h2>
     
     <div class="pain-points-grid">
         <div class="pain-point-card">
@@ -437,41 +641,47 @@
         </div>
     </div>
 
-    <h2 class="section-title" style="margin-top: 100px;">Why YAIdigitals Works For Normal People Like You:</h2>
-    
-    <div class="pain-points-grid">
-        <div class="pain-point-card">
-            <span class="pain-icon">🟢</span> 
-            <div>
-                <strong style="color:#fff; display:block; margin-bottom: 3px;">No Tech Skills Needed</strong>
-                <span style="font-size: 0.9rem; color: #888;">If you can upload a photo to Instagram, you can use this.</span>
-            </div>
-        </div>
-        <div class="pain-point-card">
-            <span class="pain-icon">📅</span> 
-            <div>
-                <strong style="color:#fff; display:block; margin-bottom: 3px;">Never Run Out of Content</strong>
-                <span style="font-size: 0.9rem; color: #888;">4,000+ videos = you can post 3 times a day for years.</span>
-            </div>
-        </div>
-        <div class="pain-point-card">
-            <span class="pain-icon">🎭</span> 
-            <div>
-                <strong style="color:#fff; display:block; margin-bottom: 3px;">100% Faceless</strong>
-                <span style="font-size: 0.9rem; color: #888;">No face, no voice, no camera — ever.</span>
-            </div>
-        </div>
-        <div class="pain-point-card">
-            <span class="pain-icon">⚡</span> 
-            <div>
-                <strong style="color:#fff; display:block; margin-bottom: 3px;">Start In Minutes</strong>
-                <span style="font-size: 0.9rem; color: #888;">Instant download. Start posting and getting views today.</span>
-            </div>
-        </div>
+    <div class="section-header">
+        <h2>What Creators Are Saying</h2>
+        <p>Join the community of successful theme page owners.</p>
     </div>
-    
-    <div style="text-align: center; margin-top: 60px;">
-        <a href="store.html" class="cta-btn" style="background: transparent; border: 2px solid var(--primary); color: #fff; box-shadow: none;">View All Bundles in Store →</a>
+
+    <div class="testimonials">
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Honestly, I was skeptical. But the Hulk reels went viral on my second day. Gained 1.2k followers in a week. Worth every rupee."</div>
+            <div class="reviewer">
+                <div class="reviewer-avatar">R</div>
+                <div class="reviewer-info">
+                    <h4>Rahul Verma</h4>
+                    <span>Instagram Creator</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"The Stickman and 3D shorts quality is insane. I use them as background videos for my facts channel. Saved me hours of searching."</div>
+            <div class="reviewer">
+                <div class="reviewer-avatar">S</div>
+                <div class="reviewer-info">
+                    <h4>Sarah K.</h4>
+                    <span>YouTuber (Shorts)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Instant download worked perfectly. The files are organized and actually high quality. Will buy the Movie bundle next."</div>
+            <div class="reviewer">
+                <div class="reviewer-avatar">A</div>
+                <div class="reviewer-info">
+                    <h4>Amit Singh</h4>
+                    <span>Theme Page Owner</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -501,7 +711,6 @@
 <script>
     // 1. COUNTDOWN TIMER SCRIPT
     function startTimer() {
-        // Start with 11 mins 39 secs
         let totalSeconds = (11 * 60) + 39; 
         
         const minEl = document.getElementById('minutes');
@@ -509,7 +718,6 @@
 
         setInterval(() => {
             if(totalSeconds <= 0) {
-                // Reset timer for FOMO loop
                 totalSeconds = (11 * 60) + 39; 
             }
             
@@ -541,28 +749,21 @@
     const popupTime = document.getElementById('popupTime');
 
     function showRandomSale() {
-        // Pick random person
         const randomPerson = purchasers[Math.floor(Math.random() * purchasers.length)];
-        
-        // Pick random time (1 to 12 mins ago)
         const randomMin = Math.floor(Math.random() * 12) + 1;
 
-        // Update DOM
         popupIcon.textContent = randomPerson.name.charAt(0);
         popupName.textContent = randomPerson.name;
         popupItem.textContent = randomPerson.item;
         popupTime.textContent = randomMin + " minutes ago";
 
-        // Show popup
         popup.classList.add('show');
 
-        // Hide after 4 seconds
         setTimeout(() => {
             popup.classList.remove('show');
         }, 4000);
     }
 
-    // Start popping up after 3 seconds, then every 12 seconds
     setTimeout(() => {
         showRandomSale();
         setInterval(showRandomSale, 12000);
