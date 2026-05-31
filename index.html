@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 1. MICROSOFT CLARITY (Tracking) -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -9,6 +10,7 @@
         })(window, document, "clarity", "script", "vhgdi3tuje");
     </script>
 
+    <!-- 2. GOOGLE ANALYTICS (Live Traffic) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T10RJDBXLH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,9 +22,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- SEO TAGS -->
     <title>YAIdigitals | Ready-Made Viral Video Bundles to Earn Online</title>
     <meta name="description" content="Want to make money online? Get 4,000+ Faceless Viral Videos. Post them. Grow. Earn. Algorithm-friendly assets for explosive growth.">
     
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -179,7 +183,7 @@
 
         /* --- PREMIUM GLOWING TIMER --- */
         .timer-container { 
-            margin: 30px auto 25px auto; /* Reduced bottom margin */
+            margin: 30px auto 25px auto; 
             max-width: 350px;
             background: var(--bg-glass);
             border: 1px solid var(--border);
@@ -239,7 +243,7 @@
             margin-top: 8px;
         }
 
-        /* --- HERO PRICING (NEW) --- */
+        /* --- HERO PRICING --- */
         .hero-price {
             display: flex;
             align-items: center;
@@ -353,11 +357,59 @@
         .proof-caption { font-weight: 700; color: #fff; font-size: 1.2rem; display: block; font-family: 'Outfit', sans-serif;}
         .proof-source { color: var(--primary); font-size: 0.9rem; margin-top: 4px; display: block; font-weight: 500; }
 
-        /* --- COLLECTIONS PREVIEW --- */
-        .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        /* --- CAROUSEL FORMAT FOR HOMEPAGE --- */
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .product-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            gap: 25px;
+            padding: 20px 5px 40px 5px;
+            scrollbar-width: none; 
+        }
+        .product-carousel::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .carousel-btn {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            z-index: 10;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: scale(1.1);
+        }
+        .carousel-btn.left { left: -25px; }
+        .carousel-btn.right { right: -25px; }
+
+        /* Modified preview-card for carousel sliding */
         .preview-card {
             background: #0a0a0a; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); 
             text-align: left; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative;
+            min-width: 320px; max-width: 320px; flex-shrink: 0; scroll-snap-align: start;
         }
         .preview-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15); transform: translateY(-5px); }
         .preview-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
@@ -393,7 +445,7 @@
 
         /* --- LIVE SALES POPUP --- */
         .sales-popup {
-            position: fixed; bottom: 85px; left: 25px; /* Moved slightly up to avoid footer overlap */
+            position: fixed; bottom: 85px; left: 25px; 
             background: rgba(10, 10, 10, 0.98); border: 1px solid #333;
             padding: 15px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8);
@@ -434,7 +486,6 @@
         @media(max-width: 768px) {
             .navbar { padding: 15px 0; }
             .nav-links { gap: 15px; font-size: 14px; }
-            
             .hero { padding: 80px 20px 40px 20px; }
             .hero::before { top: -50px; width: 500px; height: 500px; } 
             .hero h1 { font-size: 3.2rem; letter-spacing: -1px; }
@@ -453,6 +504,9 @@
             .pain-point-card { padding: 18px 20px; font-size: 0.95rem; gap: 15px;}
             .step-card { flex-direction: column; align-items: center; text-align: center; padding: 25px; gap: 15px;}
             
+            .carousel-btn { display: none; } /* Hide navigation arrows on mobile, rely on touch swipe */
+            .preview-card { min-width: 290px; max-width: 290px; }
+
             .sales-popup { bottom: 90px; left: 15px; right: 15px; padding: 12px;}
             .hero-guarantee { flex-direction: column; gap: 10px; align-items: center; }
             
@@ -463,6 +517,7 @@
 </head>
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar-wrapper">
     <div class="nav-container">
         <nav class="navbar">
@@ -476,12 +531,14 @@
     </div>
 </div>
 
+<!-- HERO SECTION -->
 <div class="hero">
     <div class="trust-pill hero-load load-1">🔥 <span>Trending Now:</span> Join 80,000+ Satisfied Customers</div>
     
     <h1 class="hero-load load-2">The Secret To Automated<br><span>Social Income.</span></h1>
     <p class="hero-load load-3">Unlock 4,000+ premium, ready-made viral videos. Simply download, post, and watch your channels grow—zero editing required.</p>
 
+    <!-- PREMIUM GLASS HUD TIMER -->
     <div class="timer-container hero-load load-4">
         <div class="timer-header"><span></span> Limited Time Pricing Ends In</div>
         <div class="timer-boxes">
@@ -497,11 +554,13 @@
         </div>
     </div>
 
+    <!-- HERO PRICING -->
     <div class="hero-price hero-load load-4">
-        <span class="old-price">₹4,999</span>
-        <span class="new-price">Only <span>₹99</span></span>
+        <span class="old-price">₹1,999</span>
+        <span class="new-price">Only <span>₹199</span></span>
     </div>
 
+    <!-- MAIN CTA -->
     <a href="store.html" class="cta-btn hero-load load-5">Unlock Premium Assets →</a>
     
     <div class="hero-guarantee hero-load load-5">
@@ -511,6 +570,7 @@
     </div>
 </div>
 
+<!-- STATS BAR -->
 <div class="stats-section reveal">
     <div class="container stats-grid">
         <div class="stat-item reveal delay-1">
@@ -534,6 +594,7 @@
 
 <div class="container">
     
+    <!-- PAIN POINTS -->
     <div class="section-header reveal">
         <h2>Stop Wasting Time.<br>Start <span class="highlight-text">Scaling.</span></h2>
         <p>If you are struggling with any of these, this platform is for you.</p>
@@ -558,6 +619,7 @@
         </div>
     </div>
 
+    <!-- REAL RESULTS PROOF -->
     <div class="section-header anchor reveal" id="proof" style="margin-top: 120px;">
         <h2>My YouTube Results After Posting This <span class="highlight-text">Premium Content</span> 💰</h2>
         <p>I don't just sell these bundles—I actively use them. Here is the automated income generated by my own faceless theme channels.</p>
@@ -576,8 +638,8 @@
         </div>
         <div class="proof-card reveal delay-3">
             <img src="assets/earnings3.PNG" alt="Creator Studio Proof" class="proof-img">
-            <span class="proof-caption">$13,902+ Generated</span>
-            <span class="proof-source">Stickman Animation Account</span>
+            <span class="proof-caption">$9,378+ Generated</span>
+            <span class="proof-source">Skeleton Animation Account</span>
         </div>
     </div>
     
@@ -585,63 +647,91 @@
         <a href="store.html" class="cta-btn" style="padding: 16px 40px; font-size: 1.1rem; max-width: 350px;">I Want These Results</a>
     </div>
 
+    <!-- COLLECTIONS PREVIEW (NOW WITH CAROUSEL FORMAT) -->
     <div class="section-header reveal" style="margin-top: 120px;">
         <h2>Premium <span class="highlight-text">Collections</span></h2>
         <p>Select the niche that fits your vision and start posting today.</p>
     </div>
     
-    <div class="preview-grid">
-        <div class="preview-card reveal delay-1">
-            <div class="badge" style="background: #ef4444; color: #fff;">🔥 MEGA BUNDLE</div>
-            <img src="assets/stickman.PNG" class="preview-img" alt="Stickman Animations">
-            <div class="preview-content">
-                <h3>2300+ Stickman Reels</h3>
-                <p>Faceless viral animations designed for maximum retention and easy storytelling overlays.</p>
-                <div class="card-footer">
-                    <span class="card-price">₹99</span>
-                    <a href="store.html" class="text-link">View Details →</a>
+    <div class="carousel-wrapper reveal delay-1">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+        
+        <div class="product-carousel" id="productCarousel">
+            
+            <!-- Skeleton (NEW) -->
+            <div class="preview-card">
+                <div class="badge" style="background: #a855f7; color: #fff;">NEW BUNDLE</div>
+                <img src="assets/skeleton.PNG" class="preview-img" alt="Skeleton Viral Bundle">
+                <div class="preview-content">
+                    <h3>2000+ Viral Skeleton Reels</h3>
+                    <p>The ultimate creator's toolkit! 100% watermark-free HD Skeleton Reels perfect for fitness, motivation, or facts channels. Ready to post.</p>
+                    <div class="card-footer">
+                        <span class="card-price">₹299</span>
+                        <a href="store.html" class="text-link">View Details →</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="preview-card reveal delay-2">
-            <div class="badge" style="background: #facc15; color: #000;">NEW ARRIVAL</div>
-            <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral Shorts">
-            <div class="preview-content">
-                <h3>250+ 3D Viral Shorts</h3>
-                <p>Oddly satisfying high-quality 3D loops and scenarios. Proven to generate massive share rates.</p>
-                <div class="card-footer">
-                    <span class="card-price">₹99</span>
-                    <a href="store.html" class="text-link">View Details →</a>
+            <!-- Stickman -->
+            <div class="preview-card">
+                <div class="badge" style="background: #ef4444; color: #fff;">🔥 MEGA BUNDLE</div>
+                <img src="assets/stickman.PNG" class="preview-img" alt="Stickman Animations">
+                <div class="preview-content">
+                    <h3>2300+ Stickman Reels</h3>
+                    <p>Faceless viral animations designed for maximum retention and easy storytelling overlays.</p>
+                    <div class="card-footer">
+                        <span class="card-price">₹99</span>
+                        <a href="store.html" class="text-link">View Details →</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="preview-card reveal delay-3">
-            <img src="assets/Hulk500.PNG" class="preview-img" alt="Hulk AI Reels">
-            <div class="preview-content">
-                <h3>500+ AI Hulk Edits</h3>
-                <p>High-energy motivational transformation videos. Perfect for gym and male-improvement niches.</p>
-                <div class="card-footer">
-                    <span class="card-price">₹49</span>
-                    <a href="store.html" class="text-link">View Details →</a>
+            <!-- 3D Shorts -->
+            <div class="preview-card">
+                <div class="badge" style="background: #facc15; color: #000;">NEW ARRIVAL</div>
+                <img src="assets/viralvideos.PNG" class="preview-img" alt="3D Viral Shorts">
+                <div class="preview-content">
+                    <h3>250+ 3D Viral Shorts</h3>
+                    <p>Oddly satisfying high-quality 3D loops and scenarios. Proven to generate massive share rates.</p>
+                    <div class="card-footer">
+                        <span class="card-price">₹99</span>
+                        <a href="store.html" class="text-link">View Details →</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="preview-card reveal delay-4">
-            <img src="assets/500-movie-explain.PNG" class="preview-img" alt="Movie Explained">
-            <div class="preview-content">
-                <h3>500+ Movie Explained</h3>
-                <p>Suspenseful movie recaps split into parts, forcing viewers to subscribe for the conclusion.</p>
-                <div class="card-footer">
-                    <span class="card-price">₹149</span>
-                    <a href="store.html" class="text-link">View Details →</a>
+            <!-- Hulk -->
+            <div class="preview-card">
+                <img src="assets/Hulk500.PNG" class="preview-img" alt="Hulk AI Reels">
+                <div class="preview-content">
+                    <h3>500+ AI Hulk Edits</h3>
+                    <p>High-energy motivational transformation videos. Perfect for gym and male-improvement niches.</p>
+                    <div class="card-footer">
+                        <span class="card-price">₹49</span>
+                        <a href="store.html" class="text-link">View Details →</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Movies -->
+            <div class="preview-card">
+                <img src="assets/500-movie-explain.PNG" class="preview-img" alt="Movie Explained">
+                <div class="preview-content">
+                    <h3>500+ Movie Explained</h3>
+                    <p>Suspenseful movie recaps split into parts, forcing viewers to subscribe for the conclusion.</p>
+                    <div class="card-footer">
+                        <span class="card-price">₹149</span>
+                        <a href="store.html" class="text-link">View Details →</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
     </div>
 
+    <!-- 3 SIMPLE STEPS -->
     <div class="section-header reveal" style="margin-top: 120px;">
         <h2>The Framework For Success.<br><span class="highlight-text">3 Simple Steps.</span></h2>
     </div>
@@ -674,11 +764,13 @@
 
 </div>
 
+<!-- FOOTER -->
 <footer>
     <p>© 2026 YAIdigitals. All Rights Reserved.</p>
     <a href="legal.html">Legal & Privacy Policies</a>
 </footer>
 
+<!-- FIXED STICKY FOOTER CTA -->
 <div class="sticky-footer">
     <div class="sticky-price">
         <span class="old">₹1,999</span>
@@ -687,6 +779,7 @@
     <a href="store.html" class="cta-btn">Get Instant Access</a>
 </div>
 
+<!-- LIVE SALES POPUP NOTIFICATION -->
 <div class="sales-popup" id="salesPopup">
     <div class="popup-icon" id="popupIcon">R</div>
     <div class="popup-text">
@@ -696,8 +789,16 @@
     </div>
 </div>
 
+<!-- SCRIPTS -->
 <script>
-    // 1. SCROLL REVEAL ANIMATION OBSERVER
+    // 1. CAROUSEL SCROLL LOGIC
+    function scrollCarousel(direction) {
+        const carousel = document.getElementById('productCarousel');
+        const scrollAmount = 345; // Width of preview-card + gap
+        carousel.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+    }
+
+    // 2. SCROLL REVEAL ANIMATION OBSERVER
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -712,7 +813,7 @@
 
     revealElements.forEach(el => revealObserver.observe(el));
 
-    // 2. FOMO COUNTDOWN TIMER
+    // 3. FOMO COUNTDOWN TIMER
     function startTimer() {
         let totalSeconds = (11 * 60) + 39; 
         const minEl = document.getElementById('minutes');
@@ -732,7 +833,7 @@
     }
     startTimer();
 
-    // 3. LIVE SALES POPUP
+    // 4. LIVE SALES POPUP
     const purchasers = [
         { name: "Siddharth (Delhi)", item: "purchased Mega Stickman Bundle" },
         { name: "Neha K. (Bangalore)", item: "purchased 3D Shorts Bundle" },
