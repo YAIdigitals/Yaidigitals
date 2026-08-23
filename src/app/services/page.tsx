@@ -1,40 +1,42 @@
-import Link from 'next/link';
 import { createServerSupabase } from '@/lib/supabase/server';
+import type { Metadata } from 'next';
+import { ServiceCard } from '@/components/cards/ServiceCard';
+import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
+import { SectionHeading } from '@/components/SectionHeading';
+import type { ServiceRecord } from '@/lib/types';
 
 export const revalidate = 0;
 
+export const metadata: Metadata = {
+  title: 'Services — Apps, Websites, AI Agents & Custom Software',
+  description:
+    'Explore YAIdigitals services: mobile app development, website and e-commerce builds, AI calling agents, AI automation and custom software — scoped before work begins.',
+  alternates: { canonical: '/services' },
+};
+
 export default async function ServicesPage() {
   const supabase = createServerSupabase();
-  const { data: services } = await supabase.from('services').select('*').order('title');
+  const { data: services } = await supabase
+    .from('services')
+    .select('*')
+    .eq('active', true)
+    .order('sort_order');
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="text-3xl font-bold mb-8 text-textMain">Our Services</h1>
-      <p className="mb-12 text-textMuted max-w-3xl mx-auto">
-        We offer comprehensive technology solutions tailored to your business needs. Our services span the full lifecycle of digital product development.
-      </p>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <section className="mx-auto max-w-6xl px-6 py-16">
+      <SectionHeading
+        as="h1"
+        eyebrow="Services"
+        title="What we build for you"
+        description="Comprehensive technology solutions across the full lifecycle of digital product development — each with a defined process and deliverables."
+      />
+      <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {(services ?? []).map((service) => (
-          <Link
-            key={service.id}
-            href={`/services/${service.slug}`}
-            className="group border-border rounded-lg p-6 hover:border-primary transition-shadow hover:shadow-lg"
-          >
-            {service.icon && (
-              <div className="mb-4 h-12 w-12 flex items-center justify-center bg-bgCard rounded-full">
-                {typeof service.icon === 'string' && service.icon.startsWith('http') ? (
-                  <img src={service.icon} alt={service.title} className="h-8 w-8" />
-                ) : (
-                  <span className="text-2xl text-textMain">{service.icon.substring(0, 1).toUpperCase()}</span>
-                )}
-              </div>
-            )}
-            <h3 className="mb-2 font-semibold text-lg text-textMain">{service.title}</h3>
-            <p className="mb-4 text-textMuted line-clamp-3">{service.short_description}</p>
-            <span className="text-xs text-primary">Learn More →</span>
-          </Link>
+          <StaggerItem key={service.id} className="h-full">
+            <ServiceCard service={service as unknown as ServiceRecord} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
     </section>
   );
 }

@@ -1,91 +1,79 @@
 import { createServerSupabase } from '@/lib/supabase/server';
-import { generateCourseMetadata } from '@/lib/seo';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { CourseCard } from '@/components/cards/CourseCard';
+import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
+import { SectionHeading } from '@/components/SectionHeading';
+import type { CourseRecord } from '@/lib/types';
 
 export const revalidate = 0;
 
-export async function generateMetadata() {
-  // This will be overridden by individual course pages that have specific data
-  return {
-    title: 'Courses | YAIdigitals',
-    description: 'Learn in-demand skills with our expert-led courses. From beginner to advanced levels, we provide comprehensive training to help you succeed in the digital world.',
-  };
-}
+export const metadata: Metadata = {
+  title: 'Courses — Practical Tech & Content Skills',
+  description:
+    'Learn in-demand skills with YAIdigitals courses — short-form content, editing and AI automation training for beginners through advanced levels.',
+  alternates: { canonical: '/courses' },
+};
 
 export default async function CoursesPage() {
   const supabase = createServerSupabase();
-  const { data: courses } = await supabase.from('courses').select('*').eq('published', true).order('created_at', { ascending: false });
-   
+  const { data: courses } = await supabase
+    .from('courses')
+    .select('*')
+    .eq('published', true)
+    .order('featured', { ascending: false })
+    .order('created_at', { ascending: false });
+
+  const all = (courses ?? []) as unknown as CourseRecord[];
+  const featured = all.filter((c) => c.featured);
+  const rest = all.filter((c) => !c.featured);
+
   return (
-    <section className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="text-3xl font-bold mb-8 text-textMain">Our Courses</h1>
-      <p className="mb-8 text-textMuted max-w-2xl">
-        Learn in-demand skills with our expert-led courses. From beginner to advanced levels,
-        we provide comprehensive training to help you succeed in the digital world.
-      </p>
-      
-      {/* Featured courses */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4 text-textMain">Featured Courses</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {courses?.slice(0, 6).map((course) => (
-            <div key={course.id} className="border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-              {course.thumbnail && (
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="p-4">
-                <h3 className="font-semibold text-textMain">{course.title}</h3>
-                <p className="mt-2 text-sm text-textMuted line-clamp-2">{course.instructor}</p>
-                <p className="mt-1 text-sm text-textMuted">
-                  {course.difficulty_level} • {course.duration} • {course.num_lessons} lessons
-                </p>
-                <a href={`/courses/${course.slug}`} className="mt-3 inline-block bg-primary text-textMain px-4 py-2 rounded hover:bg-primaryDark/80">
-                  View Course
-                </a>
-              </div>
-            </div>
-          ))}
+    <section className="mx-auto max-w-6xl px-6 py-16">
+      <SectionHeading
+        as="h1"
+        eyebrow="Courses"
+        title="Practical courses, taught by practitioners"
+        description="Short-form content, editing and AI automation skills from the team that builds and ships this work every day."
+      />
+
+      {all.length === 0 ? (
+        <div className="mt-16 rounded-xl border border-border bg-bgCard p-10 text-center">
+          <h2 className="font-semibold text-textMain">No courses published yet</h2>
+          <p className="mt-2 text-sm text-textMuted">
+            We&apos;re preparing new material. Check back soon or subscribe via our blog for updates.
+          </p>
         </div>
-        {courses && courses.length > 6 && (
-          <a href="/courses" className="mt-4 inline-block bg-primary text-textMain px-4 py-2 rounded hover:bg-primaryDark/80">
-            View All Courses
-          </a>
-        )}
-      </div>
-      
-      {/* All courses */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4 text-textMain">All Courses</h2>
-        <div className="space-y-4">
-          {courses?.map((course) => (
-            <div key={course.id} className="border-border rounded-lg p-4 hover:bg-bgCard/50">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-semibold text-textMain">{course.title}</h3>
-                  <p className="mt-1 text-sm text-textMuted">{course.instructor}</p>
-                  <p className="mt-1 text-sm text-textMuted">
-                    {course.difficulty_level} • {course.duration} • {course.num_lessons} lessons
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="px-3 py-1 bg-primary text-textMain text-xs rounded">
-                    {course.enrollment_status === 'open' ? 'Enroll Open' : 
-                     course.enrollment_status === 'coming_soon' ? 'Coming Soon' : 
-                     'Closed'}
-                  </span>
-                  <a href={`/courses/${course.slug}`} className="mt-2 inline-block bg-primary text-textMain px-3 py-1 rounded text-xs hover:bg-primaryDark/80">
-                    Details
-                  </a>
-                </div>
-              </div>
+      ) : (
+        <>
+          {featured.length > 0 && (
+            <div className="mt-12">
+              <h2 className="mb-5 text-xl font-bold text-textMain">Featured courses</h2>
+              <StaggerGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {featured.map((course) => (
+                  <StaggerItem key={course.id} className="h-full">
+                    <CourseCard course={course} />
+                  </StaggerItem>
+                ))}
+              </StaggerGroup>
             </div>
-          ))}
-        </div>
-      </div>
+          )}
+
+          {rest.length > 0 && (
+            <div className={featured.length > 0 ? 'mt-14 border-t border-border pt-12' : 'mt-12'}>
+              <h2 className={`mb-5 text-xl font-bold text-textMain ${featured.length > 0 ? '' : 'sr-only'}`}>
+                All courses
+              </h2>
+              <StaggerGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {rest.map((course) => (
+                  <StaggerItem key={course.id} className="h-full">
+                    <CourseCard course={course} />
+                  </StaggerItem>
+                ))}
+              </StaggerGroup>
+            </div>
+          )}
+        </>
+      )}
     </section>
   );
 }

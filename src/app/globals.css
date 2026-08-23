@@ -1,11 +1,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   --background-rgb: 5, 5, 5;
   --foreground-rgb: 255, 255, 255;
 }
+
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
+}
+
+::selection {
+  background-color: rgba(34, 197, 94, 0.35);
+  color: #ffffff;
+}
+
+/* Consistent keyboard focus across the site */
+:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Lenis smooth-scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Respect users who prefer reduced motion: kill decorative CSS animations
+   globally. JS-driven animation is handled per-component via useReducedMotion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-primary;
+  }
+
+  /* Cycles stacked abstract app screens: each of 3 screens shows for ~3s */
+  .app-screen-cycle {
+    animation: app-screen-cycle 9s linear infinite;
+  }
+}
+
+@keyframes app-screen-cycle {
+  0%, 26% { opacity: 1; }
+  33%, 93% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Referenced from inline styles (JS-driven reveals) — kept explicit so it
+   exists regardless of which Tailwind animation utilities end up used. */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
