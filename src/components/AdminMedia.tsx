@@ -39,9 +39,9 @@ export default function AdminMedia() {
       </label>
       <ul className="space-y-2">
         {files.map(f => (
-          <li key={f.id} className="border rounded p-3 flex items-center justify-between">
-            <a href={f.url} target="_blank" rel="noreferrer" className="text-primary underline">{f.path}</a>
-            <button onClick={() => remove(f.id)} className="text-red-600 text-sm">Delete</button>
+          <li key={f.id} className="flex flex-col gap-2 rounded-xl border border-border bg-bgCard p-3 sm:flex-row sm:items-center sm:justify-between">
+            <a href={f.url} target="_blank" rel="noreferrer" className="min-w-0 truncate text-sm text-primary underline-offset-4 hover:underline">{f.path}</a>
+            <button onClick={() => remove(f.id)} className="shrink-0 self-start text-sm text-red-400 sm:self-auto">Delete</button>
           </li>
         ))}
       </ul>

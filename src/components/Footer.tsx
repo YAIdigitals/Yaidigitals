@@ -37,9 +37,12 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="flex flex-col gap-10 md:flex-row md:justify-between md:items-start">
           <div className="max-w-xs space-y-4">
-            <Link href="/" className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-textMain">
+            <Link href="/" className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider">
               <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
-              YAIdigitals
+              <span>
+                <span className="text-primary">YAI</span>
+                <span className="text-textMain">digitals</span>
+              </span>
             </Link>
             <p className="text-sm leading-relaxed text-textMuted">
               A technology company building mobile apps, websites, AI calling agents and instant-delivery
@@ -109,9 +112,9 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 sm:flex-row">
           <p className="text-center text-sm text-textMuted">
-            © {new Date().getFullYear()} YAIdigitals. All rights reserved.
+            © {new Date().getFullYear()} <span className="text-primary">YAI</span>
+            <span className="text-textMain">digitals</span>. All rights reserved.
           </p>
-          <p className="text-sm text-textMuted">Built with Next.js · Deployed on Vercel</p>
         </div>
       </div>
     </footer>

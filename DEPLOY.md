@@ -26,13 +26,24 @@ Vercel → Settings → Environment Variables (all environments).
 
 ## Database
 Schema lives in `supabase/schema.sql` plus `supabase/migrations/`.
-RLS is enabled everywhere; admin rights are determined by
-`user_metadata.role == 'admin'` (checked through the `public.is_admin()` helper).
+Apply new migrations in the Supabase dashboard (SQL editor) — they are not run
+automatically. RLS is enabled everywhere; admin rights require
+`user_metadata.role == 'admin'` AND an approved row in `public.admin_approvals`
+(checked through the `public.is_admin()` helper).
 
 ## Admin panel
-1. Sign up at `/admin/signup`
-2. An owner sets your metadata role to `admin` in Supabase Auth
-3. Log in at `/admin/login`
+Admins can only reach `/admin` after being approved by a super admin.
+
+1. **Super admin (first account)** — the first `role=admin` account to sign in
+   is auto-approved and becomes the super admin. Create your account in Supabase
+   Auth (or via `/admin/signup`), then sign in once at `/admin/login`.
+2. **Everyone else** signs up at `/admin/signup` → status *pending*.
+3. The super admin opens **Admin → Access**, approves or revokes accounts.
+
+Approval lives in the `admin_approvals` table (service-role only, no client
+access). RLS policies use `public.is_admin()`, which requires BOTH
+`user_metadata.role = 'admin'` AND an approved row — so unapproved or revoked
+admins are locked out of the panel AND the database.
 
 ## Seed products
 ```bash

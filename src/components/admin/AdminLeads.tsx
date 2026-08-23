@@ -380,9 +380,9 @@ export default function AdminLeads() {
         ) : (
           <div className="space-y-4">
             {leads.map((lead) => (
-              <div key={lead.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
-                <div>
-                  <h3 className="font-semibold">{lead.name}</h3>
+              <div key={lead.id} className="border-border bg-bgCard rounded-xl p-4 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-textMain break-words">{lead.name}</h3>
                   <p className="text-sm text-textMuted">{lead.email}</p>
                   {lead.company && (
                     <p className="text-sm text-textMuted mt-1">{lead.company}</p>
@@ -409,7 +409,7 @@ export default function AdminLeads() {
                     </span>
                   </p>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex shrink-0 space-x-2">
                   <button
                     onClick={() => handleLeadEdit(lead)}
                     className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"

@@ -94,11 +94,14 @@ export default function Header() {
         <div className="flex justify-between h-16 items-center">
           <Link
             href="/"
-            className="flex items-center gap-2 text-xl font-bold text-textMain"
+            className="flex items-center gap-2 text-xl font-bold"
             aria-label="YAIdigitals — home"
           >
             <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-primary shadow-glow-sm" />
-            YAIdigitals
+            <span>
+              <span className="text-primary">YAI</span>
+              <span className="text-textMain">digitals</span>
+            </span>
           </Link>
 
           {/* Desktop navigation */}

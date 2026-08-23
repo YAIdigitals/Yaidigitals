@@ -22,8 +22,9 @@ export default function OpenGraphImage() {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ width: 14, height: 14, borderRadius: 9999, backgroundColor: '#22c55e' }} />
-          <div style={{ fontSize: 34, fontWeight: 700, color: '#22c55e', letterSpacing: -0.5 }}>
-            YAIdigitals
+          <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: -0.5, display: 'flex' }}>
+            <span style={{ color: '#22c55e' }}>YAI</span>
+            <span style={{ color: '#ffffff' }}>digitals</span>
           </div>
         </div>
         <div
