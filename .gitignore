@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# next.js build output
+.next/
+out/
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel
+
+# misc debug artifacts
+*.log
+dev_server_*.log
+latest_response*.html
+simple_response.html
+cannot_get_response.html
+
+# typescript
+tsconfig.tsbuildinfo
+next-env.d.ts
