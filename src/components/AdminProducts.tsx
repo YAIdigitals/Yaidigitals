@@ -30,21 +30,21 @@ export default function AdminProducts() {
   return (
     <div className="space-y-4">
       <form onSubmit={e => { e.preventDefault(); create(); }} className="flex flex-wrap gap-2 items-end">
-        <input className="border rounded px-3 py-2" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} required />
-        <input className="border rounded px-3 py-2" placeholder="slug" value={slug} onChange={e => setSlug(e.target.value)} required />
-        <input className="border rounded px-3 py-2 w-24" type="number" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} required />
-        <input className="border rounded px-3 py-2 w-64" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-        <button type="submit" className="bg-black text-white px-4 py-2 rounded">Add product</button>
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} required />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none" placeholder="slug" value={slug} onChange={e => setSlug(e.target.value)} required />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-24" type="number" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} required />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-64" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+        <button type="submit" className="bg-primary text-textMain px-4 py-2 rounded">Add product</button>
       </form>
       <ul className="space-y-2">
         {products.map(p => (
           <li key={p.id} className="border rounded p-4 flex items-center justify-between">
             <div>
               <p className="font-semibold">{p.title}</p>
-              <p className="text-sm text-gray-600">₹{p.price} · {p.active ? 'Active' : 'Hidden'}</p>
+              <p className="text-sm text-textMuted">₹{p.price} · {p.active ? 'Active' : 'Hidden'}</p>
             </div>
             <div className="flex gap-3">
-              <a href={`/product/${p.slug}`} target="_blank" rel="noreferrer" className="text-blue-600 text-sm">View</a>
+              <a href={`/product/${p.slug}`} target="_blank" rel="noreferrer" className="text-primary text-sm">View</a>
               <button onClick={() => remove(p.id)} className="text-red-600 text-sm">Delete</button>
             </div>
           </li>

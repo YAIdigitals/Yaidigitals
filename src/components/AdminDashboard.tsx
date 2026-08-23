@@ -29,7 +29,7 @@ export default function AdminDashboard({ initialTab }: { initialTab: string }) {
           'projects',
           'leads'
         ] as Tab[]).map(t => (
-          <button key={t} onClick={() => setTab(t)} className={`pb-2 ${tab===t ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}>
+          <button key={t} onClick={() => setTab(t)} className={`pb-2 ${tab===t ? 'border-b-2 border-primary font-semibold' : 'text-textMuted'}`}>
             {t}
           </button>
         ))}

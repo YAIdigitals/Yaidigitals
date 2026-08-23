@@ -75,8 +75,8 @@ export default function ContactForm() {
       )}
       
       {error && (
-        <div className="mb-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
-          <h3 className="font-semibold text-primary">Error</h3>
+        <div className="mb-6 p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+          <h3 className="font-semibold text-red-400">Error</h3>
           <p className="mt-2 text-sm text-textMuted">{error}</p>
         </div>
       )}

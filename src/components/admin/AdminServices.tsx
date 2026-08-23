@@ -126,7 +126,7 @@ export default function AdminServices() {
 
   return (
     <div className="space-y-6">
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Add/Edit Service</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -136,7 +136,7 @@ export default function AdminServices() {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 required
               />
             </div>
@@ -146,7 +146,7 @@ export default function AdminServices() {
                 type="text"
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 required
               />
             </div>
@@ -157,7 +157,7 @@ export default function AdminServices() {
             <textarea
               value={shortDescription}
               onChange={(e) => setShortDescription(e.target.value)}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               rows={3}
             />
           </div>
@@ -167,7 +167,7 @@ export default function AdminServices() {
             <textarea
               value={fullContent}
               onChange={(e) => setFullContent(e.target.value)}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               rows={6}
             />
           </div>
@@ -179,7 +179,7 @@ export default function AdminServices() {
                 type="text"
                 value={icon}
                 onChange={(e) => setIcon(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
             <div>
@@ -187,7 +187,7 @@ export default function AdminServices() {
               <textarea
                 value={features}
                 onChange={(e) => setFeatures(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
                 placeholder='["Feature 1", "Feature 2"]'
               />
@@ -200,7 +200,7 @@ export default function AdminServices() {
               <textarea
                 value={pricingInfo}
                 onChange={(e) => setPricingInfo(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
                 placeholder='{"regular": 99, "discounted": 79}'
               />
@@ -211,7 +211,7 @@ export default function AdminServices() {
                 type="text"
                 value={seoTitle}
                 onChange={(e) => setSeoTitle(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function AdminServices() {
                 type="text"
                 value={seoDescription}
                 onChange={(e) => setSeoDescription(e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
             <div className="flex items-end">
@@ -254,7 +254,7 @@ export default function AdminServices() {
               type="number"
               value={sortOrder}
               onChange={(e) => setSortOrder(Number(e.target.value))}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
             />
           </div>
           
@@ -262,8 +262,8 @@ export default function AdminServices() {
             <button
               type="submit"
               disabled={loading}
-              className={`bg-black text-white px-4 py-2 rounded ${
-                loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+              className={`bg-primary text-textMain px-4 py-2 rounded ${
+                loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
               }`}
             >
               {loading ? 'Saving...' : 'Save Service'}
@@ -272,27 +272,27 @@ export default function AdminServices() {
         </form>
       </div>
       
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Services List</h2>
         {loading ? (
           <p className="text-center py-8">Loading services...</p>
         ) : services.length === 0 ? (
-          <p className="text-center py-8 text-gray-500">No services found. Add a service above.</p>
+          <p className="text-center py-8 text-textMuted">No services found. Add a service above.</p>
         ) : (
           <div className="space-y-4">
             {services.map((service) => (
-              <div key={service.id} className="border rounded-lg p-4 flex justify-between items-start">
+              <div key={service.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold">{service.title}</h3>
-                  <p className="text-sm text-gray-600">{service.slug}</p>
+                  <p className="text-sm text-textMuted">{service.slug}</p>
                   {service.short_description && (
-                    <p className="text-sm text-gray-500 mt-1">{service.short_description}</p>
+                    <p className="text-sm text-textMuted mt-1">{service.short_description}</p>
                   )}
                 </div>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEdit(service)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                    className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                   >
                     Edit
                   </button>

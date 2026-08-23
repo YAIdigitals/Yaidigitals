@@ -395,26 +395,26 @@ export default function AdminCourses() {
 
   return (
     <div className="space-y-6">
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-4">Course Management</h1>
         
         <nav className="mb-6 flex gap-4 border-b">
           <button
             onClick={() => setActiveTab('courses')}
-            className={`pb-2 ${activeTab === 'courses' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            className={`pb-2 ${activeTab === 'courses' ? 'border-b-2 border-primary font-semibold' : 'text-textMuted'}`}
           >
             Courses
           </button>
           <button
             onClick={() => setActiveTab('modules')}
-            className={`pb-2 ${activeTab === 'modules' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            className={`pb-2 ${activeTab === 'modules' ? 'border-b-2 border-primary font-semibold' : 'text-textMuted'}`}
             disabled={!selectedCourseId}
           >
             Modules
           </button>
           <button
             onClick={() => setActiveTab('lessons')}
-            className={`pb-2 ${activeTab === 'lessons' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            className={`pb-2 ${activeTab === 'lessons' ? 'border-b-2 border-primary font-semibold' : 'text-textMuted'}`}
             disabled={!selectedModuleId}
           >
             Lessons
@@ -433,7 +433,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.title}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, title: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                       required
                     />
                   </div>
@@ -443,7 +443,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.slug}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, slug: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                       required
                     />
                   </div>
@@ -454,7 +454,7 @@ export default function AdminCourses() {
                   <textarea
                     value={courseForm.short_description}
                     onChange={(e) => setCourseForm(prev => ({ ...prev, short_description: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     rows={3}
                   />
                 </div>
@@ -464,7 +464,7 @@ export default function AdminCourses() {
                   <textarea
                     value={courseForm.full_description}
                     onChange={(e) => setCourseForm(prev => ({ ...prev, full_description: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     rows={6}
                   />
                 </div>
@@ -476,7 +476,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.instructor}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, instructor: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                   <div>
@@ -485,7 +485,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.duration}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, duration: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                 </div>
@@ -497,7 +497,7 @@ export default function AdminCourses() {
                       type="number"
                       value={courseForm.regular_price}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, regular_price: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                   <div>
@@ -506,7 +506,7 @@ export default function AdminCourses() {
                       type="number"
                       value={courseForm.discounted_price}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, discounted_price: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export default function AdminCourses() {
                     <select
                       value={courseForm.difficulty_level}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, difficulty_level: e.target.value as 'beginner' | 'intermediate' | 'advanced' }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     >
                       <option value="beginner">Beginner</option>
                       <option value="intermediate">Intermediate</option>
@@ -530,7 +530,7 @@ export default function AdminCourses() {
                       type="number"
                       value={courseForm.num_lessons}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, num_lessons: Number(e.target.value) }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ export default function AdminCourses() {
                     <textarea
                       value={courseForm.features}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, features: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                       rows={3}
                       placeholder='["Feature 1", "Feature 2"]'
                     />
@@ -551,7 +551,7 @@ export default function AdminCourses() {
                     <textarea
                       value={courseForm.requirements}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, requirements: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                       rows={3}
                       placeholder='["Requirement 1", "Requirement 2"]'
                     />
@@ -564,7 +564,7 @@ export default function AdminCourses() {
                     <textarea
                       value={courseForm.what_youll_learn}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, what_youll_learn: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                       rows={3}
                       placeholder='["Learn 1", "Learn 2"]'
                     />
@@ -575,7 +575,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.seo_title}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, seo_title: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                 </div>
@@ -587,7 +587,7 @@ export default function AdminCourses() {
                       type="text"
                       value={courseForm.seo_description}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, seo_description: e.target.value }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                   <div className="flex items-end">
@@ -636,7 +636,7 @@ export default function AdminCourses() {
                     <select
                       value={courseForm.enrollment_status}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, enrollment_status: e.target.value as 'open' | 'closed' | 'coming_soon' }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     >
                       <option value="open">Open</option>
                       <option value="closed">Closed</option>
@@ -649,8 +649,8 @@ export default function AdminCourses() {
                   <button
                     type="submit"
                     disabled={courseForm.loading}
-                    className={`bg-black text-white px-4 py-2 rounded ${
-                      courseForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+                    className={`bg-primary text-textMain px-4 py-2 rounded ${
+                      courseForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
                     }`}
                   >
                     {courseForm.loading ? 'Saving...' : 'Save Course'}
@@ -687,7 +687,7 @@ export default function AdminCourses() {
                       }));
                       setSelectedCourseId(null);
                     }}
-                    className="ml-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                    className="ml-4 border border-border bg-bgCard text-textMuted px-4 py-2 rounded hover:border-primary hover:text-textMain"
                   >
                     Clear Form
                   </button>
@@ -698,25 +698,25 @@ export default function AdminCourses() {
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">Courses List</h2>
               {courses.length === 0 ? (
-                <p className="text-center py-8 text-gray-500">No courses found. Add a course above.</p>
+                <p className="text-center py-8 text-textMuted">No courses found. Add a course above.</p>
               ) : (
                 <div className="space-y-4">
                   {courses.map((course) => (
-                    <div key={course.id} className="border rounded-lg p-4 flex justify-between items-start">
+                    <div key={course.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                       <div>
                         <h3 className="font-semibold">{course.title}</h3>
-                        <p className="text-sm text-gray-600">{course.slug}</p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm text-textMuted">{course.slug}</p>
+                        <p className="text-sm text-textMuted mt-1">
                           {course.instructor} • {course.difficulty_level} • {course.duration}
                         </p>
                         {course.short_description && (
-                          <p className="text-sm text-gray-500 mt-2">{course.short_description}</p>
+                          <p className="text-sm text-textMuted mt-2">{course.short_description}</p>
                         )}
                       </div>
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleCourseEdit(course)}
-                          className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                          className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                         >
                           Edit
                         </button>
@@ -745,7 +745,7 @@ export default function AdminCourses() {
                   <select
                     value={moduleForm.course_id || ''}
                     onChange={(e) => setModuleForm(prev => ({ ...prev, course_id: e.target.value ? Number(e.target.value) : null }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     required
                   >
                     <option value="">Select a course</option>
@@ -763,7 +763,7 @@ export default function AdminCourses() {
                     type="text"
                     value={moduleForm.title}
                     onChange={(e) => setModuleForm(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     required
                   />
                 </div>
@@ -773,7 +773,7 @@ export default function AdminCourses() {
                   <textarea
                     value={moduleForm.description}
                     onChange={(e) => setModuleForm(prev => ({ ...prev, description: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     rows={4}
                   />
                 </div>
@@ -784,7 +784,7 @@ export default function AdminCourses() {
                     type="number"
                     value={moduleForm.sort_order}
                     onChange={(e) => setModuleForm(prev => ({ ...prev, sort_order: Number(e.target.value) }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                   />
                 </div>
                 
@@ -792,8 +792,8 @@ export default function AdminCourses() {
                   <button
                     type="submit"
                     disabled={moduleForm.loading}
-                    className={`bg-black text-white px-4 py-2 rounded ${
-                      moduleForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+                    className={`bg-primary text-textMain px-4 py-2 rounded ${
+                      moduleForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
                     }`}
                   >
                     {moduleForm.loading ? 'Saving...' : 'Save Module'}
@@ -812,7 +812,7 @@ export default function AdminCourses() {
                       }));
                       setSelectedModuleId(null);
                     }}
-                    className="ml-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                    className="ml-4 border border-border bg-bgCard text-textMuted px-4 py-2 rounded hover:border-primary hover:text-textMain"
                   >
                     Clear Form
                   </button>
@@ -823,22 +823,22 @@ export default function AdminCourses() {
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">Modules List</h2>
               {modules.length === 0 ? (
-                <p className="text-center py-8 text-gray-500">No modules found for this course. Add a module above.</p>
+                <p className="text-center py-8 text-textMuted">No modules found for this course. Add a module above.</p>
               ) : (
                 <div className="space-y-4">
                   {modules.map((module) => (
-                    <div key={module.id} className="border rounded-lg p-4 flex justify-between items-start">
+                    <div key={module.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                       <div>
                         <h3 className="font-semibold">{module.title}</h3>
-                        <p className="text-sm text-gray-500">Sort Order: {module.sort_order}</p>
+                        <p className="text-sm text-textMuted">Sort Order: {module.sort_order}</p>
                         {module.description && (
-                          <p className="text-sm text-gray-500 mt-1">{module.description}</p>
+                          <p className="text-sm text-textMuted mt-1">{module.description}</p>
                         )}
                       </div>
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleModuleEdit(module)}
-                          className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                          className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                         >
                           Edit
                         </button>
@@ -867,7 +867,7 @@ export default function AdminCourses() {
                   <select
                     value={lessonForm.module_id || ''}
                     onChange={(e) => setLessonForm(prev => ({ ...prev, module_id: e.target.value ? Number(e.target.value) : null }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     required
                   >
                     <option value="">Select a module</option>
@@ -885,7 +885,7 @@ export default function AdminCourses() {
                     type="text"
                     value={lessonForm.title}
                     onChange={(e) => setLessonForm(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     required
                   />
                 </div>
@@ -895,7 +895,7 @@ export default function AdminCourses() {
                   <textarea
                     value={lessonForm.description}
                     onChange={(e) => setLessonForm(prev => ({ ...prev, description: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     rows={4}
                   />
                 </div>
@@ -906,7 +906,7 @@ export default function AdminCourses() {
                     type="text"
                     value={lessonForm.video_url}
                     onChange={(e) => setLessonForm(prev => ({ ...prev, video_url: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                   />
                 </div>
                 
@@ -915,7 +915,7 @@ export default function AdminCourses() {
                   <textarea
                     value={lessonForm.resources}
                     onChange={(e) => setLessonForm(prev => ({ ...prev, resources: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     rows={3}
                     placeholder='["Resource 1.pdf", "Resource 2.zip"]'
                   />
@@ -928,7 +928,7 @@ export default function AdminCourses() {
                       type="number"
                       value={lessonForm.sort_order}
                       onChange={(e) => setLessonForm(prev => ({ ...prev, sort_order: Number(e.target.value) }))}
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                     />
                   </div>
                   <div>
@@ -946,8 +946,8 @@ export default function AdminCourses() {
                   <button
                     type="submit"
                     disabled={lessonForm.loading}
-                    className={`bg-black text-white px-4 py-2 rounded ${
-                      lessonForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+                    className={`bg-primary text-textMain px-4 py-2 rounded ${
+                      lessonForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
                     }`}
                   >
                     {lessonForm.loading ? 'Saving...' : 'Save Lesson'}
@@ -968,7 +968,7 @@ export default function AdminCourses() {
                         loading: false
                       }));
                     }}
-                    className="ml-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                    className="ml-4 border border-border bg-bgCard text-textMuted px-4 py-2 rounded hover:border-primary hover:text-textMain"
                   >
                     Clear Form
                   </button>
@@ -979,32 +979,32 @@ export default function AdminCourses() {
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">Lessons List</h2>
               {lessons.length === 0 ? (
-                <p className="text-center py-8 text-gray-500">No lessons found for this module. Add a lesson above.</p>
+                <p className="text-center py-8 text-textMuted">No lessons found for this module. Add a lesson above.</p>
               ) : (
                 <div className="space-y-4">
                   {lessons.map((lesson) => (
-                    <div key={lesson.id} className="border rounded-lg p-4 flex justify-between items-start">
+                    <div key={lesson.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                       <div>
                         <h3 className="font-semibold">{lesson.title}</h3>
-                        <p className="text-sm text-gray-500">Sort Order: {lesson.sort_order}</p>
+                        <p className="text-sm text-textMuted">Sort Order: {lesson.sort_order}</p>
                         {lesson.description && (
-                          <p className="text-sm text-gray-500 mt-1">{lesson.description}</p>
+                          <p className="text-sm text-textMuted mt-1">{lesson.description}</p>
                         )}
                         {lesson.video_url && (
-                          <p className="text-sm text-gray-500 mt-1">
-                            <a href={lesson.video_url} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                          <p className="text-sm text-textMuted mt-1">
+                            <a href={lesson.video_url} target="_blank" rel="noreferrer" className="text-primary underline">
                               Video Link
                             </a>
                           </p>
                         )}
                         {lesson.resources && lesson.resources.length > 0 && (
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-textMuted mt-1">
                             {lesson.resources.length} resource(s)
                           </p>
                         )}
                         <span className={`
-                          px-2 py-1 rounded-text-sm 
-                          ${lesson.is_preview ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}
+                          px-2 py-1 rounded text-sm 
+                          ${lesson.is_preview ? 'bg-primary/20 text-primary' : 'bg-bgCard text-textMuted'}
                         `}>
                           {lesson.is_preview ? 'Preview' : 'Full'}
                         </span>
@@ -1012,7 +1012,7 @@ export default function AdminCourses() {
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleLessonEdit(lesson)}
-                          className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                          className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                         >
                           Edit
                         </button>

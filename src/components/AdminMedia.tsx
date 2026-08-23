@@ -33,14 +33,14 @@ export default function AdminMedia() {
 
   return (
     <div className="space-y-4">
-      <label className="bg-black text-white px-4 py-2 rounded inline-block cursor-pointer">
+      <label className="bg-primary text-textMain px-4 py-2 rounded inline-block cursor-pointer">
         {uploading ? 'Uploading...' : 'Upload file'}
         <input type="file" className="hidden" onChange={e => e.target.files && upload(e.target.files[0])} />
       </label>
       <ul className="space-y-2">
         {files.map(f => (
           <li key={f.id} className="border rounded p-3 flex items-center justify-between">
-            <a href={f.url} target="_blank" rel="noreferrer" className="text-blue-600 underline">{f.path}</a>
+            <a href={f.url} target="_blank" rel="noreferrer" className="text-primary underline">{f.path}</a>
             <button onClick={() => remove(f.id)} className="text-red-600 text-sm">Delete</button>
           </li>
         ))}

@@ -165,7 +165,7 @@ export default function AdminLeads() {
 
   return (
     <div className="space-y-6">
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Lead Management</h2>
         
         {/* Filters and Search */}
@@ -175,7 +175,7 @@ export default function AdminLeads() {
             <select
               value={statusFilter}
               onChange={handleStatusChange}
-              className="border rounded px-3 py-2 w-full md:w-32"
+              className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full md:w-32"
             >
               <option value="all">All Statuses</option>
               <option value="new">New</option>
@@ -194,13 +194,13 @@ export default function AdminLeads() {
               value={searchTerm}
               onChange={handleSearchChange}
               placeholder="Search by name, email, company, or description"
-              className="border rounded px-3 py-2 w-full md:w-48"
+              className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full md:w-48"
             />
           </div>
         </div>
         
         {/* Lead Form */}
-        <div className="border rounded-lg p-6">
+        <div className="border-border bg-bgCard rounded-lg p-6">
           <h3 className="text-lg font-bold mb-4">
             {editLeadId ? 'Edit Lead' : 'Add New Lead'}
           </h3>
@@ -212,7 +212,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.name}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                   required
                 />
               </div>
@@ -222,7 +222,7 @@ export default function AdminLeads() {
                   type="email"
                   value={leadForm.email}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                   required
                 />
               </div>
@@ -235,7 +235,7 @@ export default function AdminLeads() {
                   type="tel"
                   value={leadForm.phone}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -244,7 +244,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.company}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, company: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.project_type}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, project_type: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -265,7 +265,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.budget_range}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, budget_range: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.required_service}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, required_service: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -286,7 +286,7 @@ export default function AdminLeads() {
                   type="text"
                   value={leadForm.preferred_contact_method}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, preferred_contact_method: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -296,7 +296,7 @@ export default function AdminLeads() {
               <textarea
                 value={leadForm.project_description}
                 onChange={(e) => setLeadForm(prev => ({ ...prev, project_description: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={4}
               />
             </div>
@@ -307,7 +307,7 @@ export default function AdminLeads() {
                 <select
                   value={leadForm.status}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, status: e.target.value as 'new' | 'contacted' | 'qualified' | 'in_progress' | 'won' | 'lost' }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 >
                   <option value="new">New</option>
                   <option value="contacted">Contacted</option>
@@ -322,7 +322,7 @@ export default function AdminLeads() {
                 <textarea
                   value={leadForm.internal_notes}
                   onChange={(e) => setLeadForm(prev => ({ ...prev, internal_notes: e.target.value }))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                   rows={4}
                 />
               </div>
@@ -332,8 +332,8 @@ export default function AdminLeads() {
               <button
                 type="submit"
                 disabled={leadForm.loading}
-                className={`bg-black text-white px-4 py-2 rounded ${
-                  leadForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+                className={`bg-primary text-textMain px-4 py-2 rounded ${
+                  leadForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
                 }`}
               >
                 {leadForm.loading ? 'Saving...' : 'Save Lead'}
@@ -360,7 +360,7 @@ export default function AdminLeads() {
                     }));
                     setEditLeadId(null);
                   }}
-                  className="ml-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                  className="ml-4 border border-border bg-bgCard text-textMuted px-4 py-2 rounded hover:border-primary hover:text-textMain"
                 >
                   Cancel Edit
                 </button>
@@ -371,39 +371,39 @@ export default function AdminLeads() {
       </div>
       
       {/* Leads List */}
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Leads List ({leads.length})</h2>
         {loading ? (
           <p className="text-center py-8">Loading leads...</p>
         ) : leads.length === 0 ? (
-          <p className="text-center py-8 text-gray-500">No leads found matching the filters.</p>
+          <p className="text-center py-8 text-textMuted">No leads found matching the filters.</p>
         ) : (
           <div className="space-y-4">
             {leads.map((lead) => (
-              <div key={lead.id} className="border rounded-lg p-4 flex justify-between items-start">
+              <div key={lead.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold">{lead.name}</h3>
-                  <p className="text-sm text-gray-600">{lead.email}</p>
+                  <p className="text-sm text-textMuted">{lead.email}</p>
                   {lead.company && (
-                    <p className="text-sm text-gray-500 mt-1">{lead.company}</p>
+                    <p className="text-sm text-textMuted mt-1">{lead.company}</p>
                   )}
                   {lead.project_type && (
-                    <p className="text-sm text-gray-500 mt-1">{lead.project_type}</p>
+                    <p className="text-sm text-textMuted mt-1">{lead.project_type}</p>
                   )}
                   {lead.budget_range && (
-                    <p className="text-sm text-gray-500 mt-1">{lead.budget_range}</p>
+                    <p className="text-sm text-textMuted mt-1">{lead.budget_range}</p>
                   )}
                   {lead.required_service && (
-                    <p className="text-sm text-gray-500 mt-1">{lead.required_service}</p>
+                    <p className="text-sm text-textMuted mt-1">{lead.required_service}</p>
                   )}
-                  <p className="text-sm text-gray-500 mt-2">
-                    <span className={`px-2 py-1 rounded-text-sm 
-                      ${lead.status === 'new' ? 'bg-blue-100 text-blue-800' :
-                        lead.status === 'contacted' ? 'bg-yellow-100 text-yellow-800' :
-                        lead.status === 'qualified' ? 'bg-purple-100 text-purple-800' :
-                        lead.status === 'in_progress' ? 'bg-orange-100 text-orange-800' :
-                        lead.status === 'won' ? 'bg-green-100 text-green-800' :
-                        'bg-red-100 text-red-800'}
+                  <p className="text-sm text-textMuted mt-2">
+                    <span className={`px-2 py-1 rounded text-sm 
+                      ${lead.status === 'new' ? 'bg-primary/20 text-primary' :
+                        lead.status === 'contacted' ? 'bg-yellow-400/20 text-accentYellow' :
+                        lead.status === 'qualified' ? 'bg-purple-400/20 text-purple-300' :
+                        lead.status === 'in_progress' ? 'bg-orange-400/20 text-orange-300' :
+                        lead.status === 'won' ? 'bg-primary/20 text-primary' :
+                        'bg-red-500/20 text-red-300'}
                     `}>
                       {lead.status.charAt(0).toUpperCase() + lead.status.slice(1)}
                     </span>
@@ -412,7 +412,7 @@ export default function AdminLeads() {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleLeadEdit(lead)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                    className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                   >
                     Edit
                   </button>

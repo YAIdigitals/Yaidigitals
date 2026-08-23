@@ -60,7 +60,7 @@ export default async function Home() {
           {(courses ?? []).map((course) => {
             const difficultyClass = course.difficulty_level === 'beginner' ? 'bg-primary/20 text-primary' :
                                 course.difficulty_level === 'intermediate' ? 'bg-accentYellow/20 text-accentYellow' :
-                                'bg-green-100 text-green-800';
+                                'bg-primary/20 text-primary';
             return (
               <Link
                 key={course.id}

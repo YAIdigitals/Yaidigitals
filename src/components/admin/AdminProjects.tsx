@@ -145,7 +145,7 @@ export default function AdminProjects() {
 
   return (
     <div className="space-y-6">
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Add/Edit Project</h2>
         <form onSubmit={handleProjectSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -155,7 +155,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.title}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 required
               />
             </div>
@@ -165,7 +165,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.slug}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, slug: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 required
               />
             </div>
@@ -178,7 +178,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.client_business}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, client_business: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
             <div>
@@ -187,7 +187,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.category}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -197,7 +197,7 @@ export default function AdminProjects() {
             <textarea
               value={projectForm.technologies}
               onChange={(e) => setProjectForm(prev => ({ ...prev, technologies: e.target.value }))}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               rows={3}
               placeholder='["React", "Node.js", "PostgreSQL"]'
             />
@@ -208,7 +208,7 @@ export default function AdminProjects() {
             <textarea
               value={projectForm.description}
               onChange={(e) => setProjectForm(prev => ({ ...prev, description: e.target.value }))}
-              className="w-full border rounded px-3 py-2"
+              className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               rows={4}
             />
           </div>
@@ -219,7 +219,7 @@ export default function AdminProjects() {
               <textarea
                 value={projectForm.problem}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, problem: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
               />
             </div>
@@ -228,7 +228,7 @@ export default function AdminProjects() {
               <textarea
                 value={projectForm.solution}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, solution: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
               />
             </div>
@@ -240,7 +240,7 @@ export default function AdminProjects() {
               <textarea
                 value={projectForm.screenshots}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, screenshots: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
                 placeholder='["https://example.com/screen1.jpg", "https://example.com/screen2.jpg"]'
               />
@@ -251,7 +251,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.website_url}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, website_url: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -262,7 +262,7 @@ export default function AdminProjects() {
               <textarea
                 value={projectForm.app_urls}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, app_urls: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 rows={3}
                 placeholder='["https://apps.apple.com/app/id123", "https://play.google.com/store/apps/details?id=com.example"]'
               />
@@ -273,7 +273,7 @@ export default function AdminProjects() {
                 type="date"
                 value={projectForm.completion_date}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, completion_date: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.seo_title}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, seo_title: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
             <div>
@@ -294,7 +294,7 @@ export default function AdminProjects() {
                 type="text"
                 value={projectForm.seo_description}
                 onChange={(e) => setProjectForm(prev => ({ ...prev, seo_description: e.target.value }))}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -315,8 +315,8 @@ export default function AdminProjects() {
             <button
               type="submit"
               disabled={projectForm.loading}
-              className={`bg-black text-white px-4 py-2 rounded ${
-                projectForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+              className={`bg-primary text-textMain px-4 py-2 rounded ${
+                projectForm.loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primaryDark/80'
               }`}
             >
               {projectForm.loading ? 'Saving...' : 'Save Project'}
@@ -345,7 +345,7 @@ export default function AdminProjects() {
                   loading: false
                 }));
               }}
-              className="ml-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+              className="ml-4 border border-border bg-bgCard text-textMuted px-4 py-2 rounded hover:border-primary hover:text-textMain"
             >
               Clear Form
             </button>
@@ -353,34 +353,34 @@ export default function AdminProjects() {
         </form>
       </div>
       
-      <div className="border rounded-lg p-6">
+      <div className="border-border bg-bgCard rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Projects List</h2>
         {projects.length === 0 ? (
-          <p className="text-center py-8 text-gray-500">No projects found. Add a project above.</p>
+          <p className="text-center py-8 text-textMuted">No projects found. Add a project above.</p>
         ) : (
           <div className="space-y-4">
             {projects.map((project) => (
-              <div key={project.id} className="border rounded-lg p-4 flex justify-between items-start">
+              <div key={project.id} className="border-border bg-bgCard rounded-lg p-4 flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold">{project.title}</h3>
-                  <p className="text-sm text-gray-600">{project.slug}</p>
+                  <p className="text-sm text-textMuted">{project.slug}</p>
                   {project.client_business && (
-                    <p className="text-sm text-gray-500 mt-1">{project.client_business}</p>
+                    <p className="text-sm text-textMuted mt-1">{project.client_business}</p>
                   )}
                   {project.category && (
-                    <p className="text-sm text-gray-500 mt-1">{project.category}</p>
+                    <p className="text-sm text-textMuted mt-1">{project.category}</p>
                   )}
                   {project.completion_date && (
-                    <p className="text-sm text-gray-500 mt-1">Completed: {project.completion_date}</p>
+                    <p className="text-sm text-textMuted mt-1">Completed: {project.completion_date}</p>
                   )}
                   {project.description && (
-                    <p className="text-sm text-gray-500 mt-1">{project.description}</p>
+                    <p className="text-sm text-textMuted mt-1">{project.description}</p>
                   )}
                 </div>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleProjectEdit(project)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                    className="bg-primary text-textMain px-3 py-1 rounded text-sm hover:bg-primaryDark/80"
                   >
                     Edit
                   </button>

@@ -24,10 +24,10 @@ export default function AdminBlog() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <input className="border rounded px-3 py-2 w-full" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
-        <input className="border rounded px-3 py-2 w-full" placeholder="Slug" value={slug} onChange={e => setSlug(e.target.value)} />
-        <textarea className="border rounded px-3 py-2 w-full" rows={4} value={content} onChange={e => setContent(e.target.value)} />
-        <button onClick={create} className="bg-black text-white px-4 py-2 rounded">Publish post</button>
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full focus:border-primary focus:outline-none" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full focus:border-primary focus:outline-none" placeholder="Slug" value={slug} onChange={e => setSlug(e.target.value)} />
+        <textarea className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full focus:border-primary focus:outline-none" rows={4} value={content} onChange={e => setContent(e.target.value)} />
+        <button onClick={create} className="bg-primary text-textMain px-4 py-2 rounded">Publish post</button>
       </div>
       <ul className="space-y-2">
         {items.map(p => <li key={p.id} className="border rounded p-3">{p.title}</li>)}

@@ -24,10 +24,10 @@ export default function AdminBundles() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <input className="border rounded px-3 py-2" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
-        <input className="border rounded px-3 py-2" placeholder="slug" value={slug} onChange={e => setSlug(e.target.value)} />
-        <input className="border rounded px-3 py-2 w-24" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} />
-        <button onClick={create} className="bg-black text-white px-4 py-2 rounded">Add bundle</button>
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none" placeholder="slug" value={slug} onChange={e => setSlug(e.target.value)} />
+        <input className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-24" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} />
+        <button onClick={create} className="bg-primary text-textMain px-4 py-2 rounded">Add bundle</button>
       </div>
       <ul className="space-y-2">
         {items.map(b => <li key={b.id} className="border rounded p-3 flex justify-between"><span>{b.name} — ₹{b.price}</span></li>)}

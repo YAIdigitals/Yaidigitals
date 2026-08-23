@@ -21,7 +21,7 @@ export default function AdminLogin() {
       <h1 className="text-2xl font-bold">Admin login</h1>
       <form onSubmit={login} className="space-y-3">
         <input
-          className="border rounded px-3 py-2 w-full"
+          className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full focus:border-primary focus:outline-none"
           type="email"
           placeholder="Email"
           value={email}
@@ -29,19 +29,19 @@ export default function AdminLogin() {
           required
         />
         <input
-          className="border rounded px-3 py-2 w-full"
+          className="border-border bg-bgCard text-textMain rounded px-3 py-2 w-full focus:border-primary focus:outline-none"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="bg-black text-white px-4 py-2 rounded w-full" type="submit">
+        <button className="bg-primary text-textMain px-4 py-2 rounded w-full" type="submit">
           Login
         </button>
       </form>
-      <p className="text-sm text-gray-600">
-        Signup <a className="text-blue-600 underline" href="/admin/signup">here</a>
+      <p className="text-sm text-textMuted">
+        Signup <a className="text-primary underline" href="/admin/signup">here</a>
       </p>
     </div>
   );
