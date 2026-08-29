@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       supabase.from('industries').select('slug, updated_at').eq('published', true),
       supabase.from('courses').select('slug, updated_at').eq('published', true),
       supabase.from('products').select('slug').eq('active', true),
-      supabase.from('blog_posts').select('slug, updated_at, published_at').eq('active', true),
+      supabase.from('blog_posts').select('slug, updated_at, published_at, created_at').eq('status', 'published'),
     ]);
 
     return [
@@ -70,8 +70,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/insights/${b.slug}`,
         lastModified: b.updated_at
           ? new Date(b.updated_at)
-          : b.published_at
-            ? new Date(b.published_at)
+          : b.created_at
+            ? new Date(b.created_at)
             : new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.6,

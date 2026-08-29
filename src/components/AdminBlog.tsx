@@ -21,15 +21,15 @@ interface PostRow {
   title: string;
   excerpt: string | null;
   content: string;
-  cover_image: string | null;
-  author_name: string | null;
+  featured_image: string | null;
+  author: string | null;
   author_role: string | null;
   tags: string[] | null;
   seo_title: string | null;
   seo_description: string | null;
   published_at: string | null;
   updated_at: string | null;
-  active: boolean;
+  status: string;
   featured: boolean;
 }
 
@@ -38,13 +38,13 @@ const EMPTY: Omit<PostRow, 'id' | 'published_at' | 'updated_at'> = {
   title: '',
   excerpt: '',
   content: '',
-  cover_image: '',
-  author_name: '',
+  featured_image: '',
+  author: '',
   author_role: '',
   tags: [],
   seo_title: '',
   seo_description: '',
-  active: false,
+  status: 'draft',
   featured: false,
 };
 
@@ -64,8 +64,8 @@ export default function AdminBlog() {
     setRows(((data ?? []) as unknown as PostRow[]).map((r) => ({
       ...r,
       excerpt: r.excerpt ?? '',
-      cover_image: r.cover_image ?? '',
-      author_name: r.author_name ?? '',
+      featured_image: r.featured_image ?? '',
+      author: r.author ?? '',
       author_role: r.author_role ?? '',
       tags: Array.isArray(r.tags) ? r.tags : [],
       seo_title: r.seo_title ?? '',
@@ -131,15 +131,15 @@ export default function AdminBlog() {
             hint="Blank line separates paragraphs. Lines starting with '## ' render as section headings."
           />
           <div className="grid gap-4 md:grid-cols-2">
-            <Text label="Cover image URL" value={form.cover_image ?? ''} onChange={(v) => set({ cover_image: v })} />
-            <Text label="Author name" value={form.author_name ?? ''} onChange={(v) => set({ author_name: v })} placeholder="YAIdigitals Team" />
+            <Text label="Featured image URL" value={form.featured_image ?? ''} onChange={(v) => set({ featured_image: v })} />
+            <Text label="Author name" value={form.author ?? ''} onChange={(v) => set({ author: v })} placeholder="YAIdigitals Team" />
             <Text label="Author role" value={form.author_role ?? ''} onChange={(v) => set({ author_role: v })} />
             <Text label="SEO title" value={form.seo_title ?? ''} onChange={(v) => set({ seo_title: v })} />
           </div>
           <Area label="SEO description" value={form.seo_description ?? ''} onChange={(v) => set({ seo_description: v })} rows={2} />
           <ListEditor label="Tags" items={form.tags ?? []} onChange={(items) => set({ tags: items })} placeholder="mobile-apps" />
           <div className="flex flex-wrap items-center gap-6">
-            <Check label="Published (visible on site)" checked={form.active} onChange={(v) => set({ active: v })} />
+            <Check label="Published (visible on site)" checked={form.status === 'published'} onChange={(v) => set({ status: v ? 'published' : 'draft' })} />
             <Check label="Featured" checked={form.featured} onChange={(v) => set({ featured: v })} />
           </div>
           <div className="flex justify-end gap-3">
@@ -174,10 +174,10 @@ export default function AdminBlog() {
                     <h3 className="font-semibold text-textMain">{row.title}</h3>
                     <span
                       className={`rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase ${
-                        row.active ? 'bg-primary/15 text-primary' : 'bg-yellow-500/15 text-yellow-400'
+                        row.status === 'published' ? 'bg-primary/15 text-primary' : 'bg-yellow-500/15 text-yellow-400'
                       }`}
                     >
-                      {row.active ? 'published' : 'draft'}
+                      {row.status}
                     </span>
                   </div>
                   <p className="mt-0.5 text-xs text-textMuted">/insights/{row.slug}</p>
@@ -190,13 +190,13 @@ export default function AdminBlog() {
                       title: row.title,
                       excerpt: row.excerpt ?? '',
                       content: row.content ?? '',
-                      cover_image: row.cover_image ?? '',
-                      author_name: row.author_name ?? '',
+                      featured_image: row.featured_image ?? '',
+                      author: row.author ?? '',
                       author_role: row.author_role ?? '',
                       tags: Array.isArray(row.tags) ? row.tags : [],
                       seo_title: row.seo_title ?? '',
                       seo_description: row.seo_description ?? '',
-                      active: row.active,
+                      status: row.status,
                       featured: row.featured,
                     });
                     window.scrollTo({ top: 0, behavior: 'smooth' });

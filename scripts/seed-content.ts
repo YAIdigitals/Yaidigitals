@@ -683,6 +683,16 @@ async function main() {
     await step(`project: ${p.slug}`, () => supabase.from('projects').upsert(p, { onConflict: 'slug' }));
   }
 
+  // Legacy product-store "projects" predate the company repositioning. Draft
+  // them (data preserved, reversible) so /work stays focused on case studies.
+  await step('legacy projects → draft', async () => {
+    const { error } = await supabase
+      .from('projects')
+      .update({ status: 'draft', featured: false })
+      .in('slug', ['viral-reels-store-platform', 'course-platform', 'viral-reels-product-line']);
+    return { error };
+  });
+
   for (const i of INDUSTRIES) {
     await step(`industry: ${i.slug}`, () => supabase.from('industries').upsert(i, { onConflict: 'slug' }));
   }

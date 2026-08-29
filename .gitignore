@@ -9,6 +9,8 @@ out/
 .env
 .env.*
 !.env.example
+accesstoken*.md
+*token*.md
 
 # vercel
 .vercel

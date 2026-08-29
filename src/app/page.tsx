@@ -129,7 +129,7 @@ export default async function Home() {
       supabase.from('industries').select('slug, name, short_description, icon, image_url').eq('published', true).order('sort_order'),
       supabase.from('technologies').select('name, category, website_url').eq('active', true).order('sort_order'),
       supabase.from('testimonials').select('id, client_name, client_role, company, quote, rating').eq('published', true).order('sort_order').limit(3),
-      supabase.from('blog_posts').select('id, slug, title, excerpt, published_at').eq('active', true).order('published_at', { ascending: false }).limit(3),
+      supabase.from('blog_posts').select('id, slug, title, excerpt, published_at, created_at').eq('status', 'published').order('published_at', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false }).limit(3),
     ]);
 
   const section = (key: string) => homepage.sections.find((s) => s.key === key);

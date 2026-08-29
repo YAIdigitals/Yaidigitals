@@ -42,13 +42,12 @@ create policy "Published projects are viewable by everyone" on public.projects
   for select using (status = 'published');
 
 -- ---------------------------------------------------------------------------
--- 2. BLOG POSTS — author/SEO/featured support (active stays the publish flag)
+-- 2. BLOG POSTS — the production table already carries: status ('published'/
+--    'draft' publish flag), author (display name), category, featured_image,
+--    excerpt, updated_at. Only genuinely missing metadata is added here.
 -- ---------------------------------------------------------------------------
-alter table public.blog_posts add column if not exists updated_at timestamptz default now() not null;
-alter table public.blog_posts add column if not exists featured boolean default false not null;
-alter table public.blog_posts add column if not exists cover_image text;
-alter table public.blog_posts add column if not exists author_name text;
 alter table public.blog_posts add column if not exists author_role text;
+alter table public.blog_posts add column if not exists featured boolean default false not null;
 alter table public.blog_posts add column if not exists tags jsonb default '[]'::jsonb;
 alter table public.blog_posts add column if not exists seo_title text;
 alter table public.blog_posts add column if not exists seo_description text;
@@ -159,27 +158,36 @@ alter table public.testimonials enable row level security;
 alter table public.team_members enable row level security;
 alter table public.redirects enable row level security;
 
+drop policy if exists "Published industries are viewable by everyone" on public.industries;
 create policy "Published industries are viewable by everyone" on public.industries
   for select using (published = true);
+drop policy if exists "Industries are manageable by admins" on public.industries;
 create policy "Industries are manageable by admins" on public.industries
   for all using (auth.role() = 'service_role' or public.is_admin());
 
+drop policy if exists "Active technologies are viewable by everyone" on public.technologies;
 create policy "Active technologies are viewable by everyone" on public.technologies
   for select using (active = true);
+drop policy if exists "Technologies are manageable by admins" on public.technologies;
 create policy "Technologies are manageable by admins" on public.technologies
   for all using (auth.role() = 'service_role' or public.is_admin());
 
+drop policy if exists "Published testimonials are viewable by everyone" on public.testimonials;
 create policy "Published testimonials are viewable by everyone" on public.testimonials
   for select using (published = true);
+drop policy if exists "Testimonials are manageable by admins" on public.testimonials;
 create policy "Testimonials are manageable by admins" on public.testimonials
   for all using (auth.role() = 'service_role' or public.is_admin());
 
+drop policy if exists "Published team members are viewable by everyone" on public.team_members;
 create policy "Published team members are viewable by everyone" on public.team_members
   for select using (published = true);
+drop policy if exists "Team members are manageable by admins" on public.team_members;
 create policy "Team members are manageable by admins" on public.team_members
   for all using (auth.role() = 'service_role' or public.is_admin());
 
 -- Redirects are consumed server-side only; no public read policy (deny by default).
+drop policy if exists "Redirects are manageable by admins" on public.redirects;
 create policy "Redirects are manageable by admins" on public.redirects
   for all using (auth.role() = 'service_role' or public.is_admin());
 
@@ -225,7 +233,7 @@ create policy "Media deletes are admin only" on storage.objects
 create index if not exists idx_projects_featured_sort on public.projects (featured desc, sort_order asc, created_at desc);
 create index if not exists idx_projects_status on public.projects (status);
 create index if not exists idx_services_active_sort on public.services (active, sort_order);
-create index if not exists idx_blog_active_published on public.blog_posts (active, published_at desc);
+create index if not exists idx_blog_status_published on public.blog_posts (status, created_at desc);
 create index if not exists idx_industries_published_sort on public.industries (published, sort_order);
 create index if not exists idx_technologies_active_sort on public.technologies (active, sort_order);
 create index if not exists idx_testimonials_published_sort on public.testimonials (published, sort_order);

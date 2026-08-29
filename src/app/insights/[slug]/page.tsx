@@ -11,8 +11,8 @@ interface PostRecord {
   title: string;
   excerpt: string | null;
   content: string | null;
-  cover_image: string | null;
-  author_name: string | null;
+  featured_image: string | null;
+  author: string | null;
   author_role: string | null;
   published_at: string | null;
   updated_at: string | null;
@@ -22,9 +22,9 @@ async function getPost(slug: string) {
   const supabase = createServerSupabase();
   const { data } = await supabase
     .from('blog_posts')
-    .select('title, excerpt, content, cover_image, author_name, author_role, published_at, updated_at')
+    .select('title, excerpt, content, featured_image, author, author_role, published_at, updated_at')
     .eq('slug', slug)
-    .eq('active', true)
+    .eq('status', 'published')
     .maybeSingle();
   return data as PostRecord | null;
 }
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: post.title,
     description: post.excerpt || undefined,
     path: `/insights/${params.slug}`,
-    image: post.cover_image || '',
+    image: post.featured_image || '',
     type: 'article',
     publishedTime: post.published_at ?? undefined,
     modifiedTime: post.updated_at ?? undefined,
@@ -76,8 +76,8 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
               slug: params.slug,
               publishedTime: post.published_at ?? undefined,
               modifiedTime: post.updated_at ?? undefined,
-              authorName: post.author_name || undefined,
-              image: post.cover_image || undefined,
+              authorName: post.author || undefined,
+              image: post.featured_image || undefined,
             }),
           ]),
         }}
@@ -102,9 +102,9 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
             {post.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-textMuted">
-            {post.author_name && (
+            {post.author && (
               <span>
-                By {post.author_name}
+                By {post.author}
                 {post.author_role ? `, ${post.author_role}` : ''}
               </span>
             )}
@@ -117,10 +117,10 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
           </div>
         </header>
 
-        {post.cover_image && (
+        {post.featured_image && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={post.cover_image}
+            src={post.featured_image}
             alt={post.title}
             loading="eager"
             decoding="async"

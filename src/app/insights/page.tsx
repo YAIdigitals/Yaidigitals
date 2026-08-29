@@ -20,8 +20,8 @@ interface PostRecord {
   slug: string;
   title: string;
   excerpt?: string | null;
-  cover_image?: string | null;
-  author_name?: string | null;
+  featured_image?: string | null;
+  author?: string | null;
   published_at?: string | null;
 }
 
@@ -38,9 +38,10 @@ export default async function InsightsPage() {
   const supabase = createServerSupabase();
   const { data: posts } = await supabase
     .from('blog_posts')
-    .select('id, slug, title, excerpt, cover_image, author_name, published_at')
-    .eq('active', true)
-    .order('published_at', { ascending: false });
+    .select('id, slug, title, excerpt, featured_image, author, published_at, created_at')
+    .eq('status', 'published')
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false });
 
   const all = (posts ?? []) as unknown as PostRecord[];
 
@@ -75,10 +76,10 @@ export default async function InsightsPage() {
                     href={`/insights/${post.slug}`}
                     className="group flex items-start gap-5 rounded-xl border border-border bg-bgCard p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-elevate focus-visible:border-primary outline-none motion-reduce:transition-none"
                   >
-                    {post.cover_image ? (
+                    {post.featured_image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={post.cover_image}
+                        src={post.featured_image}
                         alt=""
                         loading="lazy"
                         decoding="async"
@@ -104,8 +105,8 @@ export default async function InsightsPage() {
                       {post.excerpt && (
                         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-textMuted">{post.excerpt}</p>
                       )}
-                      {post.author_name && (
-                        <p className="mt-2 text-xs text-textMuted">By {post.author_name}</p>
+                      {post.author && (
+                        <p className="mt-2 text-xs text-textMuted">By {post.author}</p>
                       )}
                     </div>
                     <ArrowUpRight
