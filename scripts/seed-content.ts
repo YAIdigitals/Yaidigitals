@@ -648,7 +648,7 @@ const SEO_SETTINGS = {
   default_title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
   default_description:
     'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
-  canonical_domain: 'https://yaidigitals.co.in',
+  canonical_domain: 'https://www.yaidigitals.co.in',
   og_image: '',
   twitter_handle: '',
   google_site_verification: '',

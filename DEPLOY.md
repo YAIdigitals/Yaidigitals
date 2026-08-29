@@ -43,7 +43,7 @@ Seed content is idempotent and only fills what the admin panel can later edit.
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (server-only; never expose to the client)
-- `NEXT_PUBLIC_APP_URL` — set to `https://yaidigitals.co.in` in production. All
+- `NEXT_PUBLIC_APP_URL` — set to `https://www.yaidigitals.co.in` in production. All
   canonical URLs, sitemap entries and JSON-LD derive from this.
 
 ## Admin panel

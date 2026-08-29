@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 /** Canonical origin for the production domain. */
-export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://yaidigitals.co.in';
+export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.yaidigitals.co.in';
 
 export const SITE_NAME = 'YAIdigitals';
 
