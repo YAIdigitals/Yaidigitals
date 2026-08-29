@@ -129,7 +129,6 @@ function VoiceWaveform({ reduceMotion }: { reduceMotion: boolean }) {
     const BARS = 56;
     let raf = 0;
     let running = !reduceMotion;
-    let t = Math.PI * 0.5;
 
     const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2);
 

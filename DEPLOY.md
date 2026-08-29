@@ -31,6 +31,21 @@ automatically. RLS is enabled everywhere; admin rights require
 `user_metadata.role == 'admin'` AND an approved row in `public.admin_approvals`
 (checked through the `public.is_admin()` helper).
 
+After applying `202608300001_brand_cms.sql`, seed the site content:
+
+```bash
+npx tsx scripts/seed-content.ts   # services, projects, industries, technologies, homepage settings
+```
+
+Seed content is idempotent and only fills what the admin panel can later edit.
+
+## Environment variables
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (server-only; never expose to the client)
+- `NEXT_PUBLIC_APP_URL` — set to `https://yaidigitals.co.in` in production. All
+  canonical URLs, sitemap entries and JSON-LD derive from this.
+
 ## Admin panel
 Admins can only reach `/admin` after being approved by a super admin.
 

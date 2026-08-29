@@ -1,35 +1,27 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  CheckCircle2,
-  ChevronDown,
-  Globe2,
-  MessageSquareText,
-  PhoneCall,
-  Smartphone,
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, ChevronDown, PhoneCall } from 'lucide-react';
 import { createServerSupabase } from '@/lib/supabase/server';
+import { getSettingsBundle } from '@/lib/settings';
+import { buildMetadata, faqJsonLd } from '@/lib/seo';
 import { Reveal } from '@/components/motion/Reveal';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 import { SectionHeading } from '@/components/SectionHeading';
 import { ServiceCard } from '@/components/cards/ServiceCard';
-import { ProductCard } from '@/components/cards/ProductCard';
+import { WorkCard, type WorkCardProject } from '@/components/cards/WorkCard';
 import { HeroVisual } from '@/components/visuals/HeroVisual';
-import { MobileAppMockup } from '@/components/visuals/MobileAppMockup';
-import { BrowserMockup } from '@/components/visuals/BrowserMockup';
 import { AICallVisual } from '@/components/visuals/AICallVisual';
 
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'YAIdigitals — App, Website & AI Automation Development',
+export const metadata: Metadata = buildMetadata({
+  title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
   description:
-    'We build mobile apps, high-performance websites and AI calling agents for growing businesses. Browse instant-delivery digital products and practical tech courses.',
-  alternates: { canonical: '/' },
-};
+    'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
+  path: '',
+});
 
 const FAQS = [
   {
@@ -41,52 +33,82 @@ const FAQS = [
     a: 'Send us a brief through the contact form describing your goal, timeline and budget range. We respond with a scoped proposal covering deliverables, milestones and pricing before any work begins.',
   },
   {
-    q: 'How are digital products delivered?',
-    a: 'Every product in our store is delivered digitally. After checkout you receive access or download instructions right away — nothing ships physically.',
-  },
-  {
     q: 'Can an AI calling agent integrate with my tools?',
     a: 'Where supported, yes — our AI calling agents can work alongside CRMs and calendars, log call summaries, and escalate complex conversations to a human on your team.',
   },
-];
-
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
-
-const CAPABILITIES = ['Mobile Apps', 'Websites', 'AI Calling Agents', 'Custom Software', 'Digital Products'];
-
-const WHY_US = [
   {
-    title: 'End-to-end delivery',
-    body: 'One team handles strategy, design, development and launch — no coordinating between separate agencies for the app, the website and the automation.',
-  },
-  {
-    title: 'Business-first engineering',
-    body: 'We start from the outcome you need — more qualified leads, faster support, a store that sells — then choose the technology that gets there.',
-  },
-  {
-    title: 'Products, not promises',
-    body: 'We run our own digital-products store and course platform, so we understand firsthand what it takes to ship and sell software.',
-  },
-  {
-    title: 'Clear scope, clear pricing',
-    body: 'Every engagement starts with a written proposal: deliverables, milestones and price agreed before development begins.',
+    q: 'Who owns the software you build?',
+    a: 'You do. Code, database and infrastructure are yours — there is no lock-in, though most clients continue with us for support and iteration.',
   },
 ];
 
 const PROCESS = [
-  { step: '01', title: 'Discover', body: 'A short call or brief to map your goal, users and constraints.' },
-  { step: '02', title: 'Scope', body: 'A written proposal with deliverables, timeline and fixed pricing.' },
-  { step: '03', title: 'Build', body: 'Iterative development with previews at every milestone.' },
-  { step: '04', title: 'Launch & support', body: 'Deployment, handover documentation and ongoing support options.' },
+  { step: '01', title: 'Discover', body: 'We understand your business, customers, workflows, objectives and technical requirements.' },
+  { step: '02', title: 'Plan', body: 'We define the product structure, features, user journeys and technical architecture.' },
+  { step: '03', title: 'Design', body: 'We create interfaces focused on clarity, usability and consistent brand experiences.' },
+  { step: '04', title: 'Build', body: 'Our development process turns approved designs and requirements into reliable digital products.' },
+  { step: '05', title: 'Test', body: 'Functionality, responsiveness, usability and critical workflows are tested before release.' },
+  { step: '06', title: 'Launch', body: 'We prepare the product for production and configure the required deployment infrastructure.' },
+  { step: '07', title: 'Improve', body: 'Digital products evolve. We can continue supporting improvements, optimization and new features after launch.' },
 ];
+
+const WHY_US = [
+  {
+    title: 'Business-First Thinking',
+    body: 'Technology should solve a business problem. We start by understanding what needs to work before deciding what needs to be built.',
+  },
+  {
+    title: 'End-to-End Development',
+    body: 'Strategy, interface design, development, deployment and ongoing improvement can be handled through one technology partner.',
+  },
+  {
+    title: 'Built for Growth',
+    body: "We design systems with future requirements in mind so today's solution does not unnecessarily restrict tomorrow's growth.",
+  },
+  {
+    title: 'Clear Communication',
+    body: 'Clear requirements, defined scope and transparent communication help keep projects focused and predictable.',
+  },
+];
+
+const AI_CAPABILITIES = [
+  '24/7 call handling',
+  'Lead qualification',
+  'Appointment workflows',
+  'Common customer enquiries',
+  'Call summaries',
+  'Human escalation',
+  'CRM/workflow integration',
+];
+
+interface DbProject {
+  id: number;
+  slug: string;
+  title: string;
+  industry?: string | null;
+  category?: string | null;
+  short_description?: string | null;
+  cover_image?: string | null;
+  services_provided?: unknown;
+  technologies?: unknown;
+}
+
+interface DbPost {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  published_at?: string | null;
+}
+
+interface DbTestimonial {
+  id: number;
+  client_name: string;
+  client_role?: string | null;
+  company?: string | null;
+  quote: string;
+  rating?: number | null;
+}
 
 function CheckItem({ children }: { children: React.ReactNode }) {
   return (
@@ -99,17 +121,49 @@ function CheckItem({ children }: { children: React.ReactNode }) {
 
 export default async function Home() {
   const supabase = createServerSupabase();
-  const [{ data: services }, { data: products }] = await Promise.all([
-    supabase.from('services').select('*').eq('active', true).order('sort_order'),
-    supabase.from('products').select('*').eq('active', true).order('sort_order').limit(3),
-  ]);
+  const [{ homepage }, { data: projects }, { data: services }, { data: industries }, { data: technologies }, { data: testimonials }, { data: posts }] =
+    await Promise.all([
+      getSettingsBundle(),
+      supabase.from('projects').select('id, slug, title, industry, category, short_description, cover_image, services_provided, technologies').eq('status', 'published').eq('featured', true).order('sort_order').limit(2),
+      supabase.from('services').select('*').eq('active', true).eq('featured', true).order('sort_order'),
+      supabase.from('industries').select('slug, name, short_description, icon, image_url').eq('published', true).order('sort_order'),
+      supabase.from('technologies').select('name, category, website_url').eq('active', true).order('sort_order'),
+      supabase.from('testimonials').select('id, client_name, client_role, company, quote, rating').eq('published', true).order('sort_order').limit(3),
+      supabase.from('blog_posts').select('id, slug, title, excerpt, published_at').eq('active', true).order('published_at', { ascending: false }).limit(3),
+    ]);
+
+  const section = (key: string) => homepage.sections.find((s) => s.key === key);
+  const enabled = (key: string) => section(key)?.enabled ?? true;
+  const head = (key: string) => section(key);
+
+  const featuredProjects = (projects ?? []) as unknown as DbProject[];
+  const toWorkCard = (p: DbProject): WorkCardProject => ({
+    slug: p.slug,
+    title: p.title,
+    industry: p.industry,
+    category: p.category,
+    short_description: p.short_description,
+    cover_image: p.cover_image,
+    services_provided: Array.isArray(p.services_provided) ? (p.services_provided as string[]) : [],
+    technologies: Array.isArray(p.technologies) ? (p.technologies as string[]) : [],
+  });
+
+  const techGroups = (technologies ?? []).reduce<Record<string, { name: string; website_url: string | null }[]>>((acc, t) => {
+    const cat = t.category || 'Other';
+    (acc[cat] ??= []).push(t);
+    return acc;
+  }, {});
+
+  const faqSection = head('faq');
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      {faqSection?.enabled && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
+        />
+      )}
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
@@ -122,7 +176,7 @@ export default async function Home() {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping motion-reduce:hidden" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                Technology company for growing businesses
+                {homepage.hero.badge}
               </p>
             </Reveal>
 
@@ -131,31 +185,32 @@ export default async function Home() {
               delay={0.1}
               className="text-4xl sm:text-5xl font-bold tracking-tight text-textMain leading-[1.12]"
             >
-              Apps, websites &amp; AI calling agents that move businesses forward
+              {homepage.hero.heading}
             </AnimatedHeading>
 
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-lg font-medium text-primary">{homepage.hero.highlighted}</p>
+            </Reveal>
+
             <Reveal delay={0.25}>
-              <p className="mt-5 text-lg text-textMuted max-w-xl leading-relaxed">
-                YAIdigitals designs and builds the software your business needs — from cross-platform mobile
-                apps and high-performance websites to AI agents that answer and qualify customer calls.
+              <p className="mt-3 text-lg text-textMuted max-w-xl leading-relaxed">
+                {homepage.hero.description}
               </p>
             </Reveal>
 
             <Reveal delay={0.35}>
               <div className="mt-8 flex flex-wrap gap-4">
-                <MagneticButton href="/contact">Start a Project</MagneticButton>
-                <MagneticButton href="/store" variant="outline">
-                  Browse Digital Products
+                <MagneticButton href={homepage.hero.primary_cta_url || '/contact'}>
+                  {homepage.hero.primary_cta_text}
+                </MagneticButton>
+                <MagneticButton href={homepage.hero.secondary_cta_url || '/work'} variant="outline">
+                  {homepage.hero.secondary_cta_text}
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.45}>
-              <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
-                {CAPABILITIES.map((c) => (
-                  <CheckItem key={c}>{c}</CheckItem>
-                ))}
-              </ul>
+              <p className="mt-10 text-sm text-textMuted">{homepage.hero.below_cta}</p>
             </Reveal>
           </div>
 
@@ -163,222 +218,318 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ── Services ─────────────────────────────────────────── */}
-      <section aria-labelledby="services-heading" className="border-t border-border bg-bgDark">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <SectionHeading
-            eyebrow="Services"
-            title="What we build"
-            description="Focused services, each with a defined process and deliverables — scoped before work begins."
-          />
-          <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {(services ?? []).map((service) => (
-              <StaggerItem key={service.id} className="h-full">
-                <ServiceCard service={service} />
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </section>
+      {/* ── Selected work ────────────────────────────────────── */}
+      {enabled('work') && featuredProjects.length > 0 && (
+        <section aria-labelledby="work-heading" className="border-t border-border bg-bgCard/40">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                eyebrow={head('work')?.eyebrow}
+                title={head('work')?.title ?? 'Selected Work'}
+                description={head('work')?.description}
+              />
+              <Reveal>
+                <Link href="/work" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
+                  View all work
+                  <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </Reveal>
+            </div>
+            <StaggerGroup className="mt-12 grid gap-6 md:grid-cols-2">
+              {featuredProjects.map((p, i) => (
+                <StaggerItem key={p.id} className="h-full">
+                  <WorkCard project={toWorkCard(p)} priority={i === 0} />
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
 
-      {/* ── App development ──────────────────────────────────── */}
-      <section aria-labelledby="app-heading" className="overflow-x-clip border-t border-border">
-        <div className="mx-auto max-w-6xl px-6 py-20 grid gap-14 lg:grid-cols-2 lg:items-center">
-          <div>
+      {/* ── Services ─────────────────────────────────────────── */}
+      {enabled('services') && (services ?? []).length > 0 && (
+        <section aria-labelledby="services-heading" className="border-t border-border bg-bgDark">
+          <div className="mx-auto max-w-6xl px-6 py-20">
             <SectionHeading
-              eyebrow="App development"
-              title="Mobile apps your customers actually keep"
-              description="Cross-platform Android and iOS apps with the polish of native builds — designed around real user journeys, not templates."
+              eyebrow={head('services')?.eyebrow}
+              title={head('services')?.title ?? 'What We Build'}
+              description={head('services')?.description}
             />
-            <Reveal delay={0.15}>
-              <ul className="mt-8 space-y-3">
-                <CheckItem>Android, iOS &amp; cross-platform releases</CheckItem>
-                <CheckItem>Admin dashboards and analytics included</CheckItem>
-                <CheckItem>Store submission handled end-to-end</CheckItem>
-              </ul>
-            </Reveal>
-            <Reveal delay={0.25}>
+            <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {(services ?? []).map((service) => (
+                <StaggerItem key={service.id} className="h-full">
+                  <ServiceCard service={service} />
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+            <Reveal className="mt-10">
               <Link
-                href="/services/mobile-app-development"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primaryDark"
+                href="/services"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primaryDark"
               >
-                Explore app development
+                Explore all services
                 <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
               </Link>
             </Reveal>
           </div>
-          <MobileAppMockup />
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* ── Website development ──────────────────────────────── */}
-      <section aria-labelledby="web-heading" className="border-t border-border bg-bgCard/40">
-        <div className="mx-auto max-w-6xl px-6 py-20 space-y-14">
-          <SectionHeading
-            eyebrow="Website development"
-            title="Websites that load fast and convert faster"
-            description="Marketing sites, e-commerce stores and web applications engineered for speed, search visibility and measurable results."
-            align="center"
-          />
-          <BrowserMockup />
-          <StaggerGroup className="grid gap-5 sm:grid-cols-3">
-            {[
-              {
-                icon: <Globe2 size={18} strokeWidth={1.75} aria-hidden="true" />,
-                title: 'Responsive by default',
-                body: 'Every layout is built mobile-first and tested across devices before launch.',
-              },
-              {
-                icon: <MessageSquareText size={18} strokeWidth={1.75} aria-hidden="true" />,
-                title: 'Content you control',
-                body: 'Manage products, posts and pages yourself — no developer needed for daily edits.',
-              },
-              {
-                icon: <Smartphone size={18} strokeWidth={1.75} aria-hidden="true" />,
-                title: 'Performance budgets',
-                body: 'Fast load times and clean Core Web Vitals treated as requirements, not extras.',
-              },
-            ].map((f) => (
-              <StaggerItem key={f.title}>
-                <div className="h-full rounded-xl border border-border bg-bgCard p-6 transition-colors duration-300 hover:border-primary/30">
-                  <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    {f.icon}
-                  </span>
-                  <h3 className="font-semibold text-textMain">{f.title}</h3>
-                  <p className="mt-2 text-sm text-textMuted leading-relaxed">{f.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </section>
+      {/* ── Industries ───────────────────────────────────────── */}
+      {enabled('industries') && (industries ?? []).length > 0 && (
+        <section aria-labelledby="industries-heading" className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <SectionHeading
+              eyebrow={head('industries')?.eyebrow}
+              title={head('industries')?.title ?? 'Industries'}
+              description={head('industries')?.description}
+              align="center"
+            />
+            <StaggerGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {(industries ?? []).map((ind) => (
+                <StaggerItem key={ind.slug} className="h-full">
+                  <Link
+                    href={`/industries/${ind.slug}`}
+                    className="group flex h-full flex-col rounded-xl border border-border bg-bgCard p-5 transition-colors duration-300 hover:border-primary/40"
+                  >
+                    {ind.icon && (
+                      <span aria-hidden="true" className="mb-3 text-2xl">
+                        {ind.icon}
+                      </span>
+                    )}
+                    <h3 className="font-semibold text-textMain">{ind.name}</h3>
+                    {ind.short_description && (
+                      <p className="mt-1.5 text-sm leading-relaxed text-textMuted">{ind.short_description}</p>
+                    )}
+                  </Link>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
 
       {/* ── AI calling agents ────────────────────────────────── */}
-      <section aria-labelledby="ai-heading" className="overflow-x-clip border-t border-border">
-        <div className="mx-auto max-w-6xl px-6 py-20 space-y-14">
-          <SectionHeading
-            eyebrow="AI calling agents"
-            title="AI calling agents that never miss a call"
-            description="A voice agent that answers around the clock, qualifies leads and books appointments — escalating complex conversations to your team with a full summary."
-            align="center"
-          />
-          <AICallVisual />
-          <Reveal className="text-center">
-            <MagneticButton href="/services/ai-calling-agents">
-              Explore AI Calling
-              <PhoneCall size={16} strokeWidth={2} aria-hidden="true" />
-            </MagneticButton>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Why YAIdigitals ──────────────────────────────────── */}
-      <section aria-labelledby="why-heading" className="border-t border-border bg-bgCard/40">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <SectionHeading eyebrow="Why us" title="Why teams choose YAIdigitals" />
-          <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2">
-            {WHY_US.map((w) => (
-              <StaggerItem key={w.title}>
-                <div className="h-full rounded-xl border border-border bg-bgCard p-6 transition-colors duration-300 hover:border-primary/30">
-                  <h3 className="font-semibold text-textMain">{w.title}</h3>
-                  <p className="mt-2 text-sm text-textMuted leading-relaxed">{w.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </section>
-
-      {/* ── Featured products ────────────────────────────────── */}
-      <section aria-labelledby="products-heading" className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+      {enabled('ai-calling') && (
+        <section aria-labelledby="ai-heading" className="overflow-x-clip border-t border-border bg-bgCard/40">
+          <div className="mx-auto max-w-6xl px-6 py-20 space-y-14">
             <SectionHeading
-              eyebrow="Store"
-              title="Instant-delivery digital products"
-              description="Ready-to-use content bundles from our own store — checkout online, download immediately."
+              eyebrow={head('ai-calling')?.eyebrow}
+              title={head('ai-calling')?.title ?? 'AI Calling Agents'}
+              description={head('ai-calling')?.description}
+              align="center"
             />
-            <Reveal>
-              <Link href="/store" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
-                View all products
-                <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </Reveal>
+            <AICallVisual />
+            <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-center lg:justify-center">
+              <ul className="mx-auto grid max-w-md gap-x-8 gap-y-3 sm:grid-cols-2 lg:mx-0">
+                {AI_CAPABILITIES.map((c) => (
+                  <CheckItem key={c}>{c}</CheckItem>
+                ))}
+              </ul>
+              <Reveal className="text-center lg:text-left">
+                <MagneticButton href="/services/ai-calling-agents">
+                  Explore AI Calling Agents
+                  <PhoneCall size={16} strokeWidth={2} aria-hidden="true" />
+                </MagneticButton>
+              </Reveal>
+            </div>
           </div>
-          <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {(products ?? []).map((p) => (
-              <StaggerItem key={p.id} className="h-full">
-                <ProductCard product={p} />
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-          <Reveal>
-            <p className="mt-8 text-sm text-textMuted">
-              Prefer structured learning?{' '}
-              <Link href="/courses" className="text-primary underline-offset-4 hover:underline">
-                Explore our courses
-              </Link>{' '}
-              on short-form content, editing and AI automation.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* ── Technology ───────────────────────────────────────── */}
+      {enabled('technology') && (technologies ?? []).length > 0 && (
+        <section aria-labelledby="tech-heading" className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <SectionHeading
+              eyebrow={head('technology')?.eyebrow}
+              title={head('technology')?.title ?? 'Technology'}
+              description={head('technology')?.description}
+              align="center"
+            />
+            <div className="mt-12 space-y-8">
+              {Object.entries(techGroups).map(([category, items]) => (
+                <Reveal key={category}>
+                  <div className="rounded-xl border border-border bg-bgCard p-6">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-textMuted">
+                      {category}
+                    </h3>
+                    <ul className="mt-4 flex flex-wrap gap-2.5">
+                      {items.map((t) => (
+                        <li
+                          key={t.name}
+                          className="rounded-lg border border-border bg-bgDark px-3.5 py-1.5 text-sm text-textMain"
+                        >
+                          {t.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Process ──────────────────────────────────────────── */}
-      <section aria-labelledby="process-heading" className="border-t border-border bg-bgCard/40">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <SectionHeading
-            eyebrow="Process"
-            title="How we work"
-            description="A simple, transparent process from first message to launch."
-          />
-          <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {PROCESS.map((p) => (
-              <StaggerItem key={p.step}>
-                <div className="h-full rounded-xl border border-border bg-bgCard p-6 relative overflow-hidden transition-colors duration-300 hover:border-primary/30">
-                  <span
-                    aria-hidden="true"
-                    className="absolute -right-2 -top-3 select-none text-6xl font-bold text-white/4"
+      {enabled('process') && (
+        <section aria-labelledby="process-heading" className="border-t border-border bg-bgCard/40">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <SectionHeading
+              eyebrow={head('process')?.eyebrow}
+              title={head('process')?.title ?? 'How We Work'}
+              description={head('process')?.description}
+            />
+            <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {PROCESS.map((p) => (
+                <StaggerItem key={p.step}>
+                  <div className="h-full rounded-xl border border-border bg-bgCard p-6 relative overflow-hidden transition-colors duration-300 hover:border-primary/30">
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-2 -top-3 select-none text-6xl font-bold text-white/4"
+                    >
+                      {p.step}
+                    </span>
+                    <span className="eyebrow">{p.step}</span>
+                    <h3 className="mt-3 font-semibold text-textMain">{p.title}</h3>
+                    <p className="mt-2 text-sm text-textMuted leading-relaxed">{p.body}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
+
+      {/* ── Why YAIdigitals ──────────────────────────────────── */}
+      {enabled('why') && (
+        <section aria-labelledby="why-heading" className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <SectionHeading
+              eyebrow={head('why')?.eyebrow}
+              title={head('why')?.title ?? 'Why YAIdigitals'}
+              description={head('why')?.description}
+            />
+            <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2">
+              {WHY_US.map((w) => (
+                <StaggerItem key={w.title}>
+                  <div className="h-full rounded-xl border border-border bg-bgCard p-6 transition-colors duration-300 hover:border-primary/30">
+                    <h3 className="font-semibold text-textMain">{w.title}</h3>
+                    <p className="mt-2 text-sm text-textMuted leading-relaxed">{w.body}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
+
+      {/* ── Testimonials (only when verified ones exist) ─────── */}
+      {enabled('testimonials') && (testimonials ?? []).length > 0 && (
+        <section aria-labelledby="testimonials-heading" className="border-t border-border bg-bgCard/40">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <SectionHeading
+              eyebrow={head('testimonials')?.eyebrow}
+              title={head('testimonials')?.title ?? 'Testimonials'}
+              description={head('testimonials')?.description}
+              align="center"
+            />
+            <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-3">
+              {(testimonials as DbTestimonial[]).map((t) => (
+                <StaggerItem key={t.id} className="h-full">
+                  <figure className="flex h-full flex-col rounded-xl border border-border bg-bgCard p-6">
+                    <blockquote className="flex-1 text-sm leading-relaxed text-textMuted">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+                    <figcaption className="mt-5 border-t border-border pt-4">
+                      <p className="font-semibold text-textMain">{t.client_name}</p>
+                      <p className="text-xs text-textMuted">
+                        {[t.client_role, t.company].filter(Boolean).join(', ')}
+                      </p>
+                    </figcaption>
+                  </figure>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
+
+      {/* ── Insights ─────────────────────────────────────────── */}
+      {enabled('insights') && (posts ?? []).length > 0 && (
+        <section aria-labelledby="insights-heading" className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                eyebrow={head('insights')?.eyebrow}
+                title={head('insights')?.title ?? 'Insights'}
+                description={head('insights')?.description}
+              />
+              <Reveal>
+                <Link href="/insights" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
+                  All insights
+                  <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </Reveal>
+            </div>
+            <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-3">
+              {(posts as DbPost[]).map((post) => (
+                <StaggerItem key={post.id} className="h-full">
+                  <Link
+                    href={`/insights/${post.slug}`}
+                    className="group flex h-full flex-col rounded-xl border border-border bg-bgCard p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-elevate focus-visible:border-primary outline-none motion-reduce:transition-none"
                   >
-                    {p.step}
-                  </span>
-                  <span className="eyebrow">{p.step}</span>
-                  <h3 className="mt-3 font-semibold text-textMain">{p.title}</h3>
-                  <p className="mt-2 text-sm text-textMuted leading-relaxed">{p.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </section>
+                    <h3 className="font-semibold leading-snug text-textMain">{post.title}</h3>
+                    {post.excerpt && (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-textMuted">{post.excerpt}</p>
+                    )}
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm text-primary group-hover:text-primaryDark">
+                      Read article
+                      <ArrowRight
+                        size={14}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                        className="transition-transform duration-200 group-hover:translate-x-0.5"
+                      />
+                    </span>
+                  </Link>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </section>
+      )}
 
       {/* ── FAQ ──────────────────────────────────────────────── */}
-      <section aria-labelledby="faq-heading" className="border-t border-border">
-        <div className="mx-auto max-w-3xl px-6 py-20">
-          <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
-          <div className="mt-10 space-y-3">
-            {FAQS.map((f, i) => (
-              <Reveal key={f.q} delay={i * 0.04}>
-                <details className="group rounded-xl border border-border bg-bgCard transition-colors open:border-primary/35">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-medium text-textMain [&::-webkit-details-marker]:hidden">
-                    {f.q}
-                    <ChevronDown
-                      size={17}
-                      strokeWidth={2}
-                      aria-hidden="true"
-                      className="shrink-0 text-primary transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none"
-                    />
-                  </summary>
-                  <p className="px-6 pb-5 text-sm text-textMuted leading-relaxed">{f.a}</p>
-                </details>
-              </Reveal>
-            ))}
+      {faqSection?.enabled && (
+        <section aria-labelledby="faq-heading" className="border-t border-border bg-bgCard/40">
+          <div className="mx-auto max-w-3xl px-6 py-20">
+            <SectionHeading eyebrow={faqSection.eyebrow} title={faqSection.title} />
+            <div className="mt-10 space-y-3">
+              {FAQS.map((f, i) => (
+                <Reveal key={f.q} delay={i * 0.04}>
+                  <details className="group rounded-xl border border-border bg-bgCard transition-colors open:border-primary/35">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-medium text-textMain [&::-webkit-details-marker]:hidden">
+                      {f.q}
+                      <ChevronDown
+                        size={17}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                        className="shrink-0 text-primary transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none"
+                      />
+                    </summary>
+                    <p className="px-6 pb-5 text-sm text-textMuted leading-relaxed">{f.a}</p>
+                  </details>
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── CTA ──────────────────────────────────────────────── */}
-      <section aria-labelledby="cta-heading" className="border-t border-border bg-bgCard/40">
+      <section aria-labelledby="cta-heading" className="border-t border-border">
         <div className="mx-auto max-w-6xl px-6 py-24">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-bgCard px-6 py-16 text-center shadow-card">
@@ -389,13 +540,14 @@ export default async function Home() {
                   as="h2"
                   className="text-2xl sm:text-3xl font-bold tracking-tight text-textMain"
                 >
-                  Have a project in mind?
+                  Have an Idea Worth Building?
                 </AnimatedHeading>
                 <p className="mx-auto mt-3 max-w-xl text-textMuted">
-                  Tell us what you want to build. You&apos;ll get a scoped proposal with deliverables and pricing — no obligation.
+                  Tell us what you&apos;re trying to create, improve or automate. We&apos;ll help you determine the right technical approach.
                 </p>
-                <div className="mt-8">
-                  <MagneticButton href="/contact">Start a Project</MagneticButton>
+                <div className="mt-8 flex flex-wrap justify-center gap-4">
+                  <MagneticButton href="/contact">Start Your Project</MagneticButton>
+                  <MagneticButton href="/work" variant="outline">View Our Work</MagneticButton>
                 </div>
               </div>
             </div>

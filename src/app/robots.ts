@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
-
-const BASE = process.env.NEXT_PUBLIC_APP_URL || 'https://yaidigitals.vercel.app';
+import { BASE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/admin/', '/api/'],
       },
     ],
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

@@ -9,7 +9,7 @@ import type { ProjectRecord } from '@/lib/types';
 export function ProjectCard({ project }: { project: ProjectRecord }) {
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/work/${project.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-bgCard transition-all duration-300 hover:border-primary/40 hover:shadow-elevate hover:-translate-y-1 focus-visible:border-primary outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-bgDark bg-grid-faint bg-grid">

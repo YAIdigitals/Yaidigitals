@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { Smartphone, Globe, PhoneCall } from 'lucide-react';
+import { Smartphone, PhoneCall } from 'lucide-react';
 import { EASE } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 

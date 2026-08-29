@@ -11,6 +11,7 @@ type FormData = {
   project_type: string;
   budget_range: string;
   required_service: string;
+  existing_website: string;
   project_description: string;
   preferred_contact_method: 'email' | 'phone' | 'whatsapp' | 'video-call';
 };
@@ -23,11 +24,13 @@ const EMPTY_FORM: FormData = {
   project_type: '',
   budget_range: '',
   required_service: '',
+  existing_website: '',
   project_description: '',
   preferred_contact_method: 'email',
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const URL_RE = /^https?:\/\/[^\s]+\.[^\s]{2,}$/i;
 
 function validateField(field: keyof FormData, value: string): string | null {
   switch (field) {
@@ -42,6 +45,11 @@ function validateField(field: keyof FormData, value: string): string | null {
     case 'phone':
       if (value.trim() && !/^[+\d][\d\s\-()]{5,18}$/.test(value.trim())) {
         return 'Please enter a valid phone number.';
+      }
+      return null;
+    case 'existing_website':
+      if (value.trim() && !URL_RE.test(value.trim())) {
+        return 'Enter a valid URL starting with http:// or https://';
       }
       return null;
     default:
@@ -59,7 +67,7 @@ const inputClasses = (hasError: boolean) =>
       : 'border-border hover:border-white/15 focus:border-primary',
   ].join(' ');
 
-export default function ContactForm() {
+export default function ContactForm({ contactEmail = 'info@yaidigitals.com' }: { contactEmail?: string }) {
   const [formData, setFormData] = useState<FormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [loading, setLoading] = useState(false);
@@ -94,7 +102,7 @@ export default function ContactForm() {
 
     // Validate all fields on submit
     const nextErrors: Partial<Record<keyof FormData, string>> = {};
-    (['name', 'email', 'phone'] as const).forEach((field) => {
+    (['name', 'email', 'phone', 'existing_website'] as const).forEach((field) => {
       const message = validateField(field, formData[field]);
       if (message) nextErrors[field] = message;
     });
@@ -134,7 +142,7 @@ export default function ContactForm() {
     } catch (err) {
       console.error('Error submitting lead:', err);
       setError(
-        'Something went wrong while sending your message. Please try again, or email us directly at info@yaidigitals.com.'
+        `Something went wrong while sending your message. Please try again, or email us directly at ${contactEmail}.`
       );
     } finally {
       setLoading(false);
@@ -256,11 +264,11 @@ export default function ContactForm() {
             <Field label="Budget Range" htmlFor="budget_range">
               <select id="budget_range" value={formData.budget_range} onChange={setField('budget_range')} disabled={loading} className={inputClasses(false)}>
                 <option value="">Select budget range</option>
-                <option value="under-1000">Under $1,000</option>
-                <option value="1000-5000">$1,000 - $5,000</option>
-                <option value="5000-15000">$5,000 - $15,000</option>
-                <option value="15000-50000">$15,000 - $50,000</option>
-                <option value="over-50000">Over $50,000</option>
+                <option value="under-1l">Under ₹1 Lakh</option>
+                <option value="1-3l">₹1 Lakh – ₹3 Lakh</option>
+                <option value="3-10l">₹3 Lakh – ₹10 Lakh</option>
+                <option value="10-25l">₹10 Lakh – ₹25 Lakh</option>
+                <option value="over-25l">Over ₹25 Lakh</option>
               </select>
             </Field>
           </div>
@@ -270,10 +278,12 @@ export default function ContactForm() {
               <select id="required_service" value={formData.required_service} onChange={setField('required_service')} disabled={loading} className={inputClasses(false)}>
                 <option value="">Select required service</option>
                 <option value="website-development">Website Development</option>
+                <option value="web-application-development">Web Application Development</option>
                 <option value="app-development">App Development</option>
                 <option value="ai-calling-agents">AI Calling Agents</option>
                 <option value="ai-automation">AI Automation</option>
                 <option value="custom-software">Custom Software Development</option>
+                <option value="ecommerce">E-commerce Development</option>
                 <option value="seo">SEO Optimization</option>
                 <option value="maintenance">Maintenance &amp; Support</option>
                 <option value="consulting">Consulting</option>
@@ -281,15 +291,31 @@ export default function ContactForm() {
               </select>
             </Field>
 
-            <Field label="Preferred Contact Method" htmlFor="preferred_contact_method">
-              <select id="preferred_contact_method" value={formData.preferred_contact_method} onChange={setField('preferred_contact_method')} disabled={loading} className={inputClasses(false)}>
-                <option value="email">Email</option>
-                <option value="phone">Phone</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="video-call">Video Call</option>
-              </select>
+            <Field label="Existing Website" htmlFor="existing_website" hint="Optional" error={errors.existing_website}>
+              <input
+                id="existing_website"
+                type="url"
+                inputMode="url"
+                value={formData.existing_website}
+                onChange={setField('existing_website')}
+                onBlur={handleBlur('existing_website')}
+                disabled={loading}
+                aria-invalid={!!errors.existing_website}
+                aria-describedby={errors.existing_website ? 'existing_website-error' : undefined}
+                placeholder="https://yourcompany.com"
+                className={inputClasses(!!errors.existing_website)}
+              />
             </Field>
           </div>
+
+          <Field label="Preferred Contact Method" htmlFor="preferred_contact_method">
+            <select id="preferred_contact_method" value={formData.preferred_contact_method} onChange={setField('preferred_contact_method')} disabled={loading} className={inputClasses(false)}>
+              <option value="email">Email</option>
+              <option value="phone">Phone</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="video-call">Video Call</option>
+            </select>
+          </Field>
 
           {/* Honeypot — hidden from users and assistive tech */}
           <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">

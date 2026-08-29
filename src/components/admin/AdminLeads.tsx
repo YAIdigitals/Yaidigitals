@@ -13,6 +13,7 @@ type Lead = {
   budget_range: string | null;
   required_service: string | null;
   project_description: string | null;
+  existing_website: string | null;
   preferred_contact_method: string | null;
   status: string;
   internal_notes: string | null;
@@ -38,8 +39,9 @@ export default function AdminLeads() {
     budget_range: '',
     required_service: '',
     project_description: '',
+    existing_website: '',
     preferred_contact_method: '',
-    status: 'new' as 'new' | 'contacted' | 'qualified' | 'in_progress' | 'won' | 'lost',
+    status: 'new' as 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'in_progress' | 'won' | 'lost',
     internal_notes: '',
     loading: false
   });
@@ -88,6 +90,7 @@ export default function AdminLeads() {
         budget_range: leadForm.budget_range,
         required_service: leadForm.required_service,
         project_description: leadForm.project_description,
+        existing_website: leadForm.existing_website || null,
         preferred_contact_method: leadForm.preferred_contact_method,
         status: leadForm.status,
         internal_notes: leadForm.internal_notes
@@ -111,6 +114,7 @@ export default function AdminLeads() {
         budget_range: '',
         required_service: '',
         project_description: '',
+        existing_website: '',
         preferred_contact_method: '',
         status: 'new',
         internal_notes: '',
@@ -146,8 +150,9 @@ export default function AdminLeads() {
       budget_range: lead.budget_range || '',
       required_service: lead.required_service || '',
       project_description: lead.project_description || '',
+      existing_website: lead.existing_website || '',
       preferred_contact_method: lead.preferred_contact_method || '',
-      status: lead.status as 'new' | 'contacted' | 'qualified' | 'in_progress' | 'won' | 'lost',
+      status: lead.status as 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'in_progress' | 'won' | 'lost',
       internal_notes: lead.internal_notes || '',
       loading: false
     });
@@ -181,6 +186,7 @@ export default function AdminLeads() {
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
               <option value="qualified">Qualified</option>
+              <option value="proposal_sent">Proposal Sent</option>
               <option value="in_progress">In Progress</option>
               <option value="won">Won</option>
               <option value="lost">Lost</option>
@@ -289,6 +295,15 @@ export default function AdminLeads() {
                   className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Existing Website</label>
+                <input
+                  type="text"
+                  value={leadForm.existing_website}
+                  onChange={(e) => setLeadForm(prev => ({ ...prev, existing_website: e.target.value }))}
+                  className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
+                />
+              </div>
             </div>
             
             <div>
@@ -306,12 +321,13 @@ export default function AdminLeads() {
                 <label className="block text-sm font-medium mb-1">Status</label>
                 <select
                   value={leadForm.status}
-                  onChange={(e) => setLeadForm(prev => ({ ...prev, status: e.target.value as 'new' | 'contacted' | 'qualified' | 'in_progress' | 'won' | 'lost' }))}
+                  onChange={(e) => setLeadForm(prev => ({ ...prev, status: e.target.value as 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'in_progress' | 'won' | 'lost' }))}
                   className="w-full border-border bg-bgCard text-textMain rounded px-3 py-2 focus:border-primary focus:outline-none"
                 >
                   <option value="new">New</option>
                   <option value="contacted">Contacted</option>
                   <option value="qualified">Qualified</option>
+                  <option value="proposal_sent">Proposal Sent</option>
                   <option value="in_progress">In Progress</option>
                   <option value="won">Won</option>
                   <option value="lost">Lost</option>
@@ -401,11 +417,12 @@ export default function AdminLeads() {
                       ${lead.status === 'new' ? 'bg-primary/20 text-primary' :
                         lead.status === 'contacted' ? 'bg-yellow-400/20 text-accentYellow' :
                         lead.status === 'qualified' ? 'bg-purple-400/20 text-purple-300' :
+                        lead.status === 'proposal_sent' ? 'bg-blue-400/20 text-blue-300' :
                         lead.status === 'in_progress' ? 'bg-orange-400/20 text-orange-300' :
                         lead.status === 'won' ? 'bg-primary/20 text-primary' :
                         'bg-red-500/20 text-red-300'}
                     `}>
-                      {lead.status.charAt(0).toUpperCase() + lead.status.slice(1)}
+                      {lead.status.replace('_', ' ').replace(/^./, c => c.toUpperCase())}
                     </span>
                   </p>
                 </div>

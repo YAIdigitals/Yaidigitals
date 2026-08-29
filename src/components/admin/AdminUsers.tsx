@@ -127,7 +127,7 @@ export default function AdminUsers() {
             </p>
           ) : (
             pending.map((u) => (
-              <UserRow key={u.id} user={u} busy={busyId === u.id}>
+              <UserRow key={u.id} user={u}>
                 <ActionButton label={`Approve ${u.email}`} onClick={() => act('approve', u.id)} busy={busyId === u.id} primary icon={<UserRoundCheck size={14} strokeWidth={2} />}>
                   Approve
                 </ActionButton>
@@ -151,7 +151,7 @@ export default function AdminUsers() {
             <p className="rounded-xl border border-border bg-bgCard p-4 text-sm text-textMuted">None.</p>
           )}
           {approved.map((u) => (
-            <UserRow key={u.id} user={u} busy={busyId === u.id} isSelf={u.id === currentUserId}>
+            <UserRow key={u.id} user={u} isSelf={u.id === currentUserId}>
               {u.id !== currentUserId && (
                 <ActionButton label={`Revoke access for ${u.email}`} onClick={() => act('revoke', u.id)} busy={busyId === u.id} danger icon={<ShieldX size={14} strokeWidth={2} />}>
                   Revoke
@@ -174,12 +174,10 @@ export default function AdminUsers() {
 
 function UserRow({
   user,
-  busy,
   isSelf = false,
   children,
 }: {
   user: AdminUserRow;
-  busy: boolean;
   isSelf?: boolean;
   children: React.ReactNode;
 }) {

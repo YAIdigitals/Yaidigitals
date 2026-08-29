@@ -560,7 +560,7 @@ export default function AdminCourses() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">What You'll Learn (JSON array)</label>
+                    <label className="block text-sm font-medium mb-1">What You&apos;ll Learn (JSON array)</label>
                     <textarea
                       value={courseForm.what_youll_learn}
                       onChange={(e) => setCourseForm(prev => ({ ...prev, what_youll_learn: e.target.value }))}

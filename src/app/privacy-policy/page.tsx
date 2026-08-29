@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
       <div className="space-y-6 text-textMuted">
         <p>
           YAIdigitals (&ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) respects your privacy. This policy explains what
-          information we collect when you use yaidigitals.vercel.app and how we handle it.
+          information we collect when you use yaidigitals.co.in and how we handle it.
         </p>
         <div>
           <h2 className="text-xl font-semibold mb-2 text-textMain">Information We Collect</h2>

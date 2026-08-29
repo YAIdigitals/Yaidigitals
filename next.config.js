@@ -2,12 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
+    // Type errors fail the build — keep CI honest.
+    ignoreBuildErrors: false,
   },
-}
+  async redirects() {
+    return [
+      // Case studies moved from /projects to /work
+      { source: '/projects', destination: '/work', permanent: true },
+      { source: '/projects/:slug', destination: '/work/:slug', permanent: true },
+      // Blog became Insights
+      { source: '/blog', destination: '/insights', permanent: true },
+      { source: '/blog/:slug', destination: '/insights/:slug', permanent: true },
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
