@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return buildMetadata({
     title: post.title,
     description: post.excerpt || undefined,
+    absoluteTitle: Boolean(post.title.includes('YAIdigitals')),
     path: `/insights/${params.slug}`,
     image: post.featured_image || '',
     type: 'article',

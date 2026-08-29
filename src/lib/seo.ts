@@ -7,6 +7,8 @@ export const SITE_NAME = 'YAIdigitals';
 
 interface BuildMetadataOptions {
   title?: string;
+  /** Render the title verbatim — used when the CMS seo_title already includes the brand suffix. */
+  absoluteTitle?: boolean;
   description?: string;
   /** Absolute or root-relative path; '' means the homepage. */
   path?: string;
@@ -24,6 +26,7 @@ interface BuildMetadataOptions {
  */
 export function buildMetadata({
   title,
+  absoluteTitle = false,
   description,
   path = '',
   image = '',
@@ -36,7 +39,7 @@ export function buildMetadata({
   const ogImage = image || '/opengraph-image';
 
   const metadata: Metadata = {
-    title,
+    title: absoluteTitle ? { absolute: title ?? '' } : title,
     description,
     alternates: { canonical: path || '/' },
     openGraph: {

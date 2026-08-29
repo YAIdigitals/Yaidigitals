@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
   return buildMetadata({
     title: service.seo_title || service.title,
+    absoluteTitle: Boolean(service.seo_title?.includes('YAIdigitals')),
     description: service.seo_description || service.short_description || undefined,
     path: `/services/${service.slug}`,
     image: service.og_image || service.hero_image || '',

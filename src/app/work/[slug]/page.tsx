@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const description = project.seo_description || project.short_description || undefined;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: `/work/${project.slug}` },
     openGraph: {

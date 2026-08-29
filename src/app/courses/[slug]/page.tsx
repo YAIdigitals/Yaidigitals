@@ -69,6 +69,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
   return buildMetadata({
     title: course.seo_title || course.title,
+    absoluteTitle: Boolean(course.seo_title?.includes('YAIdigitals')),
     description: course.seo_description || course.short_description || undefined,
     path: `/courses/${course.slug}`,
     image: course.thumbnail || course.banner || '',
