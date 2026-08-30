@@ -80,8 +80,11 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
   useEffect(() => {
     if (!isMobileOpen) return;
     stopScroll();
+    const prevHtmlOverflow = document.documentElement.style.overflow;
     const prevOverflow = document.body.style.overflow;
     const toggleButton = toggleButtonRef.current;
+    // Lock both html and body so no engine/timing can scroll the page behind the menu
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
 
     const firstLink = mobilePanelRef.current?.querySelector<HTMLAnchorElement>('a');
@@ -89,6 +92,7 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
 
     return () => {
       startScroll();
+      document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevOverflow;
       toggleButton?.focus();
     };
