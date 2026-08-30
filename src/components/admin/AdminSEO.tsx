@@ -15,6 +15,7 @@ const FALLBACK: SeoSettings = {
   og_image: '',
   twitter_handle: '',
   google_site_verification: '',
+  bing_site_verification: '',
   organization: { name: 'YAIdigitals', email: 'info@yaidigitals.com' },
 };
 
@@ -123,13 +124,21 @@ export default function AdminSEO() {
           </div>
         </Card>
 
-        <Card title="Search console">
-          <Text
-            label="Google site verification code"
-            value={data.google_site_verification}
-            onChange={(v) => set({ google_site_verification: v })}
-            hint="The value from Google Search Console's HTML tag method — exposed publicly in meta tags, safe to store."
-          />
+        <Card title="Search console & webmaster tools">
+          <div className="space-y-4">
+            <Text
+              label="Google site verification code"
+              value={data.google_site_verification}
+              onChange={(v) => set({ google_site_verification: v })}
+              hint="The content value from Search Console's HTML tag method — exposed publicly in meta tags, safe to store."
+            />
+            <Text
+              label="Bing site verification code (msvalidate.01)"
+              value={data.bing_site_verification}
+              onChange={(v) => set({ bing_site_verification: v })}
+              hint="The content value from Bing Webmaster Tools' meta tag method."
+            />
+          </div>
         </Card>
 
         <div className="flex justify-end">

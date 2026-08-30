@@ -62,6 +62,7 @@ export type SeoSettings = {
   og_image: string;
   twitter_handle: string;
   google_site_verification: string;
+  bing_site_verification: string;
   organization: {
     name: string;
     email: string;
@@ -129,6 +130,7 @@ export const DEFAULT_SEO: SeoSettings = {
   og_image: '',
   twitter_handle: '',
   google_site_verification: '',
+  bing_site_verification: '',
   organization: {
     name: 'YAIdigitals',
     email: 'info@yaidigitals.com',

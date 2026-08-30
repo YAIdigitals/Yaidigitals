@@ -75,6 +75,7 @@ export function organizationJsonLd(opts?: { email?: string; social?: string[]; u
     '@type': 'Organization',
     name: SITE_NAME,
     url: opts?.url || BASE_URL,
+    logo: `${opts?.url || BASE_URL}/icon.svg`,
     description:
       'YAIdigitals is a technology company that designs and develops mobile apps, web applications, business websites, custom software and AI-powered automation for growing businesses.',
     ...(opts?.email ? { email: opts.email } : {}),

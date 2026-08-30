@@ -37,9 +37,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description: seo.default_description,
     },
     robots: { index: true, follow: true },
-    ...(seo.google_site_verification
-      ? { verification: { google: seo.google_site_verification } }
-      : {}),
+    verification: {
+      ...(seo.google_site_verification ? { google: seo.google_site_verification } : {}),
+      ...(seo.bing_site_verification ? { other: { 'msvalidate.01': seo.bing_site_verification } } : {}),
+    },
   };
 }
 

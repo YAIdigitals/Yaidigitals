@@ -651,7 +651,8 @@ const SEO_SETTINGS = {
   canonical_domain: 'https://www.yaidigitals.co.in',
   og_image: '',
   twitter_handle: '',
-  google_site_verification: '',
+  google_site_verification: 'tiz23JuJwvrTb2kei7jYsdX-exycBXJDkSnIOmhwnp8',
+  bing_site_verification: '2F814C7B112D678ACE7FD724B6DEC538',
   organization: {
     name: 'YAIdigitals',
     type: 'Organization',
