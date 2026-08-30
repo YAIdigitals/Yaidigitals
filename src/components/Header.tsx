@@ -121,7 +121,7 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
             exit={reduceMotion ? undefined : { opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.18, ease: EASE }}
             {...hoverProps(key)}
-            className="absolute left-0 top-full pt-2 z-20 w-[26rem]"
+            className="absolute left-0 top-full pt-3 z-20 w-[26rem]"
           >
             <div className="rounded-xl border border-border bg-bgCard shadow-card p-2">
               <div className={cn('grid gap-1', twoCol && 'grid-cols-2')}>
@@ -182,7 +182,8 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-bgDark/85 backdrop-blur-lg">
+    <>
+      <header className="sticky top-0 z-50 border-b border-border bg-bgDark/85 backdrop-blur-lg">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link
@@ -260,20 +261,28 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
         </div>
       </div>
 
-      {/* Mobile panel */}
+      </header>
+
+      {/* Mobile menu overlay — fixed to the viewport, starting below the 4rem
+          header bar and bounded by top/bottom (no dvh/vh dependency). The inner
+          area scrolls when content is taller than the screen. Opacity-only
+          animation so Motion never injects overflow:hidden and nothing can clip
+          the first items. Rendered as a sibling of <header> because the
+          header's backdrop-blur would otherwise become the containing block for
+          fixed children. */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.nav
             id="mobile-menu"
             ref={mobilePanelRef}
             aria-label="Mobile"
-            initial={reduceMotion ? false : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={reduceMotion ? undefined : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: EASE }}
-            className="lg:hidden absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-bgDark/98 backdrop-blur-xl"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.18, ease: EASE }}
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto overscroll-contain border-b border-border bg-bgDark/98 backdrop-blur-xl [-webkit-overflow-scrolling:touch]"
           >
-            <div className="px-4 pt-2 pb-6 space-y-1">
+            <div className="px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-1">
               <p className="px-3 pt-3 pb-1 text-xs uppercase tracking-wider text-textMuted">Services</p>
               {SERVICE_LINKS.map((s) => (
                 <Link
@@ -356,6 +365,6 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
           </motion.nav>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
