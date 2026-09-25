@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const contentType = 'image/png';
 export const size = { width: 1200, height: 630 };
-export const alt = 'YAIdigitals — Apps, Software, Websites & AI';
+export const alt = 'YAIdigitals — website, app, software and AI development';
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -38,10 +38,10 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          We build digital products that move businesses forward
+          Website, app, software &amp; AI development
         </div>
         <div style={{ marginTop: 32, fontSize: 30, color: '#c5c5c5' }}>
-          Apps · Software · Websites · AI
+          Digital products built around your business
         </div>
       </div>
     ),

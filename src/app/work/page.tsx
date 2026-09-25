@@ -3,9 +3,10 @@ import type { Metadata } from 'next';
 import { WorkCard, type WorkCardProject } from '@/components/cards/WorkCard';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { SectionHeading } from '@/components/SectionHeading';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Our Work — Products We Have Built',
@@ -53,9 +54,17 @@ export default async function WorkPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'Work', path: '/work' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Case Studies',
+            description:
+              'Case studies of digital products built by YAIdigitals, including commerce platforms, delivery systems and business applications.',
+            path: '/work',
+            type: 'CollectionPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Work', path: '/work' }]),
+        ]}
       />
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading

@@ -4,6 +4,12 @@ import { BASE_URL } from '@/lib/seo';
 
 export const revalidate = 3600;
 
+function validDate(value?: string | null) {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     '',
@@ -13,16 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/work',
     '/insights',
     '/industries',
-    '/store',
     '/courses',
     '/privacy-policy',
     '/terms-conditions',
     '/refund-policy',
   ].map((path) => ({
-    url: `${BASE_URL}${path}`,
-    lastModified: new Date(),
-    changeFrequency: path === '' ? 'weekly' : 'monthly',
-    priority: path === '' ? 1 : path === '/work' || path === '/services' ? 0.9 : 0.6,
+    url: `${BASE_URL}${path || '/'}`,
   }));
 
   try {
@@ -38,43 +40,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
       ...staticRoutes,
+      ...((products.data ?? []).length > 0 ? [{ url: `${BASE_URL}/store` }] : []),
       ...(services.data ?? []).map((s) => ({
         url: `${BASE_URL}/services/${s.slug}`,
-        lastModified: s.updated_at ? new Date(s.updated_at) : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
+        ...(validDate(s.updated_at) ? { lastModified: validDate(s.updated_at) } : {}),
       })),
       ...(projects.data ?? []).map((p) => ({
         url: `${BASE_URL}/work/${p.slug}`,
-        lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.9,
+        ...(validDate(p.updated_at) ? { lastModified: validDate(p.updated_at) } : {}),
       })),
       ...(industries.data ?? []).map((i) => ({
         url: `${BASE_URL}/industries/${i.slug}`,
-        lastModified: i.updated_at ? new Date(i.updated_at) : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
+        ...(validDate(i.updated_at) ? { lastModified: validDate(i.updated_at) } : {}),
       })),
       ...(courses.data ?? []).map((c) => ({
         url: `${BASE_URL}/courses/${c.slug}`,
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
+        ...(validDate(c.updated_at) ? { lastModified: validDate(c.updated_at) } : {}),
       })),
       ...(products.data ?? []).map((p) => ({
         url: `${BASE_URL}/product/${p.slug}`,
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
       })),
       ...(posts.data ?? []).map((b) => ({
         url: `${BASE_URL}/insights/${b.slug}`,
-        lastModified: b.updated_at
-          ? new Date(b.updated_at)
-          : b.created_at
-            ? new Date(b.created_at)
-            : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
+        ...(validDate(b.updated_at || b.published_at || b.created_at)
+          ? { lastModified: validDate(b.updated_at || b.published_at || b.created_at) }
+          : {}),
       })),
     ];
   } catch {

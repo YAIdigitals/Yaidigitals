@@ -14,7 +14,7 @@ Environment variables live in `.env.local` (never committed):
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `NEXT_PUBLIC_APP_URL`
+- `NEXT_PUBLIC_APP_URL` (legacy; canonical URLs are fixed to the production domain in code)
 
 ## Production (Vercel)
 Project: **yaidigitals** — https://yaidigitals.vercel.app
@@ -43,8 +43,9 @@ Seed content is idempotent and only fills what the admin panel can later edit.
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (server-only; never expose to the client)
-- `NEXT_PUBLIC_APP_URL` — set to `https://www.yaidigitals.co.in` in production. All
-  canonical URLs, sitemap entries and JSON-LD derive from this.
+- `NEXT_PUBLIC_APP_URL` — optional legacy setting. Canonical URLs, sitemap entries
+  and JSON-LD are deliberately fixed to `https://www.yaidigitals.co.in` in code so
+  a preview or stale CMS setting cannot create duplicate canonical URLs.
 
 ## Admin panel
 Admins can only reach `/admin` after being approved by a super admin.

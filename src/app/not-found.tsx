@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = buildMetadata({
-  title: 'Page Not Found',
+export const metadata: Metadata = {
+  title: { absolute: 'Page Not Found | YAIdigitals' },
   description: 'The page you are looking for does not exist.',
-  path: '',
-  noindex: true,
-});
+  alternates: { canonical: null },
+};
 
 export default function NotFound() {
   return (

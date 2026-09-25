@@ -4,9 +4,10 @@ import ContactForm from '@/components/ContactForm';
 import { SectionHeading } from '@/components/SectionHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { getSettingsBundle } from '@/lib/settings';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Contact — Start Your Project',
@@ -20,9 +21,17 @@ export default async function ContactPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'Contact YAIdigitals',
+            description:
+              'Tell us about the product, website, software or automation you are planning.',
+            path: '/contact',
+            type: 'ContactPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }]),
+        ]}
       />
       <section className="mx-auto max-w-3xl px-6 py-16">
         <SectionHeading

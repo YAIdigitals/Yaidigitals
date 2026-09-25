@@ -3,13 +3,22 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, CheckCircle2, Download } from 'lucide-react';
+import { breadcrumbJsonLd, buildMetadata, metaDescription, productJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 async function getProduct(slug: string) {
   const supabase = createServerSupabase();
-  const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+  const { data } = await supabase
+    .from('products')
+    .select('*')
+    .eq('slug', slug)
+    .eq('active', true)
+    .maybeSingle();
   return data as {
+    slug: string;
     title: string;
     description: string | null;
     price: number | null;
@@ -25,19 +34,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const product = await getProduct(params.slug);
   if (!product) return { title: 'Product Not Found' };
 
-  return {
+  return buildMetadata({
     title: product.title,
-    description:
-      product.description?.slice(0, 155) ||
-      `Get ${product.title} for ${formatINR(product.price)} — instant delivery from the YAIdigitals store.`,
-    alternates: { canonical: `/product/${params.slug}` },
-    openGraph: {
-      title: product.title,
-      description: product.description?.slice(0, 155) || undefined,
-      images: product.cover_image ? [{ url: product.cover_image }] : undefined,
-      type: 'website',
-    },
-  };
+    description: metaDescription(
+      product.description,
+      `${product.title}, a downloadable digital product available from the YAIdigitals store.`
+    ),
+    path: `/product/${params.slug}`,
+    image: product.cover_image || '',
+  });
 }
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
@@ -45,7 +50,28 @@ export default async function ProductPage({ params }: { params: { slug: string }
   if (!product) notFound();
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16">
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: product.title,
+            description: product.description || undefined,
+            path: `/product/${product.slug}`,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Store', path: '/store' },
+            { name: product.title, path: `/product/${product.slug}` },
+          ]),
+          productJsonLd({
+            name: product.title,
+            description: product.description || undefined,
+            slug: product.slug,
+            image: product.cover_image || undefined,
+            price: product.price,
+          }),
+        ]}
+      />
+      <section className="mx-auto max-w-4xl px-6 py-16">
       <Link
         href="/store"
         className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
@@ -90,7 +116,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           </div>
 
           <ul className="mt-6 space-y-2.5 text-sm text-textMuted">
-            {['Instant digital delivery after checkout', 'Yours forever — no subscription'].map((line) => (
+            {['Digital delivery', 'One-time purchase — no subscription'].map((line) => (
               <li key={line} className="flex items-start gap-2.5">
                 <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" className="mt-0.5 shrink-0 text-primary" />
                 <span>{line}</span>
@@ -102,11 +128,11 @@ export default async function ProductPage({ params }: { params: { slug: string }
             href={`/contact?product=${encodeURIComponent(product.title)}`}
             className="group mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
           >
-            Get Instant Access
+            Request Access
             <ArrowRight size={16} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
           </Link>
           <p className="mt-3 text-center text-xs text-textMuted">
-            Questions first? The link opens a short form — we&apos;ll reply within one business day.
+            The link opens a short form so we can confirm access and next steps.
           </p>
         </div>
       </div>
@@ -121,6 +147,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           </div>
         </div>
       )}
-    </section>
+      </section>
+    </>
   );
 }

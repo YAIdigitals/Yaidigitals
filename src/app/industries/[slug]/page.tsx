@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 interface DbIndustry {
   slug: string;
@@ -32,21 +34,28 @@ const SERVICE_MAP: Record<string, { label: string; href: string }> = {
 
 async function getIndustry(slug: string) {
   const supabase = createServerSupabase();
-  const { data } = await supabase.from('industries').select('*').eq('slug', slug).maybeSingle();
+  const { data } = await supabase
+    .from('industries')
+    .select('*')
+    .eq('slug', slug)
+    .eq('published', true)
+    .maybeSingle();
   return (data ?? null) as DbIndustry | null;
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const industry = await getIndustry(params.slug);
   if (!industry || !industry.name) {
-    return { title: 'Industry Not Found', robots: { index: false, follow: false } };
+    return { title: 'Industry Not Found' };
   }
   return buildMetadata({
     title: industry.seo_title || `${industry.name} Technology Solutions`,
-    description:
-      industry.seo_description ||
-      industry.short_description ||
-      `How YAIdigitals builds technology for ${industry.name.toLowerCase()} businesses.`,
+    description: metaDescription(
+      industry.seo_description,
+      industry.long_description,
+      industry.short_description,
+      `How YAIdigitals builds technology for ${industry.name.toLowerCase()} businesses.`
+    ),
     path: `/industries/${industry.slug}`,
     image: industry.image_url || '',
   });
@@ -62,16 +71,18 @@ export default async function IndustryPage({ params }: { params: { slug: string 
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: `${industry.name} Technology Solutions`,
+            description: industry.short_description || undefined,
+            path: `/industries/${industry.slug}`,
+          }),
             breadcrumbJsonLd([
               { name: 'Industries', path: '/industries' },
               { name: industry.name, path: `/industries/${industry.slug}` },
-            ])
-          ),
-        }}
+            ]),
+        ]}
       />
 
       <section className="relative overflow-hidden border-b border-border">

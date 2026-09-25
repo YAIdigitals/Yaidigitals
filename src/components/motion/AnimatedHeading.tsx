@@ -36,7 +36,9 @@ export function AnimatedHeading({ children, as: Tag = 'h2', className, delay = 0
     <MotionTag
       className={className}
       aria-label={children}
-      initial="hidden"
+      // H1s are visible in the server response so the primary LCP/SEO heading
+      // never waits for hydration. Lower-level headings keep the reveal.
+      initial={Tag === 'h1' ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
       transition={{ staggerChildren: 0.045, delayChildren: delay }}

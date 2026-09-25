@@ -22,6 +22,10 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Keep native scrolling on touch devices to reduce main-thread work and
+    // preserve the platform's responsive scrolling behaviour.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if ('connection' in navigator && (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return;
 
     let cancelled = false;
 

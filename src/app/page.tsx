@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { ArrowRight, CheckCircle2, ChevronDown, PhoneCall } from 'lucide-react';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { getSettingsBundle } from '@/lib/settings';
-import { buildMetadata, faqJsonLd } from '@/lib/seo';
+import { buildMetadata, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
@@ -14,12 +15,13 @@ import { WorkCard, type WorkCardProject } from '@/components/cards/WorkCard';
 import { HeroVisual } from '@/components/visuals/HeroVisual';
 import { AICallVisual } from '@/components/visuals/AICallVisual';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
+  title: 'YAIdigitals | Website, App, Software & AI Development',
+  absoluteTitle: true,
   description:
-    'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
+    'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   path: '',
 });
 
@@ -158,12 +160,14 @@ export default async function Home() {
 
   return (
     <>
-      {faqSection?.enabled && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQS)) }}
-        />
-      )}
+      <JsonLd
+        data={webPageJsonLd({
+          name: 'YAIdigitals | Website, App, Software & AI Development',
+          description:
+            'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
+          path: '/',
+        })}
+      />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">

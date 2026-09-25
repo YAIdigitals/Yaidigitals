@@ -1,13 +1,27 @@
 import { Metadata } from 'next';
+import { breadcrumbJsonLd, buildMetadata, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Privacy Policy',
   description: 'How YAIdigitals collects, uses, and protects your information.',
-};
+  path: '/privacy-policy',
+});
 
 export default function PrivacyPolicyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-12">
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Privacy Policy',
+            description: 'How YAIdigitals collects, uses and protects information.',
+            path: '/privacy-policy',
+          }),
+          breadcrumbJsonLd([{ name: 'Privacy Policy', path: '/privacy-policy' }]),
+        ]}
+      />
+      <section className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-3xl font-bold mb-8 text-textMain">Privacy Policy</h1>
       <div className="space-y-6 text-textMuted">
         <p>
@@ -39,6 +53,7 @@ export default function PrivacyPolicyPage() {
           <p>For privacy questions, email us at info@yaidigitals.com.</p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

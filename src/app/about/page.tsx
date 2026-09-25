@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { createServerSupabase } from '@/lib/supabase/server';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { SectionHeading } from '@/components/SectionHeading';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: 'About — Technology Company for Growing Businesses',
@@ -47,9 +48,17 @@ export default async function AboutPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'About', path: '/about' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'About YAIdigitals',
+            description:
+              'YAIdigitals is a technology company focused on designing and developing digital products that help businesses operate, connect with customers and grow.',
+            path: '/about',
+            type: 'AboutPage',
+          }),
+          breadcrumbJsonLd([{ name: 'About', path: '/about' }]),
+        ]}
       />
       <section className="mx-auto max-w-4xl px-6 py-16">
         <SectionHeading

@@ -426,7 +426,7 @@ const PROJECTS = [
     completion_date: null,
     cta_text: 'Visit LocalGo',
     cta_url: 'https://localgo.co.in/',
-    seo_title: 'LocalGo Case Study — Hyperlocal Commerce & Delivery Platform | YAIdigitals',
+    seo_title: 'LocalGo Hyperlocal Commerce Case Study | YAIdigitals',
     seo_description:
       'How YAIdigitals designed and developed LocalGo, a hyperlocal commerce platform connecting customers, local businesses and delivery operations.',
     og_title: 'LocalGo — Building a Hyperlocal Commerce & Delivery Platform',
@@ -476,7 +476,7 @@ const PROJECTS = [
     completion_date: null,
     cta_text: 'Visit SparkX Car Care',
     cta_url: 'https://sparkxcarcare.in/',
-    seo_title: 'SparkX Car Care Case Study — Doorstep Automotive Care Platform | YAIdigitals',
+    seo_title: 'SparkX Car Care Platform Case Study | YAIdigitals',
     seo_description:
       'How YAIdigitals built the SparkX Car Care digital platform for doorstep car and bike service discovery and booking.',
     og_title: 'SparkX Car Care — Building a Modern Digital Presence for Automotive Care',
@@ -601,10 +601,10 @@ const TECHNOLOGIES = [
 const HOMEPAGE = {
   hero: {
     badge: 'Technology • Software • AI',
-    heading: 'We Build Digital Products That Move Businesses Forward.',
-    highlighted: 'Apps. Software. Websites. AI. Built Around Your Business.',
+    heading: 'Website, App, Custom Software & AI Development Company',
+    highlighted: 'Digital products built around your business.',
     description:
-      'YAIdigitals designs and develops powerful digital products for ambitious businesses—from high-performance websites and custom applications to scalable platforms and AI-powered automation.',
+      'YAIdigitals builds high-performance websites, mobile applications, custom software, e-commerce products, AI automation and AI calling agents for startups and growing businesses.',
     primary_cta_text: 'Start Your Project',
     primary_cta_url: '/contact',
     secondary_cta_text: 'Explore Our Work',
@@ -645,9 +645,9 @@ const SITE_SETTINGS = {
 const SEO_SETTINGS = {
   site_name: 'YAIdigitals',
   title_template: '%s | YAIdigitals',
-  default_title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
+  default_title: 'YAIdigitals | Website, App, Software & AI Development',
   default_description:
-    'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
+    'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',
   og_image: '',
   twitter_handle: '',

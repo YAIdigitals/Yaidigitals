@@ -3,12 +3,34 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { buildMetadata, breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, metaDescription, serviceJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 
 export const dynamicParams = true;
+export const revalidate = 300;
+
+const SEO_TITLES: Record<string, string> = {
+  'website-development': 'Website Development Company',
+  'web-application-development': 'Web Application Development Company',
+  'mobile-app-development': 'Mobile App Development Company',
+  'custom-software': 'Custom Software Development',
+  'ai-calling-agents': 'AI Calling Agents for Business',
+  'ai-automation': 'AI Automation Solutions',
+  ecommerce: 'E-commerce Development Company',
+};
+
+const RELATED_SERVICE_SLUGS: Record<string, string[]> = {
+  'website-development': ['web-application-development', 'ecommerce', 'custom-software'],
+  'web-application-development': ['custom-software', 'mobile-app-development', 'ai-automation'],
+  'mobile-app-development': ['web-application-development', 'custom-software', 'ecommerce'],
+  'custom-software': ['web-application-development', 'ai-automation', 'mobile-app-development'],
+  'ai-calling-agents': ['ai-automation', 'custom-software', 'web-application-development'],
+  'ai-automation': ['ai-calling-agents', 'custom-software', 'web-application-development'],
+  ecommerce: ['website-development', 'web-application-development', 'mobile-app-development'],
+};
 
 interface DbService {
   slug: string;
@@ -35,21 +57,32 @@ interface DbProject {
   cover_image?: string | null;
 }
 
+interface RelatedService {
+  slug: string;
+  title: string;
+  short_description?: string | null;
+}
+
 async function getService(slug: string) {
   const supabase = createServerSupabase();
-  const { data } = await supabase.from('services').select('*').eq('slug', slug).maybeSingle();
+  const { data } = await supabase
+    .from('services')
+    .select('*')
+    .eq('slug', slug)
+    .eq('active', true)
+    .maybeSingle();
   return (data ?? null) as DbService | null;
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const service = await getService(params.slug);
   if (!service) {
-    return { title: 'Service Not Found', robots: { index: false, follow: false } };
+    return { title: 'Service Not Found' };
   }
   return buildMetadata({
-    title: service.seo_title || service.title,
+    title: service.seo_title || SEO_TITLES[service.slug] || service.title,
     absoluteTitle: Boolean(service.seo_title?.includes('YAIdigitals')),
-    description: service.seo_description || service.short_description || undefined,
+    description: metaDescription(service.seo_description, service.short_description),
     path: `/services/${service.slug}`,
     image: service.og_image || service.hero_image || '',
   });
@@ -78,8 +111,21 @@ export default async function ServicePage({ params }: { params: { slug: string }
     (f): f is Faq & { q: string; a: string } => Boolean(f?.q && f?.a)
   );
   const relatedSlugs = list(service.related_project_slugs);
+  const relatedServiceSlugs = RELATED_SERVICE_SLUGS[service.slug] ?? [];
 
   const supabase = createServerSupabase();
+  let relatedServices: RelatedService[] = [];
+  if (relatedServiceSlugs.length > 0) {
+    const { data: serviceRows } = await supabase
+      .from('services')
+      .select('slug, title, short_description')
+      .eq('active', true)
+      .in('slug', relatedServiceSlugs);
+    relatedServices = ((serviceRows ?? []) as RelatedService[]).sort(
+      (a, b) => relatedServiceSlugs.indexOf(a.slug) - relatedServiceSlugs.indexOf(b.slug)
+    );
+  }
+
   let relatedProjects: DbProject[] = [];
   if (relatedSlugs.length > 0) {
     const { data } = await supabase
@@ -94,10 +140,13 @@ export default async function ServicePage({ params }: { params: { slug: string }
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: h1,
+            description: service.short_description || undefined,
+            path: `/services/${service.slug}`,
+          }),
             breadcrumbJsonLd([
               { name: 'Services', path: '/services' },
               { name: service.title, path: `/services/${service.slug}` },
@@ -108,9 +157,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
               slug: service.slug,
               features,
             }),
-            ...(faqs.length > 0 ? [faqJsonLd(faqs.map((f) => ({ q: f.q, a: f.a })))] : []),
-          ]),
-        }}
+        ]}
       />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
@@ -302,6 +349,36 @@ export default async function ServicePage({ params }: { params: { slug: string }
                         <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
                       </span>
                     </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </Reveal>
+        )}
+
+        {relatedServices.length > 0 && (
+          <Reveal>
+            <section aria-labelledby="related-services-heading" className="mt-14">
+              <h2 id="related-services-heading" className="text-2xl font-bold tracking-tight text-textMain">
+                Related services
+              </h2>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                {relatedServices.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/services/${related.slug}`}
+                    className="group rounded-xl border border-border bg-bgCard p-5 transition-colors hover:border-primary/40"
+                  >
+                    <h3 className="font-semibold text-textMain">{related.title}</h3>
+                    {related.short_description && (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-textMuted">
+                        {related.short_description}
+                      </p>
+                    )}
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary group-hover:text-primaryDark">
+                      Explore service
+                      <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
+                    </span>
                   </Link>
                 ))}
               </div>

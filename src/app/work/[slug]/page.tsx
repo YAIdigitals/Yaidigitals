@@ -3,12 +3,14 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, creativeWorkJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 interface DbProject {
   id: number;
@@ -44,36 +46,43 @@ interface DbProject {
 
 async function getProject(slug: string) {
   const supabase = createServerSupabase();
-  const { data } = await supabase.from('projects').select('*').eq('slug', slug).maybeSingle();
+  const { data } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'published')
+    .maybeSingle();
   return (data ?? null) as DbProject | null;
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const project = await getProject(params.slug);
-  if (!project || project.status === 'draft') {
-    return { title: 'Project Not Found', robots: { index: false, follow: false } };
+  if (!project) {
+    return { title: 'Project Not Found' };
   }
 
-  const title = project.seo_title || `${project.title} Case Study | YAIdigitals`;
-  const description = project.seo_description || project.short_description || undefined;
-
-  return {
-    title: { absolute: title },
-    description,
-    alternates: { canonical: `/work/${project.slug}` },
-    openGraph: {
-      title: project.og_title || title,
-      description: project.og_description || description,
-      url: `/work/${project.slug}`,
-      type: 'article',
-      images: project.og_image || project.cover_image ? [{ url: project.og_image || (project.cover_image as string) }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: project.og_title || title,
-      description: project.og_description || description,
-    },
+  const legacyTitles: Record<string, string> = {
+    'LocalGo Case Study — Hyperlocal Commerce & Delivery Platform | YAIdigitals':
+      'LocalGo Hyperlocal Commerce Case Study | YAIdigitals',
+    'SparkX Car Care Case Study — Doorstep Automotive Care Platform | YAIdigitals':
+      'SparkX Car Care Platform Case Study | YAIdigitals',
   };
+  const title = project.seo_title
+    ? legacyTitles[project.seo_title] || project.seo_title
+    : `${project.title} Case Study | YAIdigitals`;
+  const description = metaDescription(project.seo_description, project.short_description, project.description);
+
+  return buildMetadata({
+    title,
+    absoluteTitle: true,
+    description,
+    path: `/work/${project.slug}`,
+    image: project.og_image || project.cover_image || '',
+    openGraphTitle: project.og_title || title,
+    openGraphDescription: project.og_description || description,
+    type: 'article',
+    modifiedTime: project.updated_at || undefined,
+  });
 }
 
 function list(value: unknown): string[] {
@@ -102,7 +111,7 @@ function Section({
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
   const project = await getProject(params.slug);
-  if (!project || project.status === 'draft') notFound();
+  if (!project) notFound();
 
   const keyFeatures = list(project.key_features);
   const services = list(project.services_provided);
@@ -113,6 +122,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   const serviceSlugMap: Record<string, string> = {
     'Web Application Development': '/services/web-application-development',
     'Website Development': '/services/website-development',
+    'Business Websites': '/services/website-development',
     'Mobile App Development': '/services/mobile-app-development',
     'Custom Software': '/services/custom-software',
     'E-commerce & Marketplaces': '/services/ecommerce',
@@ -135,16 +145,27 @@ export default async function ProjectPage({ params }: { params: { slug: string }
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: `${project.title} Case Study`,
+            description: project.short_description || undefined,
+            path: `/work/${project.slug}`,
+          }),
             breadcrumbJsonLd([
               { name: 'Work', path: '/work' },
               { name: project.title, path: `/work/${project.slug}` },
-            ])
-          ),
-        }}
+            ]),
+          creativeWorkJsonLd({
+            name: `${project.title} Case Study`,
+            description: project.short_description || undefined,
+            slug: project.slug,
+            image: project.og_image || project.cover_image || undefined,
+            services,
+            technologies,
+            modifiedTime: project.updated_at || undefined,
+          }),
+        ]}
       />
 
       {/* ── Project hero ─────────────────────────────────────── */}
@@ -284,7 +305,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                   alt={`${project.title} screenshot ${i + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="w-full rounded-xl border border-border bg-bgDark object-cover"
+                  className="aspect-[16/9] w-full rounded-xl border border-border bg-bgDark object-cover"
                 />
               ))}
             </div>

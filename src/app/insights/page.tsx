@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { ArrowUpRight, Newspaper } from 'lucide-react';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { SectionHeading } from '@/components/SectionHeading';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Insights — Practical Writing on Software, Apps & AI',
@@ -47,9 +48,17 @@ export default async function InsightsPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'Insights', path: '/insights' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Insights',
+            description:
+              'Practical writing on apps, websites, custom software and AI systems for growing businesses.',
+            path: '/insights',
+            type: 'CollectionPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Insights', path: '/insights' }]),
+        ]}
       />
       <section className="mx-auto max-w-4xl px-6 py-16">
         <SectionHeading

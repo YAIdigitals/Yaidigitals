@@ -3,15 +3,16 @@ import type { Metadata } from 'next';
 import { ServiceCard } from '@/components/cards/ServiceCard';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { SectionHeading } from '@/components/SectionHeading';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import type { ServiceRecord } from '@/lib/types';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Services — Apps, Websites, AI Agents & Custom Software',
+  title: 'Development Services: Web, Apps, Software & AI',
   description:
-    'Explore YAIdigitals services: mobile app development, web applications, website development, custom software, AI calling agents, AI automation and e-commerce platforms.',
+    'Explore YAIdigitals services for websites, mobile apps, web applications, custom software, AI agents, automation and e-commerce platforms.',
   path: '/services',
 });
 
@@ -25,9 +26,17 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'Services', path: '/services' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Development Services',
+            description:
+              'Mobile app development, web applications, website development, custom software, AI calling agents, AI automation and e-commerce platforms.',
+            path: '/services',
+            type: 'CollectionPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Services', path: '/services' }]),
+        ]}
       />
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading

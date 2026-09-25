@@ -3,9 +3,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
-import { articleJsonLd, buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { articleJsonLd, buildMetadata, breadcrumbJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 interface PostRecord {
   title: string;
@@ -16,13 +18,15 @@ interface PostRecord {
   author_role: string | null;
   published_at: string | null;
   updated_at: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
 }
 
 async function getPost(slug: string) {
   const supabase = createServerSupabase();
   const { data } = await supabase
     .from('blog_posts')
-    .select('title, excerpt, content, featured_image, author, author_role, published_at, updated_at')
+    .select('title, excerpt, content, featured_image, author, author_role, published_at, updated_at, seo_title, seo_description')
     .eq('slug', slug)
     .eq('status', 'published')
     .maybeSingle();
@@ -31,12 +35,12 @@ async function getPost(slug: string) {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await getPost(params.slug);
-  if (!post) return { title: 'Article Not Found', robots: { index: false, follow: false } };
+  if (!post) return { title: 'Article Not Found' };
 
   return buildMetadata({
-    title: post.title,
-    description: post.excerpt || undefined,
-    absoluteTitle: Boolean(post.title.includes('YAIdigitals')),
+    title: post.seo_title || post.title,
+    description: metaDescription(post.seo_description, post.excerpt, post.content),
+    absoluteTitle: Boolean(post.seo_title?.includes('YAIdigitals')),
     path: `/insights/${params.slug}`,
     image: post.featured_image || '',
     type: 'article',
@@ -63,10 +67,13 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+      <JsonLd
+        data={[
+            webPageJsonLd({
+              name: post.title,
+              description: post.excerpt || undefined,
+              path: `/insights/${params.slug}`,
+            }),
             breadcrumbJsonLd([
               { name: 'Insights', path: '/insights' },
               { name: post.title, path: `/insights/${params.slug}` },
@@ -80,8 +87,7 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
               authorName: post.author || undefined,
               image: post.featured_image || undefined,
             }),
-          ]),
-        }}
+          ]}
       />
 
       <article className="mx-auto max-w-3xl px-6 py-16">
@@ -125,7 +131,7 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
             alt={post.title}
             loading="eager"
             decoding="async"
-            className="mt-8 w-full rounded-xl border border-border object-cover"
+            className="mt-8 aspect-[16/9] w-full rounded-xl border border-border object-cover"
           />
         )}
 
@@ -157,6 +163,12 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
             className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
           >
             Start a Project
+          </Link>
+          <Link
+            href="/services"
+            className="w-full text-sm font-medium text-primary underline-offset-4 hover:underline"
+          >
+            Explore our website, app, software and AI services
           </Link>
         </div>
       </article>

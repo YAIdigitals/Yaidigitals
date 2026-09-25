@@ -39,6 +39,21 @@ async function getRedirects(): Promise<RedirectRow[]> {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const hostname = (
+    request.headers.get('x-forwarded-host') ||
+    request.headers.get('host') ||
+    request.nextUrl.hostname
+  ).split(':')[0];
+
+  // Application-level safety net for the preferred host. Vercel should also
+  // configure the apex domain to redirect directly to this host.
+  if (hostname === 'yaidigitals.co.in') {
+    const canonicalUrl = request.nextUrl.clone();
+    canonicalUrl.protocol = 'https:';
+    canonicalUrl.hostname = 'www.yaidigitals.co.in';
+    canonicalUrl.port = '';
+    return NextResponse.redirect(canonicalUrl, 308);
+  }
 
   // Admin-managed redirects (exact match)
   if (pathname !== '/' && !pathname.startsWith('/admin') && !pathname.startsWith('/api')) {

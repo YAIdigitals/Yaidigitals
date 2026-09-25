@@ -1,13 +1,27 @@
 import { Metadata } from 'next';
+import { breadcrumbJsonLd, buildMetadata, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Refund Policy',
   description: 'Refund and cancellation policy for YAIdigitals digital products.',
-};
+  path: '/refund-policy',
+});
 
 export default function RefundPolicyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-12">
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Refund Policy',
+            description: 'Refund and cancellation policy for YAIdigitals digital products.',
+            path: '/refund-policy',
+          }),
+          breadcrumbJsonLd([{ name: 'Refund Policy', path: '/refund-policy' }]),
+        ]}
+      />
+      <section className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-3xl font-bold mb-8 text-textMain">Refund Policy</h1>
       <div className="space-y-6 text-textMuted">
         <div>
@@ -31,6 +45,7 @@ export default function RefundPolicyPage() {
           <p>For custom project work, refunds follow the milestones agreed in your project proposal.</p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

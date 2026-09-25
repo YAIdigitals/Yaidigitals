@@ -4,15 +4,17 @@ import { CourseCard } from '@/components/cards/CourseCard';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
 import { SectionHeading } from '@/components/SectionHeading';
 import type { CourseRecord } from '@/lib/types';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Courses — Practical Tech & Content Skills',
   description:
     'Learn in-demand skills with YAIdigitals courses — short-form content, editing and AI automation training for beginners through advanced levels.',
-  alternates: { canonical: '/courses' },
-};
+  path: '/courses',
+});
 
 export default async function CoursesPage() {
   const supabase = createServerSupabase();
@@ -28,7 +30,20 @@ export default async function CoursesPage() {
   const rest = all.filter((c) => !c.featured);
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Courses',
+            description:
+              'Practical technology, content and AI automation courses from YAIdigitals.',
+            path: '/courses',
+            type: 'CollectionPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Courses', path: '/courses' }]),
+        ]}
+      />
+      <section className="mx-auto max-w-6xl px-6 py-16">
       <SectionHeading
         as="h1"
         eyebrow="Courses"
@@ -74,6 +89,7 @@ export default async function CoursesPage() {
           )}
         </>
       )}
-    </section>
+      </section>
+    </>
   );
 }

@@ -3,9 +3,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SectionHeading } from '@/components/SectionHeading';
 import { StaggerGroup, StaggerItem } from '@/components/motion/StaggerGroup';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Industries We Serve',
@@ -33,9 +34,17 @@ export default async function IndustriesPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: 'Industries', path: '/industries' }])) }}
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'Industries YAIdigitals Serves',
+            description:
+              'Technology solutions for e-commerce, local commerce, automotive, restaurants, startups, professional services, education and real estate.',
+            path: '/industries',
+            type: 'CollectionPage',
+          }),
+          breadcrumbJsonLd([{ name: 'Industries', path: '/industries' }]),
+        ]}
       />
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading

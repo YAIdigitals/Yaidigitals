@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { buildMetadata, breadcrumbJsonLd } from '@/lib/seo';
+import { buildMetadata, breadcrumbJsonLd, courseJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import { Reveal } from '@/components/motion/Reveal';
 
 export const dynamicParams = true;
+export const revalidate = 300;
 
 interface DbCourse {
   id: number;
@@ -40,7 +42,12 @@ interface DbModule {
 
 async function getCourse(slug: string) {
   const supabase = createServerSupabase();
-  const { data } = await supabase.from('courses').select('*').eq('slug', slug).maybeSingle();
+  const { data } = await supabase
+    .from('courses')
+    .select('*')
+    .eq('slug', slug)
+    .eq('published', true)
+    .maybeSingle();
   return (data ?? null) as DbCourse | null;
 }
 
@@ -65,12 +72,12 @@ function list(value: unknown): string[] {
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const course = await getCourse(params.slug);
   if (!course) {
-    return { title: 'Course Not Found', robots: { index: false, follow: false } };
+    return { title: 'Course Not Found' };
   }
   return buildMetadata({
     title: course.seo_title || course.title,
     absoluteTitle: Boolean(course.seo_title?.includes('YAIdigitals')),
-    description: course.seo_description || course.short_description || undefined,
+    description: metaDescription(course.seo_description, course.short_description, course.full_description),
     path: `/courses/${course.slug}`,
     image: course.thumbnail || course.banner || '',
   });
@@ -102,16 +109,24 @@ export default async function CoursePage({ params }: { params: { slug: string } 
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: course.title,
+            description: course.short_description || undefined,
+            path: `/courses/${course.slug}`,
+          }),
             breadcrumbJsonLd([
               { name: 'Courses', path: '/courses' },
               { name: course.title, path: `/courses/${course.slug}` },
-            ])
-          ),
-        }}
+            ]),
+          courseJsonLd({
+            name: course.title,
+            description: course.short_description || undefined,
+            slug: course.slug,
+            image: course.thumbnail || course.banner || undefined,
+          }),
+        ]}
       />
       <section className="mx-auto max-w-4xl px-6 py-12">
         <Link

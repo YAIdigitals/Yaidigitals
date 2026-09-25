@@ -1,13 +1,27 @@
 import { Metadata } from 'next';
+import { breadcrumbJsonLd, buildMetadata, webPageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Terms & Conditions',
   description: 'Terms and conditions for using YAIdigitals products and services.',
-};
+  path: '/terms-conditions',
+});
 
 export default function TermsConditionsPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-12">
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            name: 'YAIdigitals Terms and Conditions',
+            description: 'Terms and conditions for using YAIdigitals products and services.',
+            path: '/terms-conditions',
+          }),
+          breadcrumbJsonLd([{ name: 'Terms and Conditions', path: '/terms-conditions' }]),
+        ]}
+      />
+      <section className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-3xl font-bold mb-8 text-textMain">Terms &amp; Conditions</h1>
       <div className="space-y-6 text-textMuted">
         <div>
@@ -38,6 +52,7 @@ export default function TermsConditionsPage() {
           <p>Questions about these terms can be sent to info@yaidigitals.com.</p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

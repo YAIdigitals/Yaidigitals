@@ -90,10 +90,10 @@ export const DEFAULT_SITE: SiteSettings = {
 export const DEFAULT_HOMEPAGE: HomepageSettings = {
   hero: {
     badge: 'Technology • Software • AI',
-    heading: 'We Build Digital Products That Move Businesses Forward.',
-    highlighted: 'Apps. Software. Websites. AI. Built Around Your Business.',
+    heading: 'Website, App, Custom Software & AI Development Company',
+    highlighted: 'Digital products built around your business.',
     description:
-      'YAIdigitals designs and develops powerful digital products for ambitious businesses—from high-performance websites and custom applications to scalable platforms and AI-powered automation.',
+      'YAIdigitals builds high-performance websites, mobile applications, custom software, e-commerce products, AI automation and AI calling agents for startups and growing businesses.',
     primary_cta_text: 'Start Your Project',
     primary_cta_url: '/contact',
     secondary_cta_text: 'Explore Our Work',
@@ -123,9 +123,9 @@ export const DEFAULT_INTEGRATIONS: IntegrationSettings = {
 export const DEFAULT_SEO: SeoSettings = {
   site_name: 'YAIdigitals',
   title_template: '%s | YAIdigitals',
-  default_title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
+  default_title: 'YAIdigitals | Website, App, Software & AI Development',
   default_description:
-    'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
+    'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',
   og_image: '',
   twitter_handle: '',
@@ -164,10 +164,42 @@ export async function getSettingsBundle(): Promise<{
       .select('key, value')
       .in('key', ['site', 'seo', 'homepage', 'integrations']);
     const rows = new Map((data ?? []).map((r) => [r.key as string, r.value as string]));
+    const parsedSite = parseJSON(rows.get('site'), DEFAULT_SITE);
+    const parsedSeo = parseJSON(rows.get('seo'), DEFAULT_SEO);
+    const parsedHomepage = parseJSON(rows.get('homepage'), DEFAULT_HOMEPAGE);
+    const site = { ...DEFAULT_SITE, ...parsedSite, social: { ...DEFAULT_SITE.social, ...parsedSite.social } };
+    const seo = {
+      ...DEFAULT_SEO,
+      ...parsedSeo,
+      canonical_domain: 'https://www.yaidigitals.co.in',
+      organization: { ...DEFAULT_SEO.organization, ...parsedSeo.organization },
+    };
+    const homepage = {
+      ...DEFAULT_HOMEPAGE,
+      ...parsedHomepage,
+      hero: { ...DEFAULT_HOMEPAGE.hero, ...parsedHomepage.hero },
+      sections: parsedHomepage.sections || DEFAULT_HOMEPAGE.sections,
+    };
+
+    // Upgrade only the original seeded hero. Any genuinely custom heading set
+    // in the CMS remains untouched.
+    if (homepage.hero?.heading === 'We Build Digital Products That Move Businesses Forward.') {
+      homepage.hero.heading = DEFAULT_HOMEPAGE.hero.heading;
+      if (homepage.hero.highlighted === 'Apps. Software. Websites. AI. Built Around Your Business.') {
+        homepage.hero.highlighted = DEFAULT_HOMEPAGE.hero.highlighted;
+      }
+      if (
+        homepage.hero.description ===
+        'YAIdigitals designs and develops powerful digital products for ambitious businesses—from high-performance websites and custom applications to scalable platforms and AI-powered automation.'
+      ) {
+        homepage.hero.description = DEFAULT_HOMEPAGE.hero.description;
+      }
+    }
+
     return {
-      site: parseJSON(rows.get('site'), DEFAULT_SITE),
-      seo: parseJSON(rows.get('seo'), DEFAULT_SEO),
-      homepage: parseJSON(rows.get('homepage'), DEFAULT_HOMEPAGE),
+      site,
+      seo,
+      homepage,
       integrations: parseJSON(rows.get('integrations'), DEFAULT_INTEGRATIONS),
     };
   } catch {

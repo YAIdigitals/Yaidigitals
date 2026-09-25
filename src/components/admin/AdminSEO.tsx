@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import { Area, Card, Notice, Panel, SubmitButton, Text } from '@/components/admin/ui';
 import type { SeoSettings } from '@/lib/settings';
 
+const CANONICAL_DOMAIN = 'https://www.yaidigitals.co.in';
+
 const FALLBACK: SeoSettings = {
   site_name: 'YAIdigitals',
   title_template: '%s | YAIdigitals',
-  default_title: 'YAIdigitals | Apps, Software, Websites & AI Solutions',
+  default_title: 'YAIdigitals | Website, App, Software & AI Development',
   default_description:
-    'YAIdigitals designs and develops mobile apps, web applications, business websites, custom software and AI-powered solutions for growing businesses.',
-  canonical_domain: 'https://yaidigitals.co.in',
+    'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
+  canonical_domain: CANONICAL_DOMAIN,
   og_image: '',
   twitter_handle: '',
   google_site_verification: '',
@@ -43,7 +45,7 @@ export default function AdminSEO() {
       const { data: rows } = await supabase.from('settings').select('value').eq('key', 'seo').maybeSingle();
       if (rows?.value) {
         try {
-          setData({ ...FALLBACK, ...JSON.parse(rows.value) });
+          setData({ ...FALLBACK, ...JSON.parse(rows.value), canonical_domain: CANONICAL_DOMAIN });
         } catch {
           /* keep fallback */
         }
@@ -60,7 +62,14 @@ export default function AdminSEO() {
     setNotice({ kind: 'ok', message: '' });
     const { error } = await supabase
       .from('settings')
-      .upsert({ key: 'seo', value: JSON.stringify(data), updated_at: new Date().toISOString() }, { onConflict: 'key' });
+      .upsert(
+        {
+          key: 'seo',
+          value: JSON.stringify({ ...data, canonical_domain: CANONICAL_DOMAIN }),
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'key' }
+      );
     setNotice(
       error
         ? { kind: 'error', message: `Save failed: ${error.message}` }
@@ -73,7 +82,6 @@ export default function AdminSEO() {
 
   const titleLen = data.default_title.length;
   const descLen = data.default_description.length;
-  const domainOk = /^https:\/\/[^\s/$.?#].[^\s]*$/i.test(data.canonical_domain);
 
   return (
     <form onSubmit={save} className="space-y-6">
@@ -97,7 +105,6 @@ export default function AdminSEO() {
           <div className="mt-3 flex flex-wrap gap-4 text-xs">
             <span className={titleLengthClass(titleLen)}>Title: {titleLen} chars (aim 30–60)</span>
             <span className={descriptionLengthClass(descLen)}>Description: {descLen} chars (aim 70–160)</span>
-            {!domainOk && <span className="text-red-400">Canonical domain should be https://…</span>}
           </div>
         </Card>
 
@@ -109,9 +116,9 @@ export default function AdminSEO() {
             <Area label="Default meta description" value={data.default_description} onChange={(v) => set({ default_description: v })} rows={3} />
             <Text
               label="Canonical domain"
-              value={data.canonical_domain}
-              onChange={(v) => set({ canonical_domain: v })}
-              placeholder="https://yaidigitals.co.in"
+              value={CANONICAL_DOMAIN}
+              onChange={() => {}}
+              hint="Fixed in code to prevent canonical drift and duplicate-domain indexing."
             />
           </div>
         </Card>
