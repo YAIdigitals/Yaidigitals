@@ -64,8 +64,8 @@ export default async function AboutPage() {
         <SectionHeading
           as="h1"
           eyebrow="About YAIdigitals"
-          title="We Build Technology Around Real Business Problems."
-          description="YAIdigitals is a technology company focused on designing and developing digital products that help businesses operate, connect with customers and grow."
+          title="YAIdigitals Builds Websites, Apps, Custom Software and AI Automation."
+          description="YAIdigitals is a digital product and software development company for startups and growing businesses. We plan, design, build, deploy and support technology around real business requirements."
         />
 
         <Reveal delay={0.15}>

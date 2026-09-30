@@ -7,7 +7,6 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { EASE } from '@/lib/motion';
-import { useSmoothScroll } from '@/components/motion/SmoothScrollProvider';
 
 const SERVICE_LINKS = [
   { href: '/services/website-development', label: 'Website Development', desc: 'Fast, conversion-focused sites' },
@@ -38,7 +37,6 @@ const MAIN_LINKS = [
 export default function Header({ company = 'YAIdigitals' }: { company?: string }) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
-  const { stop: stopScroll, start: startScroll } = useSmoothScroll();
 
   const [openMenu, setOpenMenu] = useState<'services' | 'products' | 'company' | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -76,10 +74,9 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
     setIsMobileOpen(false);
   }, [pathname]);
 
-  /* Mobile menu: lock body scroll + Lenis, manage focus */
+  /* Mobile menu: lock document scroll and manage focus. */
   useEffect(() => {
     if (!isMobileOpen) return;
-    stopScroll();
     const prevHtmlOverflow = document.documentElement.style.overflow;
     const prevOverflow = document.body.style.overflow;
     const toggleButton = toggleButtonRef.current;
@@ -91,12 +88,11 @@ export default function Header({ company = 'YAIdigitals' }: { company?: string }
     firstLink?.focus();
 
     return () => {
-      startScroll();
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevOverflow;
       toggleButton?.focus();
     };
-  }, [isMobileOpen, stopScroll, startScroll]);
+  }, [isMobileOpen]);
 
   useEffect(() => () => {
     if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);

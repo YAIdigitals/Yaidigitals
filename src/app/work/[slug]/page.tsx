@@ -2,9 +2,10 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
 import { buildMetadata, breadcrumbJsonLd, creativeWorkJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
@@ -55,8 +56,9 @@ async function getProject(slug: string) {
   return (data ?? null) as DbProject | null;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const project = await getProject(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getProject(slug);
   if (!project) {
     return { title: 'Project Not Found' };
   }
@@ -109,8 +111,9 @@ function Section({
   );
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = await getProject(params.slug);
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = await getProject(slug);
   if (!project) notFound();
 
   const keyFeatures = list(project.key_features);
@@ -172,18 +175,12 @@ export default async function ProjectPage({ params }: { params: { slug: string }
       <section className="relative overflow-hidden border-b border-border">
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hero-glow" />
         <div className="mx-auto max-w-5xl px-6 pt-12 pb-14">
-          <Link
-            href="/work"
-            className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-          >
-            <ArrowLeft
-              size={15}
-              strokeWidth={2}
-              aria-hidden="true"
-              className="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-            />
-            All work
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: 'Work', href: '/work' },
+              { name: project.title },
+            ]}
+          />
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             {project.industry && (

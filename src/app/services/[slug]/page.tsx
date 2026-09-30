@@ -3,8 +3,16 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { buildMetadata, breadcrumbJsonLd, metaDescription, serviceJsonLd, webPageJsonLd } from '@/lib/seo';
+import {
+  buildMetadata,
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  metaDescription,
+  serviceJsonLd,
+  webPageJsonLd,
+} from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
@@ -74,8 +82,9 @@ async function getService(slug: string) {
   return (data ?? null) as DbService | null;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const service = await getService(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const service = await getService(slug);
   if (!service) {
     return { title: 'Service Not Found' };
   }
@@ -101,8 +110,9 @@ interface Faq {
   a?: string;
 }
 
-export default async function ServicePage({ params }: { params: { slug: string } }) {
-  const service = await getService(params.slug);
+export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = await getService(slug);
   if (!service) notFound();
 
   const features = list(service.features);
@@ -157,6 +167,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
               slug: service.slug,
               features,
             }),
+            ...(faqs.length ? [faqPageJsonLd(faqs)] : []),
         ]}
       />
 
@@ -164,18 +175,12 @@ export default async function ServicePage({ params }: { params: { slug: string }
       <section className="relative overflow-hidden border-b border-border">
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hero-glow" />
         <div className="mx-auto max-w-4xl px-6 pt-12 pb-14">
-          <Link
-            href="/services"
-            className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-          >
-            <ArrowLeft
-              size={15}
-              strokeWidth={2}
-              aria-hidden="true"
-              className="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-            />
-            All services
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: 'Services', href: '/services' },
+              { name: service.title },
+            ]}
+          />
 
           <div className="mt-8">
             {service.icon && (

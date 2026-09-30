@@ -2,9 +2,10 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { buildMetadata, breadcrumbJsonLd, courseJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 
 export const dynamicParams = true;
@@ -69,8 +70,9 @@ function list(value: unknown): string[] {
   return Array.isArray(value) ? (value as string[]).filter((v) => typeof v === 'string') : [];
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const course = await getCourse(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const course = await getCourse(slug);
   if (!course) {
     return { title: 'Course Not Found' };
   }
@@ -83,8 +85,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   });
 }
 
-export default async function CoursePage({ params }: { params: { slug: string } }) {
-  const course = await getCourse(params.slug);
+export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const course = await getCourse(slug);
   if (!course) notFound();
 
   const modules = course.published && course.id ? await getModules(course.id) : [];
@@ -129,13 +132,12 @@ export default async function CoursePage({ params }: { params: { slug: string } 
         ]}
       />
       <section className="mx-auto max-w-4xl px-6 py-12">
-        <Link
-          href="/courses"
-          className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-        >
-          <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" />
-          All courses
-        </Link>
+        <Breadcrumbs
+          items={[
+            { name: 'Courses', href: '/courses' },
+            { name: course.title },
+          ]}
+        />
 
         <div className="mt-8">
           {course.thumbnail && (

@@ -2,9 +2,10 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, CheckCircle2, Download } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Download } from 'lucide-react';
 import { breadcrumbJsonLd, buildMetadata, metaDescription, productJsonLd, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export const dynamicParams = true;
 export const revalidate = 300;
@@ -30,8 +31,9 @@ function formatINR(value?: number | null) {
   return `₹${(value ?? 0).toLocaleString('en-IN')}`;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await getProduct(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
   if (!product) return { title: 'Product Not Found' };
 
   return buildMetadata({
@@ -40,13 +42,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       product.description,
       `${product.title}, a downloadable digital product available from the YAIdigitals store.`
     ),
-    path: `/product/${params.slug}`,
+    path: `/product/${slug}`,
     image: product.cover_image || '',
   });
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const product = await getProduct(params.slug);
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
   if (!product) notFound();
 
   return (
@@ -72,18 +75,12 @@ export default async function ProductPage({ params }: { params: { slug: string }
         ]}
       />
       <section className="mx-auto max-w-4xl px-6 py-16">
-      <Link
-        href="/store"
-        className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-      >
-        <ArrowLeft
-          size={15}
-          strokeWidth={2}
-          aria-hidden="true"
-          className="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-        />
-        All products
-      </Link>
+      <Breadcrumbs
+        items={[
+          { name: 'Store', href: '/store' },
+          { name: product.title },
+        ]}
+      />
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
         {/* Media */}

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import type { SiteSettings } from '@/lib/settings';
 
 const SERVICE_LINKS = [
@@ -32,10 +31,10 @@ const LEGAL_LINKS = [
 export default function Footer({ site }: { site: SiteSettings }) {
   const year = new Date().getFullYear();
   const socials = [
-    { href: site.social.instagram, label: 'Instagram', Icon: Instagram },
-    { href: site.social.facebook, label: 'Facebook', Icon: Facebook },
-    { href: site.social.twitter, label: 'Twitter / X', Icon: Twitter },
-    { href: site.social.linkedin, label: 'LinkedIn', Icon: Linkedin },
+    { href: site.social.instagram, label: 'Instagram', shortLabel: 'IG' },
+    { href: site.social.facebook, label: 'Facebook', shortLabel: 'FB' },
+    { href: site.social.twitter, label: 'Twitter / X', shortLabel: 'X' },
+    { href: site.social.linkedin, label: 'LinkedIn', shortLabel: 'IN' },
   ].filter((s) => Boolean(s.href));
 
   return (
@@ -66,7 +65,7 @@ export default function Footer({ site }: { site: SiteSettings }) {
             )}
             {socials.length > 0 && (
               <div className="flex gap-2 pt-1">
-                {socials.map(({ href, label, Icon }) => (
+                {socials.map(({ href, label, shortLabel }) => (
                   <a
                     key={label}
                     href={href}
@@ -75,7 +74,9 @@ export default function Footer({ site }: { site: SiteSettings }) {
                     aria-label={`${site.company_name} on ${label}`}
                     className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-textMuted transition-colors hover:border-primary/40 hover:text-primary"
                   >
-                    <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                    <span aria-hidden="true" className="text-[10px] font-bold tracking-wide">
+                      {shortLabel}
+                    </span>
                   </a>
                 ))}
               </div>

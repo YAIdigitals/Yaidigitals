@@ -79,7 +79,7 @@ export const DEFAULT_SITE: SiteSettings = {
   social: {
     instagram: 'https://instagram.com/yaidigitals_',
     facebook: 'https://facebook.com/yaidigitals',
-    twitter: 'https://twitter.com/yaidigitals',
+    twitter: '',
     linkedin: '',
   },
   footer_description: 'Technology built around your business.',
@@ -123,7 +123,7 @@ export const DEFAULT_INTEGRATIONS: IntegrationSettings = {
 export const DEFAULT_SEO: SeoSettings = {
   site_name: 'YAIdigitals',
   title_template: '%s | YAIdigitals',
-  default_title: 'YAIdigitals | Website, App, Software & AI Development',
+  default_title: 'YAIdigitals | Website, App, Software & AI Development Company',
   default_description:
     'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',
@@ -167,7 +167,14 @@ export async function getSettingsBundle(): Promise<{
     const parsedSite = parseJSON(rows.get('site'), DEFAULT_SITE);
     const parsedSeo = parseJSON(rows.get('seo'), DEFAULT_SEO);
     const parsedHomepage = parseJSON(rows.get('homepage'), DEFAULT_HOMEPAGE);
-    const site = { ...DEFAULT_SITE, ...parsedSite, social: { ...DEFAULT_SITE.social, ...parsedSite.social } };
+    const social = { ...DEFAULT_SITE.social, ...parsedSite.social };
+    // The formerly configured @yaidigitals X profile returns 404. Keep it out
+    // of the footer and Organization.sameAs while allowing any replacement set
+    // through the CMS to flow through normally.
+    if (/^(https?:\/\/)?(www\.)?(twitter\.com|x\.com)\/yaidigitals\/?$/i.test(social.twitter)) {
+      social.twitter = '';
+    }
+    const site = { ...DEFAULT_SITE, ...parsedSite, social };
     const seo = {
       ...DEFAULT_SEO,
       ...parsedSeo,

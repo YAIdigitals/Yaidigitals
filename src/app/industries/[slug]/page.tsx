@@ -2,9 +2,10 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { buildMetadata, breadcrumbJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 
 export const dynamicParams = true;
@@ -43,8 +44,9 @@ async function getIndustry(slug: string) {
   return (data ?? null) as DbIndustry | null;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const industry = await getIndustry(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const industry = await getIndustry(slug);
   if (!industry || !industry.name) {
     return { title: 'Industry Not Found' };
   }
@@ -61,8 +63,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   });
 }
 
-export default async function IndustryPage({ params }: { params: { slug: string } }) {
-  const industry = await getIndustry(params.slug);
+export default async function IndustryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const industry = await getIndustry(slug);
   if (!industry || !industry.name) notFound();
 
   const services = Array.isArray(industry.services)
@@ -88,13 +91,12 @@ export default async function IndustryPage({ params }: { params: { slug: string 
       <section className="relative overflow-hidden border-b border-border">
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-hero-glow" />
         <div className="mx-auto max-w-4xl px-6 pt-12 pb-14">
-          <Link
-            href="/industries"
-            className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-          >
-            <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" />
-            All industries
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: 'Industries', href: '/industries' },
+              { name: industry.name },
+            ]}
+          />
 
           <div className="mt-8">
             {industry.icon && (

@@ -171,6 +171,22 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   };
 }
 
+/** FAQ markup is emitted only for question-and-answer text that is visible on the page. */
+export function faqPageJsonLd(faqs: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+}
+
 export function serviceJsonLd(service: {
   title: string;
   description: string;

@@ -4,7 +4,6 @@ import Script from 'next/script';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider';
 import { getSettingsBundle } from '@/lib/settings';
 import { BASE_URL, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
@@ -14,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 export async function generateMetadata(): Promise<Metadata> {
   const { seo, site } = await getSettingsBundle();
   const title =
-    seo.default_title || `${site.company_name} | Website, App, Software & AI Development`;
+    seo.default_title || `${site.company_name} | Website, App, Software & AI Development Company`;
   const socialImage = seo.og_image || '/opengraph-image';
 
   return {
@@ -25,6 +24,11 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: seo.default_description,
     applicationName: site.company_name,
+    manifest: '/manifest.webmanifest',
+    icons: {
+      icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+      apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+    },
     openGraph: {
       title,
       description: seo.default_description,
@@ -57,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const webLd = websiteJsonLd();
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <head>
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
           <link rel="preconnect" href={new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin} />
@@ -82,19 +86,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${integrations.meta_pixel_id}');fbq('track','PageView');`}
           </Script>
         )}
-        <SmoothScrollProvider>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-bgDark"
-          >
-            Skip to content
-          </a>
-          <Header company={site.company_name} />
-          <main id="main" className="min-h-screen">
-            {children}
-          </main>
-          <Footer site={site} />
-        </SmoothScrollProvider>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-bgDark"
+        >
+          Skip to content
+        </a>
+        <Header company={site.company_name} />
+        <main id="main" className="min-h-screen">
+          {children}
+        </main>
+        <Footer site={site} />
       </body>
     </html>
   );

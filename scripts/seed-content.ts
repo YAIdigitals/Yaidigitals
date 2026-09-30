@@ -635,7 +635,7 @@ const SITE_SETTINGS = {
   social: {
     instagram: 'https://instagram.com/yaidigitals_',
     facebook: 'https://facebook.com/yaidigitals',
-    twitter: 'https://twitter.com/yaidigitals',
+    twitter: '',
   },
   footer_description: 'Technology built around your business.',
   default_cta_text: 'Start a Project',
@@ -645,7 +645,7 @@ const SITE_SETTINGS = {
 const SEO_SETTINGS = {
   site_name: 'YAIdigitals',
   title_template: '%s | YAIdigitals',
-  default_title: 'YAIdigitals | Website, App, Software & AI Development',
+  default_title: 'YAIdigitals | Website, App, Software & AI Development Company',
   default_description:
     'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',

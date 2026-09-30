@@ -2,9 +2,9 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft } from 'lucide-react';
 import { articleJsonLd, buildMetadata, breadcrumbJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export const dynamicParams = true;
 export const revalidate = 300;
@@ -33,15 +33,16 @@ async function getPost(slug: string) {
   return data as PostRecord | null;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPost(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
   if (!post) return { title: 'Article Not Found' };
 
   return buildMetadata({
     title: post.seo_title || post.title,
     description: metaDescription(post.seo_description, post.excerpt, post.content),
     absoluteTitle: Boolean(post.seo_title?.includes('YAIdigitals')),
-    path: `/insights/${params.slug}`,
+    path: `/insights/${slug}`,
     image: post.featured_image || '',
     type: 'article',
     publishedTime: post.published_at ?? undefined,
@@ -58,8 +59,9 @@ function formatDate(value?: string | null) {
   }
 }
 
-export default async function InsightPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+export default async function InsightPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
   if (!post) notFound();
 
   const published = formatDate(post.published_at);
@@ -69,40 +71,34 @@ export default async function InsightPostPage({ params }: { params: { slug: stri
     <>
       <JsonLd
         data={[
-            webPageJsonLd({
-              name: post.title,
-              description: post.excerpt || undefined,
-              path: `/insights/${params.slug}`,
-            }),
-            breadcrumbJsonLd([
-              { name: 'Insights', path: '/insights' },
-              { name: post.title, path: `/insights/${params.slug}` },
-            ]),
-            articleJsonLd({
-              title: post.title,
-              description: post.excerpt || '',
-              slug: params.slug,
-              publishedTime: post.published_at ?? undefined,
-              modifiedTime: post.updated_at ?? undefined,
-              authorName: post.author || undefined,
-              image: post.featured_image || undefined,
-            }),
-          ]}
+          webPageJsonLd({
+            name: post.title,
+            description: post.excerpt || undefined,
+            path: `/insights/${slug}`,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Insights', path: '/insights' },
+            { name: post.title, path: `/insights/${slug}` },
+          ]),
+          articleJsonLd({
+            title: post.title,
+            description: post.excerpt || '',
+            slug,
+            publishedTime: post.published_at ?? undefined,
+            modifiedTime: post.updated_at ?? undefined,
+            authorName: post.author || undefined,
+            image: post.featured_image || undefined,
+          }),
+        ]}
       />
 
       <article className="mx-auto max-w-3xl px-6 py-16">
-        <Link
-          href="/insights"
-          className="group inline-flex items-center gap-1.5 text-sm text-textMuted transition-colors hover:text-primary"
-        >
-          <ArrowLeft
-            size={15}
-            strokeWidth={2}
-            aria-hidden="true"
-            className="transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-          />
-          All insights
-        </Link>
+        <Breadcrumbs
+          items={[
+            { name: 'Insights', href: '/insights' },
+            { name: post.title },
+          ]}
+        />
 
         <header className="mt-8">
           <h1 className="text-3xl font-bold leading-tight tracking-tight text-textMain sm:text-4xl">
