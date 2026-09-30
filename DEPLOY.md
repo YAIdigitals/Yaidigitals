@@ -3,7 +3,7 @@
 ## Stack
 - Next.js 16 (App Router) + React 19 + Tailwind CSS
 - Supabase (Postgres + Auth + Storage)
-- Vercel (auto-deploys on every push to `master`)
+- Vercel (production deploys from `main`; `master` currently creates previews)
 
 Node.js 20.9 or newer is required.
 
