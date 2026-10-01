@@ -14,7 +14,8 @@
     "test:seo": "node scripts/seo-audit.mjs --strict",
     "seo:audit": "node scripts/seo-audit.mjs",
     "indexnow": "node scripts/submit-indexnow.mjs",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "seed:travel-projects": "tsx scripts/seed-content.ts --travel-projects-only"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

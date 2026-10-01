@@ -126,7 +126,7 @@ export default async function Home() {
   const [{ homepage }, { data: projects }, { data: services }, { data: industries }, { data: technologies }, { data: testimonials }, { data: posts }] =
     await Promise.all([
       getSettingsBundle(),
-      supabase.from('projects').select('id, slug, title, industry, category, short_description, cover_image, services_provided, technologies').eq('status', 'published').eq('featured', true).order('sort_order').limit(2),
+      supabase.from('projects').select('id, slug, title, industry, category, short_description, cover_image, services_provided, technologies').eq('status', 'published').eq('featured', true).order('sort_order').limit(4),
       supabase.from('services').select('*').eq('active', true).eq('featured', true).order('sort_order'),
       supabase.from('industries').select('slug, name, short_description, icon, image_url').eq('published', true).order('sort_order'),
       supabase.from('technologies').select('name, category, website_url').eq('active', true).order('sort_order'),

@@ -43,7 +43,7 @@ export default async function AboutPage() {
     .eq('status', 'published')
     .eq('featured', true)
     .order('sort_order')
-    .limit(2);
+    .limit(4);
   const featured = (projects ?? []) as unknown as DbProject[];
 
   return (

@@ -60,7 +60,7 @@ const SERVICES = [
         a: 'We build every site with search-friendly structure: proper headings, metadata, sitemaps, fast loading and mobile usability. Ranking also depends on competition and content, which we can help you plan for.',
       },
     ],
-    related_project_slugs: ['sparkx-car-care'],
+    related_project_slugs: ['sparkx-car-care', 'thrillhikers', 'mapntrip'],
   },
   {
     slug: 'web-application-development',
@@ -107,7 +107,7 @@ const SERVICES = [
         a: 'Row-level database security, server-side authorisation on every sensitive operation, validated inputs and secret management through environment variables — security is part of the architecture, not an afterthought.',
       },
     ],
-    related_project_slugs: ['localgo'],
+    related_project_slugs: ['localgo', 'thrillhikers', 'mapntrip'],
   },
   {
     slug: 'mobile-app-development',
@@ -380,6 +380,18 @@ const SPARKX_CHALLENGE =
 const SPARKX_SOLUTION =
   'YAIdigitals created a responsive digital experience for SparkX Car Care focused on service discovery, professional presentation, usability and customer conversion. Customers can explore car and bike care services — washing, detailing and routine servicing — and book them at their doorstep, with a location-aware experience built for both desktop and mobile visitors.';
 
+const THRILLHIKERS_CHALLENGE =
+  'ThrillHikers needed a digital platform capable of presenting a large and growing catalogue of group departures, custom tours and destination-led travel experiences without making trip discovery feel overwhelming. The business also needed clear enquiry paths, trust-building content and a secure way for confirmed travellers to make payments online.';
+
+const THRILLHIKERS_SOLUTION =
+  'YAIdigitals designed and developed a responsive travel discovery platform that organises destinations, tour packages and fixed departures into clear customer journeys. Travellers can search by destination, date and group size, review detailed itineraries and pricing, request a custom trip, contact the team through WhatsApp and make confirmed trip payments through an integrated checkout experience.';
+
+const MAPNTRIP_CHALLENGE =
+  'MapNTrip needed an online presence that could communicate its personalised approach to travel while making destinations, package ideas and different travel styles easy to explore. The platform had to support lead generation without presenting every traveller with the same rigid itinerary.';
+
+const MAPNTRIP_SOLUTION =
+  'YAIdigitals created a polished travel website centred on curated destinations, flexible package starting points and a guided custom-trip enquiry journey. The experience combines destination storytelling, transparent starting prices, travel-style discovery, detailed package pages and human support paths in a responsive platform designed to turn travel ideas into qualified enquiries.';
+
 const PROJECTS = [
   {
     slug: 'localgo',
@@ -486,6 +498,114 @@ const PROJECTS = [
     screenshots: [],
     app_urls: [],
   },
+  {
+    slug: 'thrillhikers',
+    title: 'ThrillHikers',
+    status: 'published',
+    featured: true,
+    sort_order: 3,
+    client_business: 'ThrillHikers Travel',
+    website_url: 'https://www.thrillhikers.com/',
+    category: 'Travel Website · Tour Discovery Platform',
+    industry: 'Travel & Tourism',
+    short_description:
+      'A full-service travel discovery platform for curated group departures, destination packages and custom tours across India and international destinations.',
+    description:
+      'A full-service travel discovery platform that brings destination browsing, scheduled group departures, detailed tour packages, custom-trip enquiries and online payments into one cohesive customer experience.',
+    problem: THRILLHIKERS_CHALLENGE,
+    business_requirement: THRILLHIKERS_CHALLENGE,
+    solution: THRILLHIKERS_SOLUTION,
+    key_features: [
+      'Destination and tour package catalogue',
+      'Search by destination, date and traveller count',
+      'Fixed-departure calendar with live trip options',
+      'Detailed itineraries, pricing, duration and difficulty',
+      'Custom itinerary enquiry workflow',
+      'Secure online trip payments',
+      'Traveller reviews and trust-building content',
+      'Travel journal and search-friendly editorial pages',
+      'WhatsApp and direct enquiry paths',
+      'Frequently asked questions and policy content',
+      'Mobile-responsive customer experience',
+      'Scalable destination and package route structure',
+    ],
+    services_provided: ['Website Development', 'Web Application Development', 'Custom Software'],
+    technologies: ['Next.js', 'React', 'Supabase', 'Cloudinary', 'Razorpay', 'Vercel'],
+    architecture_overview:
+      'ThrillHikers uses a Next.js and React frontend deployed on Vercel, with Supabase-backed application data and Cloudinary-managed travel media. Its route architecture separates destinations, tours, fixed departures, editorial content and payment flows so each part of the traveller journey can scale independently.',
+    development_approach:
+      'The platform was developed around the full traveller funnel: discover a destination, compare relevant departures or packages, understand the itinerary, build trust, enquire through the preferred channel and complete a confirmed payment securely. Reusable content structures keep a large travel catalogue consistent across desktop and mobile.',
+    outcome:
+      'ThrillHikers now operates through a unified travel platform where visitors can explore a broad destination catalogue, find scheduled group trips, request personalised itineraries and move from discovery to enquiry or payment without leaving the brand experience.',
+    cover_image:
+      'https://res.cloudinary.com/hh6vqdlq/image/upload/f_auto,q_auto,c_fill,w_1600,h_900/v1788939715/thrillhikers/destinations/yi0pwirm1fszi2rbggie.jpg',
+    completion_date: null,
+    cta_text: 'Visit ThrillHikers',
+    cta_url: 'https://www.thrillhikers.com/',
+    seo_title: 'ThrillHikers Travel Platform Case Study | YAIdigitals',
+    seo_description:
+      'How YAIdigitals built ThrillHikers, a travel discovery platform for group departures, destination packages, custom enquiries and online payments.',
+    og_title: 'ThrillHikers — Building a Complete Travel Discovery Platform',
+    og_description:
+      'A YAIdigitals case study covering the destination, tour discovery, enquiry and payment experience built for ThrillHikers.',
+    og_image:
+      'https://res.cloudinary.com/hh6vqdlq/image/upload/f_auto,q_auto,c_fill,w_1600,h_900/v1788939715/thrillhikers/destinations/yi0pwirm1fszi2rbggie.jpg',
+    screenshots: [],
+    app_urls: [],
+  },
+  {
+    slug: 'mapntrip',
+    title: 'MapNTrip',
+    status: 'published',
+    featured: true,
+    sort_order: 4,
+    client_business: 'MapNTrip',
+    website_url: 'https://mapntrip.in/',
+    category: 'Travel Website · Custom Itinerary Platform',
+    industry: 'Travel & Tourism',
+    short_description:
+      'A personalised travel platform for discovering curated destinations, flexible holiday packages and journeys shaped around each traveller.',
+    description:
+      'A personalised holiday-planning platform that combines curated destination storytelling, flexible package ideas, travel-style discovery and a guided custom-trip enquiry experience.',
+    problem: MAPNTRIP_CHALLENGE,
+    business_requirement: MAPNTRIP_CHALLENGE,
+    solution: MAPNTRIP_SOLUTION,
+    key_features: [
+      'Curated destination discovery',
+      'Flexible holiday package catalogue',
+      'Travel-style filtering for families, couples and groups',
+      'Custom itinerary planning workflow',
+      'Destination and package detail pages',
+      'Transparent starting prices and trip durations',
+      'Lead capture and contact journeys',
+      'WhatsApp and human support paths',
+      'Travel journal and editorial content',
+      'Frequently asked questions and travel policies',
+      'Mobile-first responsive experience',
+      'Search-friendly page and content structure',
+    ],
+    services_provided: ['Website Development', 'Web Application Development', 'Custom Software'],
+    technologies: ['Next.js', 'React', 'Supabase', 'Vercel'],
+    architecture_overview:
+      'MapNTrip uses a Next.js and React frontend deployed on Vercel with Supabase-backed content and enquiry workflows. Reusable destination, package and experience models support a structured catalogue while keeping trip-planning paths connected to the same customer experience.',
+    development_approach:
+      'The experience was built around personalisation rather than a rigid booking funnel. Visitors can begin with a destination, a package or a travel style, understand the important trade-offs and then move into a guided planning conversation with enough context for the team to respond effectively.',
+    outcome:
+      'MapNTrip now has a live, cohesive travel platform that presents its personalised service clearly, gives visitors useful starting points and turns destination interest into structured trip-planning enquiries.',
+    cover_image: 'https://mapntrip.in/images/kashmir-hero.webp',
+    completion_date: null,
+    cta_text: 'Visit MapNTrip',
+    cta_url: 'https://mapntrip.in/',
+    seo_title: 'MapNTrip Travel Platform Case Study | YAIdigitals',
+    seo_description:
+      'How YAIdigitals built MapNTrip, a personalised travel platform for destinations, flexible holiday packages and custom itinerary enquiries.',
+    og_title: 'MapNTrip — Building a Personalised Holiday Planning Platform',
+    og_description:
+      'A YAIdigitals case study covering the destination discovery, package and custom itinerary experience built for MapNTrip.',
+    og_image: 'https://mapntrip.in/images/kashmir-hero.webp',
+    screenshots: [],
+    app_urls: [],
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -577,7 +697,7 @@ const INDUSTRIES = [
 
 /* ------------------------------------------------------------------ */
 /* Technologies — only what this codebase and its projects verifiably  */
-/* use (see package.json and the LocalGo / SparkX Expo builds)         */
+/* use (see package.json and the deployed project builds)               */
 /* ------------------------------------------------------------------ */
 
 const TECHNOLOGIES = [
@@ -592,6 +712,8 @@ const TECHNOLOGIES = [
   { name: 'PostgreSQL', category: 'Database', website_url: 'https://postgresql.org', sort_order: 9 },
   { name: 'MapLibre GL', category: 'Frontend', website_url: 'https://maplibre.org', sort_order: 10 },
   { name: 'Vercel', category: 'Cloud & Infrastructure', website_url: 'https://vercel.com', sort_order: 11 },
+  { name: 'Cloudinary', category: 'Cloud & Infrastructure', website_url: 'https://cloudinary.com', sort_order: 12 },
+  { name: 'Razorpay', category: 'Payments', website_url: 'https://razorpay.com', sort_order: 13 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -665,6 +787,7 @@ const SEO_SETTINGS = {
 async function main() {
   const supabase = createServerAdminSupabase();
   let failures = 0;
+  const travelProjectsOnly = process.argv.includes('--travel-projects-only');
 
   const step = async (label: string, fn: () => Promise<{ error: { message: string } | null }>) => {
     const { error } = await fn();
@@ -675,6 +798,34 @@ async function main() {
       console.log(`✓ ${label}`);
     }
   };
+
+  if (travelProjectsOnly) {
+    for (const p of PROJECTS.filter(({ slug }) => ['thrillhikers', 'mapntrip'].includes(slug))) {
+      await step(`project: ${p.slug}`, () => supabase.from('projects').upsert(p, { onConflict: 'slug' }));
+    }
+
+    for (const s of SERVICES.filter(({ slug }) => ['website-development', 'web-application-development'].includes(slug))) {
+      await step(`related projects: ${s.slug}`, () =>
+        supabase
+          .from('services')
+          .update({ related_project_slugs: s.related_project_slugs })
+          .eq('slug', s.slug)
+      );
+    }
+
+    await step('travel project technologies', () =>
+      supabase
+        .from('technologies')
+        .upsert(TECHNOLOGIES.filter(({ name }) => ['Cloudinary', 'Razorpay'].includes(name)), { onConflict: 'name' })
+    );
+
+    if (failures > 0) {
+      console.error(`\n${failures} travel project step(s) failed.`);
+      process.exit(1);
+    }
+    console.log('\nTravel project content seed complete.');
+    return;
+  }
 
   for (const s of SERVICES) {
     await step(`service: ${s.slug}`, () => supabase.from('services').upsert(s, { onConflict: 'slug' }));
