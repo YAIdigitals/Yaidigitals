@@ -435,6 +435,7 @@ const PROJECTS = [
       'The platform was developed around its core workflows first — discovery, ordering and delivery — with the customer experience, merchant tooling and administration built as connected parts of one product rather than separate apps.',
     outcome:
       'LocalGo is live and serving customers across its active service areas, bringing food, grocery, medicine, print and parcel delivery from nearby local stores into a single platform.',
+    cover_image: 'https://localgo.co.in/performance/localgo-city-v2-720.webp',
     completion_date: null,
     cta_text: 'Visit LocalGo',
     cta_url: 'https://localgo.co.in/',
@@ -444,7 +445,7 @@ const PROJECTS = [
     og_title: 'LocalGo — Building a Hyperlocal Commerce & Delivery Platform',
     og_description:
       'A YAIdigitals case study: the engineering behind a multi-service local commerce and delivery ecosystem.',
-    og_image: null,
+    og_image: 'https://localgo.co.in/og-image.png',
     screenshots: [],
     app_urls: [],
   },
@@ -485,6 +486,8 @@ const PROJECTS = [
       'The experience was built around a simple customer path — understand the services, trust the brand, book at the doorstep — with a structured, responsive interface designed to perform on mobile devices first.',
     outcome:
       'SparkX Car Care now presents its automotive-care services through a modern digital platform where customers can discover and book car and bike care at their doorstep.',
+    cover_image:
+      'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&h=900&q=85',
     completion_date: null,
     cta_text: 'Visit SparkX Car Care',
     cta_url: 'https://sparkxcarcare.in/',
@@ -494,7 +497,8 @@ const PROJECTS = [
     og_title: 'SparkX Car Care — Building a Modern Digital Presence for Automotive Care',
     og_description:
       'A YAIdigitals case study: a modern digital platform for doorstep car and bike care services.',
-    og_image: null,
+    og_image:
+      'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&h=900&q=85',
     screenshots: [],
     app_urls: [],
   },
@@ -537,8 +541,7 @@ const PROJECTS = [
       'The platform was developed around the full traveller funnel: discover a destination, compare relevant departures or packages, understand the itinerary, build trust, enquire through the preferred channel and complete a confirmed payment securely. Reusable content structures keep a large travel catalogue consistent across desktop and mobile.',
     outcome:
       'ThrillHikers now operates through a unified travel platform where visitors can explore a broad destination catalogue, find scheduled group trips, request personalised itineraries and move from discovery to enquiry or payment without leaving the brand experience.',
-    cover_image:
-      'https://res.cloudinary.com/hh6vqdlq/image/upload/f_auto,q_auto,c_fill,w_1600,h_900/v1788939715/thrillhikers/destinations/yi0pwirm1fszi2rbggie.jpg',
+    cover_image: 'https://www.thrillhikers.com/images/hero-desktop.webp',
     completion_date: null,
     cta_text: 'Visit ThrillHikers',
     cta_url: 'https://www.thrillhikers.com/',
@@ -548,8 +551,7 @@ const PROJECTS = [
     og_title: 'ThrillHikers — Building a Complete Travel Discovery Platform',
     og_description:
       'A YAIdigitals case study covering the destination, tour discovery, enquiry and payment experience built for ThrillHikers.',
-    og_image:
-      'https://res.cloudinary.com/hh6vqdlq/image/upload/f_auto,q_auto,c_fill,w_1600,h_900/v1788939715/thrillhikers/destinations/yi0pwirm1fszi2rbggie.jpg',
+    og_image: 'https://www.thrillhikers.com/images/hero-desktop.webp',
     screenshots: [],
     app_urls: [],
   },
@@ -788,6 +790,7 @@ async function main() {
   const supabase = createServerAdminSupabase();
   let failures = 0;
   const travelProjectsOnly = process.argv.includes('--travel-projects-only');
+  const projectImagesOnly = process.argv.includes('--project-images-only');
 
   const step = async (label: string, fn: () => Promise<{ error: { message: string } | null }>) => {
     const { error } = await fn();
@@ -798,6 +801,26 @@ async function main() {
       console.log(`✓ ${label}`);
     }
   };
+
+  if (projectImagesOnly) {
+    for (const p of PROJECTS.filter(({ slug }) =>
+      ['localgo', 'sparkx-car-care', 'thrillhikers'].includes(slug)
+    )) {
+      await step(`project image: ${p.slug}`, () =>
+        supabase
+          .from('projects')
+          .update({ cover_image: p.cover_image, og_image: p.og_image })
+          .eq('slug', p.slug)
+      );
+    }
+
+    if (failures > 0) {
+      console.error(`\n${failures} project image step(s) failed.`);
+      process.exit(1);
+    }
+    console.log('\nProject image seed complete.');
+    return;
+  }
 
   if (travelProjectsOnly) {
     for (const p of PROJECTS.filter(({ slug }) => ['thrillhikers', 'mapntrip'].includes(slug))) {
