@@ -16,7 +16,8 @@
     "indexnow": "node scripts/submit-indexnow.mjs",
     "seed": "tsx scripts/seed.ts",
     "seed:travel-projects": "tsx scripts/seed-content.ts --travel-projects-only",
-    "seed:project-images": "tsx scripts/seed-content.ts --project-images-only"
+    "seed:project-images": "tsx scripts/seed-content.ts --project-images-only",
+    "seed:sparkx-playstore": "tsx scripts/seed-content.ts --sparkx-playstore-only"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

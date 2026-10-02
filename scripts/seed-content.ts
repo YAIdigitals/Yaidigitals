@@ -392,6 +392,11 @@ const MAPNTRIP_CHALLENGE =
 const MAPNTRIP_SOLUTION =
   'YAIdigitals created a polished travel website centred on curated destinations, flexible package starting points and a guided custom-trip enquiry journey. The experience combines destination storytelling, transparent starting prices, travel-style discovery, detailed package pages and human support paths in a responsive platform designed to turn travel ideas into qualified enquiries.';
 
+const SPARKX_PLAY_URL =
+  'https://play.google.com/store/apps/details?id=com.sparkx.carcare.mobile&pcampaignid=web_share';
+const SPARKX_PLAY_IMAGE =
+  'https://play-lh.googleusercontent.com/QVNCgbwStZM2nHWFqM6QV3QSg0Q3t95UNXXxrkOt9moIFWmlwBcj1_CWpOKY1Qr4rIIbBuvmh7kyI0ku4LQ3TSg=w1200-h630-pc0xffffff-pd';
+
 const PROJECTS = [
   {
     slug: 'localgo',
@@ -456,8 +461,8 @@ const PROJECTS = [
     featured: true,
     sort_order: 2,
     client_business: 'SparkX Car Care',
-    website_url: 'https://sparkxcarcare.in/',
-    category: 'Web Application · Business Platform',
+    website_url: SPARKX_PLAY_URL,
+    category: 'Mobile App · Automotive Service Platform',
     industry: 'Automotive / Car Care',
     short_description:
       "A modern digital platform created to strengthen SparkX Car Care's online presence and make its automotive-care services easier for customers to discover and book.",
@@ -478,29 +483,27 @@ const PROJECTS = [
       'Performance-conscious frontend',
       'Scalable content structure',
     ],
-    services_provided: ['Web Application Development', 'Business Websites'],
+    services_provided: ['Mobile App Development', 'Web Application Development', 'Business Websites'],
     technologies: ['React Native', 'Expo', 'React Native Web', 'MapLibre GL', 'TypeScript'],
     architecture_overview:
-      'SparkX Car Care runs on a cross-platform React Native (Expo) codebase delivered to the web through React Native Web, with MapLibre GL providing the location-aware experience that supports doorstep service booking.',
+      'SparkX Car Care runs on a cross-platform React Native and Expo codebase delivered as a live Android application and through React Native Web, with MapLibre GL providing the location-aware experience that supports doorstep service booking.',
     development_approach:
       'The experience was built around a simple customer path — understand the services, trust the brand, book at the doorstep — with a structured, responsive interface designed to perform on mobile devices first.',
     outcome:
-      'SparkX Car Care now presents its automotive-care services through a modern digital platform where customers can discover and book car and bike care at their doorstep.',
-    cover_image:
-      'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&h=900&q=85',
+      'SparkX Car Care is live on Google Play, giving Android customers a direct way to discover, book and manage doorstep car and bike care services.',
+    cover_image: SPARKX_PLAY_IMAGE,
     completion_date: null,
-    cta_text: 'Visit SparkX Car Care',
-    cta_url: 'https://sparkxcarcare.in/',
-    seo_title: 'SparkX Car Care Platform Case Study | YAIdigitals',
+    cta_text: 'Get SparkX Car Care on Google Play',
+    cta_url: SPARKX_PLAY_URL,
+    seo_title: 'SparkX Car Care App Case Study | YAIdigitals',
     seo_description:
-      'How YAIdigitals built the SparkX Car Care digital platform for doorstep car and bike service discovery and booking.',
-    og_title: 'SparkX Car Care — Building a Modern Digital Presence for Automotive Care',
+      'How YAIdigitals built and launched the SparkX Car Care Android app for doorstep car and bike service discovery, booking and management.',
+    og_title: 'SparkX Car Care — Building a Doorstep Automotive Care App',
     og_description:
-      'A YAIdigitals case study: a modern digital platform for doorstep car and bike care services.',
-    og_image:
-      'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&h=900&q=85',
+      'A YAIdigitals case study: the live Android application for booking and managing doorstep car and bike care services.',
+    og_image: SPARKX_PLAY_IMAGE,
     screenshots: [],
-    app_urls: [],
+    app_urls: [SPARKX_PLAY_URL],
   },
   {
     slug: 'thrillhikers',
@@ -791,6 +794,7 @@ async function main() {
   let failures = 0;
   const travelProjectsOnly = process.argv.includes('--travel-projects-only');
   const projectImagesOnly = process.argv.includes('--project-images-only');
+  const sparkxPlaystoreOnly = process.argv.includes('--sparkx-playstore-only');
 
   const step = async (label: string, fn: () => Promise<{ error: { message: string } | null }>) => {
     const { error } = await fn();
@@ -801,6 +805,40 @@ async function main() {
       console.log(`✓ ${label}`);
     }
   };
+
+  if (sparkxPlaystoreOnly) {
+    const sparkx = PROJECTS.find(({ slug }) => slug === 'sparkx-car-care');
+    if (!sparkx) throw new Error('SparkX Car Care seed content is missing.');
+
+    await step('project Play Store release: sparkx-car-care', () =>
+      supabase
+        .from('projects')
+        .update({
+          website_url: sparkx.website_url,
+          category: sparkx.category,
+          services_provided: sparkx.services_provided,
+          architecture_overview: sparkx.architecture_overview,
+          outcome: sparkx.outcome,
+          cover_image: sparkx.cover_image,
+          cta_text: sparkx.cta_text,
+          cta_url: sparkx.cta_url,
+          seo_title: sparkx.seo_title,
+          seo_description: sparkx.seo_description,
+          og_title: sparkx.og_title,
+          og_description: sparkx.og_description,
+          og_image: sparkx.og_image,
+          app_urls: sparkx.app_urls,
+        })
+        .eq('slug', sparkx.slug)
+    );
+
+    if (failures > 0) {
+      console.error(`\n${failures} SparkX Play Store step(s) failed.`);
+      process.exit(1);
+    }
+    console.log('\nSparkX Play Store seed complete.');
+    return;
+  }
 
   if (projectImagesOnly) {
     for (const p of PROJECTS.filter(({ slug }) =>

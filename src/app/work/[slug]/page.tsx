@@ -120,6 +120,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const services = list(project.services_provided);
   const technologies = list(project.technologies);
   const screenshots = list(project.screenshots);
+  const projectHostname = project.website_url ? new URL(project.website_url).hostname : '';
+  const projectLinkLabel = projectHostname === 'play.google.com' ? 'Google Play' : 'Website';
 
   // Related services pages for contextual internal linking
   const serviceSlugMap: Record<string, string> = {
@@ -258,7 +260,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 )}
                 {project.website_url && (
                   <div>
-                    <dt className="text-xs font-medium uppercase tracking-wider text-textMuted">Website</dt>
+                    <dt className="text-xs font-medium uppercase tracking-wider text-textMuted">{projectLinkLabel}</dt>
                     <dd className="mt-1 text-sm font-medium">
                       <a
                         href={project.website_url}
@@ -266,7 +268,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                         rel="noopener noreferrer"
                         className="text-primary underline-offset-4 hover:underline"
                       >
-                        {new URL(project.website_url).hostname}
+                        {projectHostname}
                       </a>
                     </dd>
                   </div>
