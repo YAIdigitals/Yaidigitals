@@ -156,7 +156,7 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 font-semibold text-bgDark shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
           >
             Start a Project
           </Link>

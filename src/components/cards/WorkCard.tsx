@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowUpRight, FolderGit2 } from 'lucide-react';
 
 export interface WorkCardProject {
@@ -22,20 +22,24 @@ export function WorkCard({ project, priority = false }: { project: WorkCardProje
   const tech = project.technologies ?? [];
 
   return (
-    <Link
+    <a
       href={`/work/${project.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-bgCard transition-all duration-300 hover:border-primary/40 hover:shadow-elevate focus-visible:border-primary outline-none motion-reduce:transition-none"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-bgDark bg-grid-faint bg-grid">
-        {project.cover_image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+        {project.cover_image?.startsWith('/') ? (
+          <Image
             src={project.cover_image}
             alt={`${project.title} — ${project.industry || 'project'}`}
-            loading={priority ? 'eager' : 'lazy'}
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            fill
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
+        ) : project.cover_image ? (
+          // Transitional fallback for CMS records created before media was localised.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={project.cover_image} alt={`${project.title} — ${project.industry || 'project'}`} loading={priority ? 'eager' : 'lazy'} className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/25 bg-primary/8 text-primary">
@@ -85,6 +89,6 @@ export function WorkCard({ project, priority = false }: { project: WorkCardProje
           />
         </span>
       </div>
-    </Link>
+    </a>
   );
 }

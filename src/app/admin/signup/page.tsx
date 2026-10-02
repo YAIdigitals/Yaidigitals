@@ -96,7 +96,7 @@ export default function Signup() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-medium text-textMain transition-colors hover:bg-primaryDark disabled:pointer-events-none disabled:opacity-55"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-semibold text-bgDark transition-colors hover:bg-primaryDark disabled:pointer-events-none disabled:opacity-55"
             >
               {submitting && <Loader2 size={15} strokeWidth={2.5} aria-hidden="true" className="animate-spin" />}
               {submitting ? 'Submitting…' : 'Request access'}

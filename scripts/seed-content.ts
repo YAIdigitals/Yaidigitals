@@ -362,6 +362,71 @@ const SERVICES = [
     ],
     related_project_slugs: ['localgo'],
   },
+  {
+    slug: 'startup-mvp-development',
+    active: true,
+    featured: true,
+    sort_order: 8,
+    title: 'Startup MVP Development',
+    hero_title: 'Launch a Focused MVP and Learn from Real Users',
+    short_description:
+      'Strategy, product design and engineering for founders who need to validate an idea without building the entire roadmap at once.',
+    full_content: [
+      'An MVP should test the most important assumption behind a business, not become a rushed version of every feature on the roadmap. YAIdigitals helps founders define that smallest credible product and take it from idea to a production release.',
+      '## What we build',
+      'Customer-facing web and mobile MVPs, marketplaces, booking products, SaaS workflows, internal operating tools and the admin systems needed to support an early launch.',
+      '## Scope before code',
+      'We turn the product idea into user journeys, risks, a prioritised feature set and measurable launch goals. Features that do not help validate the core proposition move to a later phase, keeping cost and time focused.',
+      '## Built beyond the prototype',
+      'The first release uses maintainable architecture, secure data access, analytics and deployment practices so validated products can evolve instead of being discarded and rebuilt immediately after launch.',
+    ].join('\n\n'),
+    features: ['Product discovery and scope definition', 'User journeys and product direction', 'Prioritised MVP feature set', 'Web, mobile and backend development', 'Authentication, payments and core integrations', 'Admin and operational workflows', 'Analytics and feedback instrumentation', 'Production deployment and iteration roadmap'],
+    process: [
+      { step: 'Validate', body: 'Clarify the customer, problem, riskiest assumption and evidence the MVP must produce.' },
+      { step: 'Scope', body: 'Define core journeys and move non-essential features into a transparent later roadmap.' },
+      { step: 'Design', body: 'Create a usable product experience and test important decisions before engineering.' },
+      { step: 'Build', body: 'Develop in short milestones with working previews and stakeholder feedback.' },
+      { step: 'Launch and learn', body: 'Release, measure real behaviour and prioritise the next iteration from evidence.' },
+    ],
+    faqs: [
+      { q: 'How do you decide what belongs in an MVP?', a: 'A feature belongs when it is necessary for the core user journey or helps test a critical business assumption. Everything else is documented for a later phase rather than quietly expanding the first release.' },
+      { q: 'Will the MVP need to be rebuilt after validation?', a: 'Not by default. We use production-ready foundations and make deliberate trade-offs, so a successful product can be extended. If a rapid prototype is the smarter choice, we explain that boundary before work begins.' },
+      { q: 'Can you help if I only have an idea?', a: 'Yes. Discovery turns the idea into users, workflows, priorities, risks and an actionable first scope before you commit to full development.' },
+    ],
+    related_project_slugs: ['localgo', 'sparkx-car-care', 'mapntrip'],
+  },
+  {
+    slug: 'maintenance-support',
+    active: true,
+    featured: true,
+    sort_order: 9,
+    title: 'Maintenance & Technical Support',
+    hero_title: 'Keep Your Website, App or Software Reliable',
+    short_description:
+      'Structured maintenance, monitoring and technical support for digital products that need to stay secure, fast and dependable.',
+    full_content: [
+      'Launching a digital product is the start of its operational life. Framework updates, browser changes, provider APIs, security patches and evolving business needs all require controlled maintenance.',
+      '## What support covers',
+      'Preventive dependency updates, incident diagnosis, bug fixes, performance monitoring, backup and recovery checks, small improvements, deployment support and clear technical recommendations for larger changes.',
+      '## A safer way to change production systems',
+      'We review the current stack first, establish access and recovery requirements, then work through documented requests with testing and release notes. Urgent work is separated from planned improvement so both remain visible.',
+      '## Existing products are welcome',
+      'We can support products built by another team after a technical assessment. The assessment identifies risk, documentation gaps and stabilisation work before an ongoing commitment is agreed.',
+    ].join('\n\n'),
+    features: ['Technical health and maintainability review', 'Security and dependency updates', 'Bug diagnosis and production fixes', 'Performance and availability monitoring', 'Backup and recovery verification', 'Small feature and content improvements', 'Deployment support and release notes', 'Prioritised technical improvement roadmap'],
+    process: [
+      { step: 'Assess', body: 'Review the product, infrastructure, access, known issues and recovery readiness.' },
+      { step: 'Stabilise', body: 'Resolve urgent risks and establish a dependable baseline.' },
+      { step: 'Maintain', body: 'Handle planned updates, fixes and monitoring through a documented workflow.' },
+      { step: 'Improve', body: 'Use real incidents, performance data and business priorities to guide the roadmap.' },
+    ],
+    faqs: [
+      { q: 'Can you maintain software built by another developer?', a: 'Usually, yes. We begin with a technical assessment because the codebase, hosting, access and documentation determine what can be supported safely.' },
+      { q: 'Does maintenance include new features?', a: 'Small, well-defined improvements can be included in an agreed support plan. Larger product features are estimated separately so maintenance capacity remains available for reliability work.' },
+      { q: 'Do you guarantee that a website will never go offline?', a: 'No responsible provider can guarantee zero downtime across every external service. We reduce risk through monitoring, tested deployment practices, backups and a clear incident response path.' },
+    ],
+    related_project_slugs: ['localgo', 'sparkx-car-care', 'thrillhikers', 'mapntrip'],
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -395,7 +460,7 @@ const MAPNTRIP_SOLUTION =
 const SPARKX_PLAY_URL =
   'https://play.google.com/store/apps/details?id=com.sparkx.carcare.mobile&pcampaignid=web_share';
 const SPARKX_PLAY_IMAGE =
-  'https://play-lh.googleusercontent.com/QVNCgbwStZM2nHWFqM6QV3QSg0Q3t95UNXXxrkOt9moIFWmlwBcj1_CWpOKY1Qr4rIIbBuvmh7kyI0ku4LQ3TSg=w1200-h630-pc0xffffff-pd';
+  '/projects/sparkx-car-care/desktop.webp';
 
 const PROJECTS = [
   {
@@ -440,7 +505,7 @@ const PROJECTS = [
       'The platform was developed around its core workflows first — discovery, ordering and delivery — with the customer experience, merchant tooling and administration built as connected parts of one product rather than separate apps.',
     outcome:
       'LocalGo is live and serving customers across its active service areas, bringing food, grocery, medicine, print and parcel delivery from nearby local stores into a single platform.',
-    cover_image: 'https://localgo.co.in/performance/localgo-city-v2-720.webp',
+    cover_image: '/projects/localgo/desktop.webp',
     completion_date: null,
     cta_text: 'Visit LocalGo',
     cta_url: 'https://localgo.co.in/',
@@ -450,8 +515,8 @@ const PROJECTS = [
     og_title: 'LocalGo — Building a Hyperlocal Commerce & Delivery Platform',
     og_description:
       'A YAIdigitals case study: the engineering behind a multi-service local commerce and delivery ecosystem.',
-    og_image: 'https://localgo.co.in/og-image.png',
-    screenshots: [],
+    og_image: '/projects/localgo/desktop.webp',
+    screenshots: ['/projects/localgo/desktop.webp', '/projects/localgo/mobile.webp'],
     app_urls: [],
   },
   {
@@ -502,7 +567,7 @@ const PROJECTS = [
     og_description:
       'A YAIdigitals case study: the live Android application for booking and managing doorstep car and bike care services.',
     og_image: SPARKX_PLAY_IMAGE,
-    screenshots: [],
+    screenshots: ['/projects/sparkx-car-care/desktop.webp', '/projects/sparkx-car-care/mobile.webp'],
     app_urls: [SPARKX_PLAY_URL],
   },
   {
@@ -544,7 +609,7 @@ const PROJECTS = [
       'The platform was developed around the full traveller funnel: discover a destination, compare relevant departures or packages, understand the itinerary, build trust, enquire through the preferred channel and complete a confirmed payment securely. Reusable content structures keep a large travel catalogue consistent across desktop and mobile.',
     outcome:
       'ThrillHikers now operates through a unified travel platform where visitors can explore a broad destination catalogue, find scheduled group trips, request personalised itineraries and move from discovery to enquiry or payment without leaving the brand experience.',
-    cover_image: 'https://www.thrillhikers.com/images/hero-desktop.webp',
+    cover_image: '/projects/thrillhikers/desktop.webp',
     completion_date: null,
     cta_text: 'Visit ThrillHikers',
     cta_url: 'https://www.thrillhikers.com/',
@@ -554,8 +619,8 @@ const PROJECTS = [
     og_title: 'ThrillHikers — Building a Complete Travel Discovery Platform',
     og_description:
       'A YAIdigitals case study covering the destination, tour discovery, enquiry and payment experience built for ThrillHikers.',
-    og_image: 'https://www.thrillhikers.com/images/hero-desktop.webp',
-    screenshots: [],
+    og_image: '/projects/thrillhikers/desktop.webp',
+    screenshots: ['/projects/thrillhikers/desktop.webp', '/projects/thrillhikers/mobile.webp'],
     app_urls: [],
   },
   {
@@ -597,7 +662,7 @@ const PROJECTS = [
       'The experience was built around personalisation rather than a rigid booking funnel. Visitors can begin with a destination, a package or a travel style, understand the important trade-offs and then move into a guided planning conversation with enough context for the team to respond effectively.',
     outcome:
       'MapNTrip now has a live, cohesive travel platform that presents its personalised service clearly, gives visitors useful starting points and turns destination interest into structured trip-planning enquiries.',
-    cover_image: 'https://mapntrip.in/images/kashmir-hero.webp',
+    cover_image: '/projects/mapntrip/desktop.webp',
     completion_date: null,
     cta_text: 'Visit MapNTrip',
     cta_url: 'https://mapntrip.in/',
@@ -607,8 +672,8 @@ const PROJECTS = [
     og_title: 'MapNTrip — Building a Personalised Holiday Planning Platform',
     og_description:
       'A YAIdigitals case study covering the destination discovery, package and custom itinerary experience built for MapNTrip.',
-    og_image: 'https://mapntrip.in/images/kashmir-hero.webp',
-    screenshots: [],
+    og_image: '/projects/mapntrip/desktop.webp',
+    screenshots: ['/projects/mapntrip/desktop.webp', '/projects/mapntrip/mobile.webp'],
     app_urls: [],
   },
 ];
@@ -728,13 +793,13 @@ const TECHNOLOGIES = [
 const HOMEPAGE = {
   hero: {
     badge: 'Technology • Software • AI',
-    heading: 'Website, App, Custom Software & AI Development Company',
-    highlighted: 'Digital products built around your business.',
+    heading: 'We Build Websites, Apps and AI Systems That Help Businesses Grow',
+    highlighted: '',
     description:
-      'YAIdigitals builds high-performance websites, mobile applications, custom software, e-commerce products, AI automation and AI calling agents for startups and growing businesses.',
-    primary_cta_text: 'Start Your Project',
+      'From high-converting websites to mobile apps, custom software and AI automation—YAIdigitals turns business ideas into reliable digital products.',
+    primary_cta_text: 'Discuss Your Project',
     primary_cta_url: '/contact',
-    secondary_cta_text: 'Explore Our Work',
+    secondary_cta_text: 'View Our Work',
     secondary_cta_url: '/work',
     below_cta: 'Strategy • Design • Development • Deployment • Support',
   },
@@ -755,8 +820,8 @@ const HOMEPAGE = {
 const SITE_SETTINGS = {
   company_name: 'YAIdigitals',
   contact_email: 'info@yaidigitals.com',
-  contact_phone: '',
-  whatsapp: '',
+  contact_phone: '+91 60061 07923',
+  whatsapp: '+916006107923',
   address: '',
   business_hours: '',
   social: {
@@ -764,7 +829,7 @@ const SITE_SETTINGS = {
     facebook: 'https://facebook.com/yaidigitals',
     twitter: '',
   },
-  footer_description: 'Technology built around your business.',
+  footer_description: 'Websites, apps, custom software and AI systems built around your business.',
   default_cta_text: 'Start a Project',
   default_cta_url: '/contact',
 };
@@ -776,7 +841,7 @@ const SEO_SETTINGS = {
   default_description:
     'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',
-  og_image: '',
+  og_image: '/brand/yaidigitals-social.jpg',
   twitter_handle: '',
   google_site_verification: 'tiz23JuJwvrTb2kei7jYsdX-exycBXJDkSnIOmhwnp8',
   bing_site_verification: '2F814C7B112D678ACE7FD724B6DEC538',

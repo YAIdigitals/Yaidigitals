@@ -160,7 +160,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             </div>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
+              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-bgDark shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
             >
               Start a Project
               <ArrowRight size={15} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />

@@ -28,8 +28,7 @@ html {
   border-radius: 2px;
 }
 
-/* Respect users who prefer reduced motion: kill decorative CSS animations
-   globally. JS-driven animation is handled per-component via useReducedMotion. */
+/* Respect users who prefer reduced motion across decorative transitions. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

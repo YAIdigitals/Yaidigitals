@@ -1,163 +1,125 @@
 import { NextResponse } from 'next/server';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { createHmac } from 'node:crypto';
+import { createServerAdminSupabase } from '@/lib/supabase/server';
+import { deliverLeadNotification } from '@/lib/leads/notifications';
+import { ipRateLimitKey, leadSubmissionKey, parseLeadInput, type LeadRow } from '@/lib/leads/schema';
 
 export const dynamic = 'force-dynamic';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^[+\d][\d\s\-()]{5,18}$/;
-const URL_RE = /^https?:\/\/[^\s]+\.[^\s]{2,}$/i;
-
-const PROJECT_TYPES = [
-  'website',
-  'app',
-  'ai-automation',
-  'custom-software',
-  'seo',
-  'maintenance',
-  'consulting',
-  'other',
-];
-const BUDGET_RANGES = ['under-1l', '1-3l', '3-10l', '10-25l', 'over-25l'];
-const SERVICES = [
-  'website-development',
-  'web-application-development',
-  'app-development',
-  'ai-calling-agents',
-  'ai-automation',
-  'custom-software',
-  'ecommerce',
-  'seo',
-  'maintenance',
-  'consulting',
-  'other',
-];
-const CONTACT_METHODS = ['email', 'phone', 'whatsapp', 'video-call'];
-
-type LeadPayload = {
-  name?: unknown;
-  email?: unknown;
-  phone?: unknown;
-  company?: unknown;
-  project_type?: unknown;
-  budget_range?: unknown;
-  required_service?: unknown;
-  project_description?: unknown;
-  preferred_contact_method?: unknown;
-  existing_website?: unknown;
-  website?: unknown;
-};
-
-function str(value: unknown): string {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
-/* ------------------------------------------------------------------ */
-/* Lightweight in-memory rate limit: 5 submissions per IP per 10 min.  */
-/* Per-instance (resets on redeploy) — enough to blunt spam bursts.    */
-/* ------------------------------------------------------------------ */
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;
-const rateMap = new Map<string, { count: number; resetAt: number }>();
+const localRateMap = new Map<string, { count: number; resetAt: number }>();
 
-function isRateLimited(ip: string): boolean {
+function localRateLimited(key: string) {
   const now = Date.now();
-  const entry = rateMap.get(ip);
-  if (!entry || entry.resetAt < now) {
-    rateMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    // Opportunistic cleanup to keep the map small
-    if (rateMap.size > 5000) {
-      for (const [key, value] of rateMap) if (value.resetAt < now) rateMap.delete(key);
-    }
+  const entry = localRateMap.get(key);
+  if (!entry || entry.resetAt <= now) {
+    localRateMap.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
     return false;
   }
   entry.count += 1;
   return entry.count > RATE_MAX;
 }
 
-/**
- * Server-side lead intake. Validates every field before touching the
- * database — client-side validation is only a convenience layer.
- */
-export async function POST(request: Request) {
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    request.headers.get('x-real-ip') ||
-    'unknown';
+function requestIp(request: Request) {
+  return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown';
+}
 
-  if (isRateLimited(ip)) {
-    return NextResponse.json(
-      { error: 'Too many submissions. Please try again later or email us directly.' },
-      { status: 429 }
-    );
+function allowedOrigin(request: Request) {
+  const origin = request.headers.get('origin');
+  if (!origin) return true;
+  if (origin === 'https://www.yaidigitals.co.in') return true;
+  if (process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return true;
+  return false;
+}
+
+export async function POST(request: Request) {
+  if (!allowedOrigin(request)) return NextResponse.json({ error: 'Request origin is not allowed.' }, { status: 403 });
+
+  const declaredLength = Number(request.headers.get('content-length') || '0');
+  if (declaredLength > 25_000) return NextResponse.json({ error: 'Request body is too large.' }, { status: 413 });
+
+  // Dedicated values are preferred. A domain-separated key derived from the
+  // existing server-only service role keeps lead intake safe during rollout.
+  const baseSecret = process.env.SUPABASE_SERVICE_ROLE_KEY || (process.env.NODE_ENV !== 'production' ? 'local-development-only' : '');
+  const derive = (purpose: string) => baseSecret ? createHmac('sha256', baseSecret).update(`yaidigitals:${purpose}`).digest('hex') : '';
+  const rateSecret = process.env.RATE_LIMIT_SECRET || derive('rate-limit');
+  const dedupeSecret = process.env.LEAD_DEDUPE_SECRET || derive('lead-dedupe');
+  if (!rateSecret || !dedupeSecret) {
+    console.error('[api/leads] required security configuration is missing');
+    return NextResponse.json({ error: 'Enquiries are temporarily unavailable. Please contact us on WhatsApp.' }, { status: 503 });
   }
 
-  let body: LeadPayload;
+  const ipKey = ipRateLimitKey(requestIp(request), rateSecret);
+  if (localRateLimited(ipKey)) {
+    return NextResponse.json({ error: 'Too many submissions. Please try again later.' }, { status: 429 });
+  }
+
+  let body: Record<string, unknown>;
   try {
-    body = await request.json();
+    const parsed: unknown = await request.json();
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('Invalid body');
+    body = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
   }
 
-  // Honeypot: pretend success, store nothing
-  if (str(body.website)) {
-    return NextResponse.json({ ok: true });
-  }
-
-  const fieldErrors: Record<string, string> = {};
-
-  const name = str(body.name);
-  const email = str(body.email);
-  const phone = str(body.phone);
-  const company = str(body.company);
-  const projectType = str(body.project_type);
-  const budgetRange = str(body.budget_range);
-  const requiredService = str(body.required_service);
-  const description = str(body.project_description);
-  const existingWebsite = str(body.existing_website);
-  const contactMethod = str(body.preferred_contact_method) || 'email';
-
-  if (name.length < 2 || name.length > 100) fieldErrors.name = 'Name must be between 2 and 100 characters.';
-  if (!EMAIL_RE.test(email) || email.length > 200) fieldErrors.email = 'A valid email address is required.';
-  if (phone && (!PHONE_RE.test(phone) || phone.length > 25)) fieldErrors.phone = 'Phone number looks invalid.';
-  if (company.length > 120) fieldErrors.company = 'Company name is too long.';
-  if (projectType && !PROJECT_TYPES.includes(projectType)) fieldErrors.project_type = 'Unknown project type.';
-  if (budgetRange && !BUDGET_RANGES.includes(budgetRange)) fieldErrors.budget_range = 'Unknown budget range.';
-  if (requiredService && !SERVICES.includes(requiredService)) fieldErrors.required_service = 'Unknown service.';
-  if (description.length > 2000) fieldErrors.project_description = 'Description must be under 2000 characters.';
-  if (existingWebsite && (existingWebsite.length > 200 || !URL_RE.test(existingWebsite)))
-    fieldErrors.existing_website = 'Existing website must be a valid URL (starting with http/https).';
-  if (!CONTACT_METHODS.includes(contactMethod)) fieldErrors.preferred_contact_method = 'Unknown contact method.';
-
-  if (Object.keys(fieldErrors).length > 0) {
-    return NextResponse.json(
-      { error: 'Validation failed.', fields: fieldErrors },
-      { status: 400 }
-    );
+  const { input, errors, isSpam } = parseLeadInput(body);
+  if (isSpam) return NextResponse.json({ ok: true }, { status: 202 });
+  if (Object.keys(errors).length) {
+    return NextResponse.json({ error: 'Please review the highlighted fields.', fields: errors }, { status: 400 });
   }
 
   try {
-    const supabase = createServerSupabase();
-    const { error: insertError } = await supabase.from('leads').insert({
-      name,
-      email,
-      phone: phone || null,
-      company: company || null,
-      project_type: projectType || null,
-      budget_range: budgetRange || null,
-      required_service: requiredService || null,
-      project_description: description || null,
-      existing_website: existingWebsite || null,
-      preferred_contact_method: contactMethod,
+    const supabase = createServerAdminSupabase();
+    const { data: rateAllowed, error: rateError } = await supabase.rpc('check_lead_rate_limit', {
+      p_key_hash: ipKey,
+      p_limit: RATE_MAX,
+      p_window_seconds: RATE_WINDOW_MS / 1000,
     });
+    if (rateError) throw new Error('Persistent rate limit check failed.');
+    if (!rateAllowed) return NextResponse.json({ error: 'Too many submissions. Please try again later.' }, { status: 429 });
 
-    if (insertError) throw insertError;
+    const submissionKey = leadSubmissionKey(input, dedupeSecret);
+    const { website: _honeypot, consent: _consent, form_started_at: _formStartedAt, ...leadData } = input;
+    void _honeypot;
+    void _consent;
+    void _formStartedAt;
 
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error('[api/leads] insert failed:', err);
-    return NextResponse.json(
-      { error: 'Failed to submit your request. Please try again.' },
-      { status: 500 }
-    );
+    const { data, error: insertError } = await supabase
+      .from('leads')
+      .insert({
+        ...leadData,
+        email: leadData.email || null,
+        phone: leadData.phone || null,
+        company: leadData.company || null,
+        project_type: leadData.project_type || null,
+        budget_range: leadData.budget_range || null,
+        existing_website: leadData.existing_website || null,
+        referrer: leadData.referrer || null,
+        utm_source: leadData.utm_source || null,
+        utm_medium: leadData.utm_medium || null,
+        utm_campaign: leadData.utm_campaign || null,
+        utm_content: leadData.utm_content || null,
+        utm_term: leadData.utm_term || null,
+        consent_at: new Date().toISOString(),
+        submission_key: submissionKey,
+        notification_status: 'pending',
+        notification_next_attempt_at: new Date().toISOString(),
+      })
+      .select('id, created_at, name, email, phone, company, project_type, budget_range, required_service, existing_website, project_description, preferred_contact_method, source_url, referrer, utm_source, utm_medium, utm_campaign, utm_content, utm_term, consent_at, notification_status, notification_attempts')
+      .single();
+
+    if (insertError?.code === '23505') {
+      return NextResponse.json({ ok: true, duplicate: true });
+    }
+    if (insertError || !data) throw new Error('Lead persistence failed.');
+
+    const lead = data as unknown as LeadRow;
+    await deliverLeadNotification(supabase, lead);
+    return NextResponse.json({ ok: true, lead_id: lead.id }, { status: 201 });
+  } catch (error) {
+    console.error('[api/leads] request failed', { message: error instanceof Error ? error.message : 'Unknown error' });
+    return NextResponse.json({ error: 'We could not save your enquiry. Please try again or contact us on WhatsApp.' }, { status: 500 });
   }
 }

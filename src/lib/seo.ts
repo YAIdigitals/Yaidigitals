@@ -64,7 +64,7 @@ export function buildMetadata({
   noindex = false,
 }: BuildMetadataOptions = {}): Metadata {
   const url = absoluteUrl(path || '/');
-  const ogImage = absoluteUrl(image || '/opengraph-image');
+  const ogImage = absoluteUrl(image || '/brand/yaidigitals-social.jpg');
 
   const metadata: Metadata = {
     title: absoluteTitle ? { absolute: title ?? '' } : title,
@@ -113,7 +113,7 @@ export function organizationJsonLd(opts?: { email?: string; social?: string[] })
     '@id': `${organizationUrl}#organization`,
     name: SITE_NAME,
     url: organizationUrl,
-    logo: absoluteUrl('/icon.svg'),
+    logo: absoluteUrl('/brand/yaidigitals-mark.png'),
     description:
       'YAIdigitals is a technology company that designs and develops mobile apps, web applications, business websites, custom software and AI-powered automation for growing businesses.',
     ...(opts?.email ? { email: opts.email } : {}),
@@ -121,6 +121,7 @@ export function organizationJsonLd(opts?: { email?: string; social?: string[] })
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'sales',
+      telephone: '+916006107923',
       ...(opts?.email ? { email: opts.email } : {}),
       availableLanguage: ['English', 'Hindi'],
     },

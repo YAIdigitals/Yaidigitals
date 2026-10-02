@@ -1,6 +1,7 @@
 import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
 import { buildMetadata, breadcrumbJsonLd, creativeWorkJsonLd, metaDescription, webPageJsonLd } from '@/lib/seo';
@@ -9,6 +10,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
+import { AnalyticsEvent } from '@/components/AnalyticsEvent';
 
 export const dynamicParams = true;
 export const revalidate = 300;
@@ -150,6 +152,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <AnalyticsEvent name="case_study_view" context={project.slug} />
       <JsonLd
         data={[
           webPageJsonLd({
@@ -219,7 +222,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   href={project.cta_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
+                  className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-bgDark shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
                 >
                   {project.cta_text}
                   <ExternalLink
@@ -297,15 +300,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <Section eyebrow="Screenshots" title="The product">
             <div className="grid gap-5 sm:grid-cols-2">
               {screenshots.map((src, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={i}
-                  src={src}
-                  alt={`${project.title} screenshot ${i + 1}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[16/9] w-full rounded-xl border border-border bg-bgDark object-cover"
-                />
+                <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-bgDark">
+                  <Image
+                    src={src}
+                    alt={`${project.title} ${i === 0 ? 'desktop' : 'mobile'} product interface`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-contain"
+                  />
+                </div>
               ))}
             </div>
           </Section>

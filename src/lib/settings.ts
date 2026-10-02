@@ -72,8 +72,8 @@ export type SeoSettings = {
 export const DEFAULT_SITE: SiteSettings = {
   company_name: 'YAIdigitals',
   contact_email: 'info@yaidigitals.com',
-  contact_phone: '',
-  whatsapp: '',
+  contact_phone: '+91 60061 07923',
+  whatsapp: '+916006107923',
   address: '',
   business_hours: '',
   social: {
@@ -82,7 +82,7 @@ export const DEFAULT_SITE: SiteSettings = {
     twitter: '',
     linkedin: '',
   },
-  footer_description: 'Technology built around your business.',
+  footer_description: 'Websites, apps, custom software and AI systems built around your business.',
   default_cta_text: 'Start a Project',
   default_cta_url: '/contact',
 };
@@ -90,13 +90,13 @@ export const DEFAULT_SITE: SiteSettings = {
 export const DEFAULT_HOMEPAGE: HomepageSettings = {
   hero: {
     badge: 'Technology • Software • AI',
-    heading: 'Website, App, Custom Software & AI Development Company',
-    highlighted: 'Digital products built around your business.',
+    heading: 'We Build Websites, Apps and AI Systems That Help Businesses Grow',
+    highlighted: '',
     description:
-      'YAIdigitals builds high-performance websites, mobile applications, custom software, e-commerce products, AI automation and AI calling agents for startups and growing businesses.',
-    primary_cta_text: 'Start Your Project',
+      'From high-converting websites to mobile apps, custom software and AI automation—YAIdigitals turns business ideas into reliable digital products.',
+    primary_cta_text: 'Discuss Your Project',
     primary_cta_url: '/contact',
-    secondary_cta_text: 'Explore Our Work',
+    secondary_cta_text: 'View Our Work',
     secondary_cta_url: '/work',
     below_cta: 'Strategy • Design • Development • Deployment • Support',
   },
@@ -127,7 +127,7 @@ export const DEFAULT_SEO: SeoSettings = {
   default_description:
     'YAIdigitals builds high-performance websites, mobile apps, custom software and AI automation solutions for startups and growing businesses.',
   canonical_domain: 'https://www.yaidigitals.co.in',
-  og_image: '',
+  og_image: '/brand/yaidigitals-social.jpg',
   twitter_handle: '',
   google_site_verification: '',
   bing_site_verification: '',
@@ -190,16 +190,30 @@ export async function getSettingsBundle(): Promise<{
 
     // Upgrade only the original seeded hero. Any genuinely custom heading set
     // in the CMS remains untouched.
-    if (homepage.hero?.heading === 'We Build Digital Products That Move Businesses Forward.') {
+    if (
+      homepage.hero?.heading === 'We Build Digital Products That Move Businesses Forward.' ||
+      homepage.hero?.heading === 'Website, App, Custom Software & AI Development Company'
+    ) {
       homepage.hero.heading = DEFAULT_HOMEPAGE.hero.heading;
-      if (homepage.hero.highlighted === 'Apps. Software. Websites. AI. Built Around Your Business.') {
+      if (
+        homepage.hero.highlighted === 'Apps. Software. Websites. AI. Built Around Your Business.' ||
+        homepage.hero.highlighted === 'Digital products built around your business.'
+      ) {
         homepage.hero.highlighted = DEFAULT_HOMEPAGE.hero.highlighted;
       }
       if (
         homepage.hero.description ===
-        'YAIdigitals designs and develops powerful digital products for ambitious businesses—from high-performance websites and custom applications to scalable platforms and AI-powered automation.'
+          'YAIdigitals designs and develops powerful digital products for ambitious businesses—from high-performance websites and custom applications to scalable platforms and AI-powered automation.' ||
+        homepage.hero.description ===
+          'YAIdigitals builds high-performance websites, mobile applications, custom software, e-commerce products, AI automation and AI calling agents for startups and growing businesses.'
       ) {
         homepage.hero.description = DEFAULT_HOMEPAGE.hero.description;
+      }
+      if (homepage.hero.primary_cta_text === 'Start Your Project') {
+        homepage.hero.primary_cta_text = DEFAULT_HOMEPAGE.hero.primary_cta_text;
+      }
+      if (homepage.hero.secondary_cta_text === 'Explore Our Work') {
+        homepage.hero.secondary_cta_text = DEFAULT_HOMEPAGE.hero.secondary_cta_text;
       }
     }
 

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import { Mail } from 'lucide-react';
+import { Clock3, Mail, MessageCircle, Phone } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import { SectionHeading } from '@/components/SectionHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { getSettingsBundle } from '@/lib/settings';
 import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { whatsappUrl, WHATSAPP_DISPLAY_NUMBER } from '@/lib/whatsapp';
 
 export const revalidate = 300;
 
@@ -42,17 +43,23 @@ export default async function ContactPage() {
         />
 
         <Reveal delay={0.15}>
-          <div className="mt-8 flex items-center gap-3 rounded-xl border border-border bg-bgCard px-5 py-4">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <Mail size={16} strokeWidth={2} aria-hidden="true" />
-            </span>
-            <p className="text-sm text-textMuted">
-              Prefer email? Write to{' '}
-              <a href={`mailto:${site.contact_email}`} className="font-medium text-textMain underline-offset-4 hover:underline">
-                {site.contact_email}
-              </a>{' '}
-              and we&apos;ll respond within one business day.
-            </p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <a href={whatsappUrl('the contact page')} target="_blank" rel="noopener noreferrer" className="flex min-h-20 items-center gap-3 rounded-xl border border-primary/25 bg-primary/5 px-5 py-4 transition hover:border-primary/50">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><MessageCircle size={18} aria-hidden="true" /></span>
+              <span><span className="block text-sm font-semibold text-textMain">WhatsApp</span><span className="text-xs text-textMuted">{WHATSAPP_DISPLAY_NUMBER}</span></span>
+            </a>
+            <a href={`mailto:${site.contact_email}`} className="flex min-h-20 items-center gap-3 rounded-xl border border-border bg-bgCard px-5 py-4 transition hover:border-primary/40">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><Mail size={18} aria-hidden="true" /></span>
+              <span><span className="block text-sm font-semibold text-textMain">Email</span><span className="text-xs text-textMuted">{site.contact_email}</span></span>
+            </a>
+            <a href="tel:+916006107923" className="flex min-h-20 items-center gap-3 rounded-xl border border-border bg-bgCard px-5 py-4 transition hover:border-primary/40">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><Phone size={18} aria-hidden="true" /></span>
+              <span><span className="block text-sm font-semibold text-textMain">Call</span><span className="text-xs text-textMuted">{WHATSAPP_DISPLAY_NUMBER}</span></span>
+            </a>
+            <div className="flex min-h-20 items-center gap-3 rounded-xl border border-border bg-bgCard px-5 py-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><Clock3 size={18} aria-hidden="true" /></span>
+              <span><span className="block text-sm font-semibold text-textMain">Response time</span><span className="text-xs text-textMuted">Within one business day</span></span>
+            </div>
           </div>
         </Reveal>
 

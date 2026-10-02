@@ -41,6 +41,7 @@ export default async function InsightsPage() {
     .from('blog_posts')
     .select('id, slug, title, excerpt, featured_image, author, published_at, created_at')
     .eq('status', 'published')
+    .not('slug', 'in', '("go-viral-short-videos","start-faceless-reels-channel")')
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false });
 
@@ -67,6 +68,10 @@ export default async function InsightsPage() {
           title="Thinking That Helps You Build Better"
           description="Practical writing on software, apps and AI for growing businesses — from the team that builds them."
         />
+        <p className="mt-5 text-sm text-textMuted">
+          Looking for short-video and content guides? Visit our separate{' '}
+          <Link href="/creator-resources" className="font-medium text-primary underline-offset-4 hover:underline">Creator Resources</Link>.
+        </p>
 
         {all.length === 0 ? (
           <div className="mt-16 rounded-xl border border-border bg-bgCard p-10 text-center">

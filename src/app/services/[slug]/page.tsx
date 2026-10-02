@@ -1,8 +1,9 @@
 import { createServerSupabase } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
-import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle } from 'lucide-react';
 import {
   buildMetadata,
   breadcrumbJsonLd,
@@ -16,6 +17,8 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Reveal } from '@/components/motion/Reveal';
 import { AnimatedHeading } from '@/components/motion/AnimatedHeading';
 import { MagneticButton } from '@/components/motion/MagneticButton';
+import { AnalyticsEvent } from '@/components/AnalyticsEvent';
+import { whatsappUrl } from '@/lib/whatsapp';
 
 export const dynamicParams = true;
 export const revalidate = 300;
@@ -28,6 +31,8 @@ const SEO_TITLES: Record<string, string> = {
   'ai-calling-agents': 'AI Calling Agents for Business',
   'ai-automation': 'AI Automation Solutions',
   ecommerce: 'E-commerce Development Company',
+  'startup-mvp-development': 'Startup MVP Development Company',
+  'maintenance-support': 'Website & App Maintenance Support',
 };
 
 const RELATED_SERVICE_SLUGS: Record<string, string[]> = {
@@ -38,6 +43,8 @@ const RELATED_SERVICE_SLUGS: Record<string, string[]> = {
   'ai-calling-agents': ['ai-automation', 'custom-software', 'web-application-development'],
   'ai-automation': ['ai-calling-agents', 'custom-software', 'web-application-development'],
   ecommerce: ['website-development', 'web-application-development', 'mobile-app-development'],
+  'startup-mvp-development': ['web-application-development', 'mobile-app-development', 'custom-software'],
+  'maintenance-support': ['website-development', 'web-application-development', 'custom-software'],
 };
 
 interface DbService {
@@ -150,6 +157,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <AnalyticsEvent name="service_view" context={service.slug} />
       <JsonLd
         data={[
           webPageJsonLd({
@@ -212,8 +220,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
 
           <Reveal delay={0.25}>
-            <div className="mt-8">
-              <MagneticButton href="/contact">Discuss Your Project</MagneticButton>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <MagneticButton href={`/contact?service=${encodeURIComponent(service.slug)}`} analyticsEvent="cta_project_click" analyticsPlacement="service_hero">Discuss Your Project</MagneticButton>
+              <a href={whatsappUrl(`${service.title} service page`)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-primary/35 px-5 py-3 text-sm font-medium text-primary hover:border-primary">
+                <MessageCircle size={17} aria-hidden="true" /> Ask on WhatsApp
+              </a>
             </div>
           </Reveal>
         </div>
@@ -325,15 +336,18 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-bgCard transition-all duration-300 hover:border-primary/40 hover:shadow-elevate focus-visible:border-primary outline-none motion-reduce:transition-none"
                   >
                     <div className="relative aspect-[16/9] overflow-hidden bg-bgDark bg-grid-faint bg-grid">
-                      {p.cover_image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                      {p.cover_image?.startsWith('/') ? (
+                        <Image
                           src={p.cover_image}
                           alt={`${p.title} — ${p.industry || 'case study'}`}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, 50vw"
+                          className="object-cover"
                         />
+                      ) : p.cover_image ? (
+                        // Transitional fallback for CMS records created before media was localised.
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={p.cover_image} alt={`${p.title} — ${p.industry || 'case study'}`} loading="lazy" className="h-full w-full object-cover" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-grid-faint bg-grid">
                           <span aria-hidden="true" className="text-primary/30">
@@ -402,7 +416,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </div>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
+              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-bgDark shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
             >
               Start a Project
               <ArrowRight

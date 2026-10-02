@@ -123,7 +123,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <Link
             href={`/contact?product=${encodeURIComponent(product.title)}`}
-            className="group mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-medium text-textMain shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
+            className="group mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-semibold text-bgDark shadow-glow-sm transition-all duration-200 hover:bg-primaryDark hover:shadow-glow active:translate-y-px motion-reduce:transition-none"
           >
             Request Access
             <ArrowRight size={16} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />

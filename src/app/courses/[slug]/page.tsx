@@ -261,7 +261,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         <div className="mt-10">
           <Link
             href="/contact"
-            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 font-medium text-textMain transition-colors hover:bg-primaryDark sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 font-semibold text-bgDark transition-colors hover:bg-primaryDark sm:w-auto"
           >
             {course.enrollment_status === 'open' ? 'Enroll Now' : 'Ask About This Course'}
           </Link>

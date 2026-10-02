@@ -1,4 +1,4 @@
-import Link from 'next/link';
+/* eslint-disable @next/next/no-html-link-for-pages -- Native links keep the static homepage free of router JavaScript. */
 import type { Metadata } from 'next';
 import { ArrowRight, CheckCircle2, ChevronDown, PhoneCall } from 'lucide-react';
 import { createServerSupabase } from '@/lib/supabase/server';
@@ -131,7 +131,7 @@ export default async function Home() {
       supabase.from('industries').select('slug, name, short_description, icon, image_url').eq('published', true).order('sort_order'),
       supabase.from('technologies').select('name, category, website_url').eq('active', true).order('sort_order'),
       supabase.from('testimonials').select('id, client_name, client_role, company, quote, rating').eq('published', true).order('sort_order').limit(3),
-      supabase.from('blog_posts').select('id, slug, title, excerpt, published_at, created_at').eq('status', 'published').order('published_at', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false }).limit(3),
+      supabase.from('blog_posts').select('id, slug, title, excerpt, published_at, created_at').eq('status', 'published').not('slug', 'in', '("go-viral-short-videos","start-faceless-reels-channel")').order('published_at', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false }).limit(3),
     ]);
 
   const section = (key: string) => homepage.sections.find((s) => s.key === key);
@@ -195,9 +195,11 @@ export default async function Home() {
               {homepage.hero.heading}
             </AnimatedHeading>
 
-            <Reveal delay={0.2}>
-              <p className="mt-4 text-lg font-medium text-primary">{homepage.hero.highlighted}</p>
-            </Reveal>
+            {homepage.hero.highlighted && (
+              <Reveal delay={0.2}>
+                <p className="mt-4 text-lg font-medium text-primary">{homepage.hero.highlighted}</p>
+              </Reveal>
+            )}
 
             <Reveal delay={0.25}>
               <p className="mt-3 text-lg text-textMuted max-w-xl leading-relaxed">
@@ -207,11 +209,14 @@ export default async function Home() {
 
             <Reveal delay={0.35}>
               <div className="mt-8 flex flex-wrap gap-4">
-                <MagneticButton href={homepage.hero.primary_cta_url || '/contact'}>
+                <MagneticButton href={homepage.hero.primary_cta_url || '/contact'} analyticsEvent="cta_project_click" analyticsPlacement="homepage_hero">
                   {homepage.hero.primary_cta_text}
                 </MagneticButton>
                 <MagneticButton href={homepage.hero.secondary_cta_url || '/work'} variant="outline">
                   {homepage.hero.secondary_cta_text}
+                </MagneticButton>
+                <MagneticButton href="/contact?service=website-development" variant="ghost" analyticsEvent="cta_audit_click" analyticsPlacement="homepage_hero">
+                  Get a Free Website Audit
                 </MagneticButton>
               </div>
             </Reveal>
@@ -236,10 +241,10 @@ export default async function Home() {
                 description={head('work')?.description}
               />
               <Reveal>
-                <Link href="/work" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
+                <a href="/work" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
                   View all work
                   <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                </a>
               </Reveal>
             </div>
             <StaggerGroup className="mt-12 grid gap-6 md:grid-cols-2">
@@ -270,13 +275,13 @@ export default async function Home() {
               ))}
             </StaggerGroup>
             <Reveal className="mt-10">
-              <Link
+              <a
                 href="/services"
                 className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primaryDark"
               >
                 Explore all services
                 <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
-              </Link>
+              </a>
             </Reveal>
           </div>
         </section>
@@ -295,7 +300,7 @@ export default async function Home() {
             <StaggerGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {(industries ?? []).map((ind) => (
                 <StaggerItem key={ind.slug} className="h-full">
-                  <Link
+                  <a
                     href={`/industries/${ind.slug}`}
                     className="group flex h-full flex-col rounded-xl border border-border bg-bgCard p-5 transition-colors duration-300 hover:border-primary/40"
                   >
@@ -308,7 +313,7 @@ export default async function Home() {
                     {ind.short_description && (
                       <p className="mt-1.5 text-sm leading-relaxed text-textMuted">{ind.short_description}</p>
                     )}
-                  </Link>
+                  </a>
                 </StaggerItem>
               ))}
             </StaggerGroup>
@@ -392,12 +397,6 @@ export default async function Home() {
               {PROCESS.map((p) => (
                 <StaggerItem key={p.step}>
                   <div className="h-full rounded-xl border border-border bg-bgCard p-6 relative overflow-hidden transition-colors duration-300 hover:border-primary/30">
-                    <span
-                      aria-hidden="true"
-                      className="absolute -right-2 -top-3 select-none text-6xl font-bold text-white/4"
-                    >
-                      {p.step}
-                    </span>
                     <span className="eyebrow">{p.step}</span>
                     <h3 className="mt-3 font-semibold text-textMain">{p.title}</h3>
                     <p className="mt-2 text-sm text-textMuted leading-relaxed">{p.body}</p>
@@ -474,16 +473,16 @@ export default async function Home() {
                 description={head('insights')?.description}
               />
               <Reveal>
-                <Link href="/insights" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
+                <a href="/insights" className="group inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-primary hover:text-primaryDark">
                   All insights
                   <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                </a>
               </Reveal>
             </div>
             <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-3">
               {(posts as DbPost[]).map((post) => (
                 <StaggerItem key={post.id} className="h-full">
-                  <Link
+                  <a
                     href={`/insights/${post.slug}`}
                     className="group flex h-full flex-col rounded-xl border border-border bg-bgCard p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-elevate focus-visible:border-primary outline-none motion-reduce:transition-none"
                   >
@@ -500,7 +499,7 @@ export default async function Home() {
                         className="transition-transform duration-200 group-hover:translate-x-0.5"
                       />
                     </span>
-                  </Link>
+                  </a>
                 </StaggerItem>
               ))}
             </StaggerGroup>

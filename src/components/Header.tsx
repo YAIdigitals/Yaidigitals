@@ -1,12 +1,7 @@
-'use client';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utils';
-import { EASE } from '@/lib/motion';
+/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation avoids shipping a client router in the global header. */
+import { ChevronDown, Menu, MessageCircle, X } from 'lucide-react';
+import { BrandLogo } from '@/components/BrandLogo';
+import { whatsappUrl } from '@/lib/whatsapp';
 
 const SERVICE_LINKS = [
   { href: '/services/website-development', label: 'Website Development', desc: 'Fast, conversion-focused sites' },
@@ -16,11 +11,14 @@ const SERVICE_LINKS = [
   { href: '/services/ai-calling-agents', label: 'AI Calling Agents', desc: '24/7 voice agents for your business' },
   { href: '/services/ai-automation', label: 'AI & Business Automation', desc: 'Streamline repetitive workflows' },
   { href: '/services/ecommerce', label: 'E-commerce & Marketplaces', desc: 'Commerce platforms that sell' },
+  { href: '/services/startup-mvp-development', label: 'Startup MVP Development', desc: 'Validate and launch with focus' },
+  { href: '/services/maintenance-support', label: 'Maintenance & Support', desc: 'Keep digital products reliable' },
 ] as const;
 
 const PRODUCT_LINKS = [
   { href: '/store', label: 'Digital Products', desc: 'Instant-delivery assets' },
   { href: '/courses', label: 'Courses', desc: 'Practical tech & content skills' },
+  { href: '/creator-resources', label: 'Creator Resources', desc: 'Content tools and practical guides' },
 ] as const;
 
 const COMPANY_LINKS = [
@@ -34,337 +32,125 @@ const MAIN_LINKS = [
   { href: '/insights', label: 'Insights' },
 ] as const;
 
-export default function Header({ company = 'YAIdigitals' }: { company?: string }) {
-  const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
+type MenuLink = { href: string; label: string; desc?: string };
 
-  const [openMenu, setOpenMenu] = useState<'services' | 'products' | 'company' | null>(null);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const desktopNavRef = useRef<HTMLElement>(null);
-  const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const toggleButtonRef = useRef<HTMLButtonElement>(null);
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const isActive = useCallback(
-    (href: string) => pathname === href || pathname.startsWith(`${href}/`),
-    [pathname]
-  );
-
-  /* Close dropdown on outside click / Escape */
-  useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (desktopNavRef.current && !desktopNavRef.current.contains(e.target as Node)) {
-        setOpenMenu(null);
-      }
-    }
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpenMenu(null);
-    }
-    document.addEventListener('mousedown', onClickOutside);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', onClickOutside);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, []);
-
-  /* Close route-aware UI whenever navigation happens */
-  useEffect(() => {
-    setOpenMenu(null);
-    setIsMobileOpen(false);
-  }, [pathname]);
-
-  /* Mobile menu: lock document scroll and manage focus. */
-  useEffect(() => {
-    if (!isMobileOpen) return;
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    const prevOverflow = document.body.style.overflow;
-    const toggleButton = toggleButtonRef.current;
-    // Lock both html and body so no engine/timing can scroll the page behind the menu
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-
-    const firstLink = mobilePanelRef.current?.querySelector<HTMLAnchorElement>('a');
-    firstLink?.focus();
-
-    return () => {
-      document.documentElement.style.overflow = prevHtmlOverflow;
-      document.body.style.overflow = prevOverflow;
-      toggleButton?.focus();
-    };
-  }, [isMobileOpen]);
-
-  useEffect(() => () => {
-    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-  }, []);
-
-  const hoverProps = (key: 'services' | 'products' | 'company') => ({
-    onMouseEnter: () => {
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-      setOpenMenu(key);
-    },
-    onMouseLeave: () => {
-      closeTimeoutRef.current = setTimeout(() => setOpenMenu(null), 150);
-    },
-  });
-
-  const renderDropdown = (key: 'services' | 'products' | 'company', links: readonly { href: string; label: string; desc?: string }[], footer?: { href: string; label: string }) => {
-    const isOpen = openMenu === key;
-    const twoCol = key === 'services';
-    return (
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id={`${key}-menu`}
-            initial={reduceMotion ? false : { opacity: 0, y: 6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: 4, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: EASE }}
-            {...hoverProps(key)}
-            className="absolute left-0 top-full pt-3 z-20 w-[26rem]"
-          >
-            <div className="rounded-xl border border-border bg-bgCard shadow-card p-2">
-              <div className={cn('grid gap-1', twoCol && 'grid-cols-2')}>
-                {links.map((s) => (
-                  <Link
-                    key={s.href}
-                    href={s.href}
-                    className="group rounded-lg px-3 py-2.5 transition-colors hover:bg-white/4 focus-visible:bg-white/4 outline-none"
-                  >
-                    <span className="block text-sm font-medium text-textMain">{s.label}</span>
-                    {s.desc && <span className="mt-0.5 block text-xs text-textMuted">{s.desc}</span>}
-                  </Link>
-                ))}
-              </div>
-              {footer && (
-                <Link
-                  href={footer.href}
-                  className="mt-1 flex items-center justify-between rounded-lg border-t border-border px-3 py-2.5 text-sm text-primary hover:text-primaryDark"
-                >
-                  {footer.label}
-                  <span aria-hidden="true">→</span>
-                </Link>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  };
-
-  const dropdownTrigger = (key: 'services' | 'products' | 'company', label: string) => {
-    const isOpen = openMenu === key;
-    const active =
-      (key === 'services' && pathname.startsWith('/services')) ||
-      (key === 'products' && (pathname.startsWith('/store') || pathname.startsWith('/courses'))) ||
-      (key === 'company' && (pathname.startsWith('/about') || pathname.startsWith('/contact')));
-    return (
-      <button
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls={`${key}-menu`}
-        aria-haspopup="true"
-        onClick={() => setOpenMenu(isOpen ? null : key)}
-        className={cn(
-          'flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-          isOpen || active ? 'text-textMain' : 'text-textMuted hover:text-textMain'
-        )}
-      >
-        {label}
-        <ChevronDown
-          size={14}
-          strokeWidth={2}
-          aria-hidden="true"
-          className={cn('transition-transform duration-200', isOpen && 'rotate-180')}
-        />
-      </button>
-    );
-  };
-
+function DesktopMenu({ label, links, footer }: { label: string; links: readonly MenuLink[]; footer?: MenuLink }) {
+  const twoColumns = label === 'Services';
   return (
-    <>
-      <header className="sticky top-0 z-50 border-b border-border bg-bgDark/85 backdrop-blur-lg">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xl font-bold"
-            aria-label={`${company} — home`}
-          >
-            <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-primary shadow-glow-sm" />
-            <span>
-              <span className="text-primary">YAI</span>
-              <span className="text-textMain">digitals</span>
-            </span>
-          </Link>
-
-          {/* Desktop navigation */}
-          <nav aria-label="Main" className="hidden lg:flex lg:items-center lg:gap-1" ref={desktopNavRef}>
-            <div className="relative" {...hoverProps('services')}>
-              {dropdownTrigger('services', 'Services')}
-              {renderDropdown('services', SERVICE_LINKS, { href: '/services', label: 'All services' })}
-            </div>
-
-            {MAIN_LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                aria-current={isActive(l.href) ? 'page' : undefined}
-                className={cn(
-                  'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                  isActive(l.href) ? 'text-textMain' : 'text-textMuted hover:text-textMain'
-                )}
-              >
-                {l.label}
-                {isActive(l.href) && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-x-3 -bottom-px h-px bg-primary"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
+    <details className="group relative">
+      <summary className="flex cursor-pointer list-none items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-textMuted transition-colors hover:text-textMain [&::-webkit-details-marker]:hidden">
+        {label}
+        <ChevronDown aria-hidden="true" size={14} strokeWidth={2} className="transition-transform duration-200 group-open:rotate-180" />
+      </summary>
+      <div className="absolute left-0 top-full z-20 w-[26rem] pt-3">
+        <div className="rounded-xl border border-border bg-bgCard p-2 shadow-card">
+          <div className={`grid gap-1 ${twoColumns ? 'grid-cols-2' : ''}`}>
+            {links.map((link) => (
+              <a key={link.href} href={link.href} className="rounded-lg px-3 py-2.5 outline-none transition-colors hover:bg-white/4 focus-visible:bg-white/4">
+                <span className="block text-sm font-medium text-textMain">{link.label}</span>
+                {link.desc && <span className="mt-0.5 block text-xs text-textMuted">{link.desc}</span>}
+              </a>
             ))}
+          </div>
+          {footer && (
+            <a href={footer.href} className="mt-1 flex items-center justify-between rounded-lg border-t border-border px-3 py-2.5 text-sm text-primary hover:text-primaryDark">
+              {footer.label}<span aria-hidden="true">→</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </details>
+  );
+}
 
-            <div className="relative" {...hoverProps('products')}>
-              {dropdownTrigger('products', 'Products')}
-              {renderDropdown('products', PRODUCT_LINKS)}
-            </div>
+export default function Header({ company = 'YAIdigitals' }: { company?: string }) {
+  return (
+    <header className="sticky top-0 z-50 border-b border-border bg-bgDark/95 lg:bg-bgDark/85 lg:backdrop-blur-lg">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <a href="/" className="flex min-h-11 items-center" aria-label={`${company} — home`}>
+            <BrandLogo priority className="w-[146px] sm:w-[162px]" />
+          </a>
 
-            <div className="relative" {...hoverProps('company')}>
-              {dropdownTrigger('company', 'Company')}
-              {renderDropdown('company', COMPANY_LINKS)}
-            </div>
+          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+            <DesktopMenu label="Services" links={SERVICE_LINKS} footer={{ href: '/services', label: 'All services' }} />
+            {MAIN_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="rounded-md px-3 py-2 text-sm font-medium text-textMuted transition-colors hover:text-textMain">
+                {link.label}
+              </a>
+            ))}
+            <DesktopMenu label="Products" links={PRODUCT_LINKS} />
+            <DesktopMenu label="Company" links={COMPANY_LINKS} />
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
+            <a
+              href={whatsappUrl()}
+              data-whatsapp-link
+              data-analytics-event="cta_whatsapp_click"
+              data-analytics-placement="header"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat with YAIdigitals on WhatsApp"
+              className="hidden h-10 w-10 items-center justify-center rounded-lg border border-border text-textMuted transition-colors hover:border-primary/40 hover:text-primary xl:inline-flex"
+            >
+              <MessageCircle size={18} aria-hidden="true" />
+            </a>
+            <a
               href="/contact"
-              className="hidden sm:inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-textMain transition-colors hover:bg-primaryDark hover:shadow-glow-sm active:translate-y-px motion-reduce:transition-none"
+              data-analytics-event="cta_project_click"
+              data-analytics-placement="header"
+              className="hidden items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-bgDark transition-colors hover:bg-primaryDark hover:shadow-glow-sm active:translate-y-px sm:inline-flex"
             >
               Start a Project
-            </Link>
+            </a>
 
-            {/* Mobile menu toggle */}
-            <button
-              ref={toggleButtonRef}
-              type="button"
-              aria-expanded={isMobileOpen}
-              aria-controls="mobile-menu"
-              aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
-              onClick={() => setIsMobileOpen((v) => !v)}
-              className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-textMuted transition-colors hover:text-textMain hover:border-primary/40"
-            >
-              {isMobileOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
-            </button>
+            <details className="group lg:hidden">
+              <summary
+                aria-label="Toggle navigation menu"
+                className="inline-flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-border text-textMuted transition-colors hover:border-primary/40 hover:text-textMain [&::-webkit-details-marker]:hidden"
+              >
+                <Menu size={20} strokeWidth={2} aria-hidden="true" className="group-open:hidden" />
+                <X size={20} strokeWidth={2} aria-hidden="true" className="hidden group-open:block" />
+              </summary>
+              <nav aria-label="Mobile" className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto overscroll-contain border-b border-border bg-bgDark/98">
+                <div className="space-y-1 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
+                  <p className="px-3 pb-1 pt-3 text-xs uppercase tracking-wider text-textMuted">Services</p>
+                  {SERVICE_LINKS.map((link) => (
+                    <a key={link.href} href={link.href} className="block rounded-lg px-3 py-2.5 text-sm text-textMuted transition-colors hover:bg-bgCard hover:text-textMain">
+                      {link.label}
+                    </a>
+                  ))}
+                  <a href="/services" className="block rounded-lg px-3 py-2.5 text-sm text-primary hover:text-primaryDark">All services →</a>
+
+                  <p className="px-3 pb-1 pt-4 text-xs uppercase tracking-wider text-textMuted">Company</p>
+                  {[...MAIN_LINKS, ...COMPANY_LINKS].map((link) => (
+                    <a key={link.href} href={link.href} className="block rounded-lg px-3 py-2.5 text-sm text-textMuted transition-colors hover:bg-bgCard hover:text-textMain">
+                      {link.label}
+                    </a>
+                  ))}
+
+                  <p className="px-3 pb-1 pt-4 text-xs uppercase tracking-wider text-textMuted">Products</p>
+                  {PRODUCT_LINKS.map((link) => (
+                    <a key={link.href} href={link.href} className="block rounded-lg px-3 py-2.5 text-sm text-textMuted transition-colors hover:bg-bgCard hover:text-textMain">
+                      {link.label}
+                    </a>
+                  ))}
+
+                  <div className="pt-4">
+                    <a href="/contact" data-analytics-event="cta_project_click" data-analytics-placement="mobile_menu" className="block rounded-lg bg-primary px-4 py-3 text-center font-semibold text-bgDark transition-colors hover:bg-primaryDark">
+                      Start a Project
+                    </a>
+                    <a href={whatsappUrl()} data-whatsapp-link data-analytics-event="cta_whatsapp_click" data-analytics-placement="mobile_menu" target="_blank" rel="noopener noreferrer" className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-lg border border-primary/40 px-4 py-3 text-center font-medium text-primary">
+                      <MessageCircle size={18} aria-hidden="true" /> WhatsApp us
+                    </a>
+                  </div>
+                </div>
+              </nav>
+            </details>
           </div>
         </div>
       </div>
-
-      </header>
-
-      {/* Mobile menu overlay — fixed to the viewport, starting below the 4rem
-          header bar and bounded by top/bottom (no dvh/vh dependency). The inner
-          area scrolls when content is taller than the screen. Opacity-only
-          animation so Motion never injects overflow:hidden and nothing can clip
-          the first items. Rendered as a sibling of <header> because the
-          header's backdrop-blur would otherwise become the containing block for
-          fixed children. */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.nav
-            id="mobile-menu"
-            ref={mobilePanelRef}
-            aria-label="Mobile"
-            initial={reduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduceMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.18, ease: EASE }}
-            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto overscroll-contain border-b border-border bg-bgDark/98 backdrop-blur-xl [-webkit-overflow-scrolling:touch]"
-          >
-            <div className="px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-1">
-              <p className="px-3 pt-3 pb-1 text-xs uppercase tracking-wider text-textMuted">Services</p>
-              {SERVICE_LINKS.map((s) => (
-                <Link
-                  key={s.href}
-                  href={s.href}
-                  className={cn(
-                    'block rounded-lg px-3 py-2.5 text-sm transition-colors',
-                    isActive(s.href)
-                      ? 'bg-primary/8 text-textMain'
-                      : 'text-textMuted hover:text-textMain hover:bg-bgCard'
-                  )}
-                >
-                  {s.label}
-                </Link>
-              ))}
-              <Link
-                href="/services"
-                className="block rounded-lg px-3 py-2.5 text-sm text-primary hover:text-primaryDark"
-              >
-                All services →
-              </Link>
-
-              <p className="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-textMuted">Company</p>
-              {MAIN_LINKS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  aria-current={isActive(l.href) ? 'page' : undefined}
-                  className={cn(
-                    'block rounded-lg px-3 py-2.5 text-sm transition-colors',
-                    isActive(l.href)
-                      ? 'bg-primary/8 text-textMain'
-                      : 'text-textMuted hover:text-textMain hover:bg-bgCard'
-                  )}
-                >
-                  {l.label}
-                </Link>
-              ))}
-              {COMPANY_LINKS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  aria-current={isActive(l.href) ? 'page' : undefined}
-                  className={cn(
-                    'block rounded-lg px-3 py-2.5 text-sm transition-colors',
-                    isActive(l.href)
-                      ? 'bg-primary/8 text-textMain'
-                      : 'text-textMuted hover:text-textMain hover:bg-bgCard'
-                  )}
-                >
-                  {l.label}
-                </Link>
-              ))}
-
-              <p className="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-textMuted">Products</p>
-              {PRODUCT_LINKS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className={cn(
-                    'block rounded-lg px-3 py-2.5 text-sm transition-colors',
-                    isActive(l.href)
-                      ? 'bg-primary/8 text-textMain'
-                      : 'text-textMuted hover:text-textMain hover:bg-bgCard'
-                  )}
-                >
-                  {l.label}
-                </Link>
-              ))}
-
-              <div className="pt-4">
-                <Link
-                  href="/contact"
-                  className="block rounded-lg bg-primary px-4 py-3 text-center font-medium text-textMain transition-colors hover:bg-primaryDark"
-                >
-                  Start a Project
-                </Link>
-              </div>
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
-    </>
+    </header>
   );
 }

@@ -1,7 +1,3 @@
-'use client';
-
-import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import type { ServiceRecord } from '@/lib/types';
 
@@ -11,15 +7,9 @@ import type { ServiceRecord } from '@/lib/types';
  * hides information.
  */
 export function ServiceCard({ service }: { service: ServiceRecord }) {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <motion.div
-      whileHover={reduceMotion ? undefined : { y: -4 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-      className="h-full"
-    >
-      <Link
+    <div className="h-full transition-transform duration-200 hover:-translate-y-1 motion-reduce:transform-none">
+      <a
         href={`/services/${service.slug}`}
         className="group relative flex h-full flex-col rounded-xl border border-border bg-bgCard p-6 transition-colors duration-300 hover:border-primary/40 focus-visible:border-primary outline-none"
       >
@@ -50,7 +40,7 @@ export function ServiceCard({ service }: { service: ServiceRecord }) {
           />
           <span className="sr-only">about {service.title}</span>
         </span>
-      </Link>
-    </motion.div>
+      </a>
+    </div>
   );
 }

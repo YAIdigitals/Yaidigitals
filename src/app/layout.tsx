@@ -7,6 +7,8 @@ import Footer from '@/components/Footer';
 import { getSettingsBundle } from '@/lib/settings';
 import { BASE_URL, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { AttributionCapture } from '@/components/AttributionCapture';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { seo, site } = await getSettingsBundle();
   const title =
     seo.default_title || `${site.company_name} | Website, App, Software & AI Development Company`;
-  const socialImage = seo.og_image || '/opengraph-image';
+  const socialImage = seo.og_image || '/brand/yaidigitals-social.jpg';
 
   return {
     metadataBase: new URL(BASE_URL),
@@ -26,8 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
     applicationName: site.company_name,
     manifest: '/manifest.webmanifest',
     icons: {
-      icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-      apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+      icon: [{ url: '/icon.png', sizes: '512x512', type: 'image/png' }],
+      apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
     },
     openGraph: {
       title,
@@ -70,6 +72,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <JsonLd data={webLd} />
       </head>
       <body className={inter.className}>
+        <AttributionCapture />
         {integrations.google_analytics_id && (
           <>
             <Script
@@ -97,6 +100,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
         </main>
         <Footer site={site} />
+        <WhatsAppButton />
       </body>
     </html>
   );
