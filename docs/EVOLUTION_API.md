@@ -77,7 +77,9 @@ CRON_SECRET=<independent-random-secret>
 
 ## Delivery, retries and authorised testing
 
-A lead is validated, spam-checked and saved before delivery is attempted. Its database row is also the durable notification job. An atomic database claim keyed by lead ID prevents concurrent sends. Retryable provider/network failures are scheduled at 5, 30 and 120 minutes, up to four total attempts; permanent authentication/validation failures use `permanently_failed` for operator action. Vercel calls the protected retry route every 15 minutes.
+A lead is validated, spam-checked and saved before delivery is attempted. Its database row is also the durable notification job. An atomic database claim keyed by lead ID prevents concurrent sends. Retryable provider/network failures are scheduled at 5, 30 and 120 minutes, up to four total attempts; permanent authentication/validation failures use `permanently_failed` for operator action.
+
+Call `GET /api/internal/lead-notifications` every 15 minutes with `Authorization: Bearer <CRON_SECRET>` from Vercel Cron on a plan that supports that frequency, or from an authenticated external scheduler. The repository deliberately does not declare the frequent schedule in `vercel.json`, because deployments on Vercel plans that do not support sub-daily cron jobs are rejected. The endpoint is safe to call concurrently because each lead is claimed atomically.
 
 Automated tests mock Evolution and never send a message. After the instance is connected, an operator may authorise one controlled test by creating a non-production lead against a staging database or by calling Evolution directly:
 
