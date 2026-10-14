@@ -23,6 +23,7 @@ const COMPANY_LINKS = [
 ];
 
 const PRODUCT_LINKS = [
+  { href: '/resources', label: 'Free Resources' },
   { href: '/store', label: 'Digital Products' },
   { href: '/courses', label: 'Courses' },
   { href: '/creator-resources', label: 'Creator Resources' },
