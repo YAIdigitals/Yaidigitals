@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createClientSupabase } from '@/lib/supabase/client';
 import { Card, Text, Area, Select, Notice, SubmitButton, Panel, EmptyRow } from '@/components/admin/ui';
-import { Plus, Copy, Trash2, ArrowLeft, Instagram } from 'lucide-react';
+import { Plus, Copy, Trash2, ArrowLeft, MessageCircle } from 'lucide-react';
 
 type Campaign = {
   id: number;
@@ -257,7 +257,7 @@ export default function AdminCampaigns() {
               <div key={c.id} className="group flex items-center justify-between gap-4 rounded-lg border border-border bg-bgDark p-4 hover:border-primary/30">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <Instagram size={14} className="shrink-0 text-pink-400" />
+                    <MessageCircle size={14} className="shrink-0 text-pink-400" />
                     <h3 className="truncate font-medium text-textMain">{c.name}</h3>
                     <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase ${
                       c.automation_status === 'active' ? 'bg-primary/15 text-primary' :
@@ -274,7 +274,7 @@ export default function AdminCampaigns() {
                 </div>
                 <div className="flex shrink-0 gap-1.5 opacity-60 group-hover:opacity-100">
                   <button onClick={() => copyTrackingUrl(c)} title="Copy URL" className="rounded p-1.5 text-textMuted hover:bg-primary/10 hover:text-primary"><Copy size={14} /></button>
-                  <button onClick={() => copyDMMessage(c)} title="Copy DM" className="rounded p-1.5 text-textMuted hover:bg-primary/10 hover:text-primary"><Instagram size={14} /></button>
+                  <button onClick={() => copyDMMessage(c)} title="Copy DM" className="rounded p-1.5 text-textMuted hover:bg-primary/10 hover:text-primary"><MessageCircle size={14} /></button>
                   <button onClick={() => openEditor(c)} title="Edit" className="rounded p-1.5 text-textMuted hover:bg-primary/10 hover:text-primary">✏️</button>
                   <button onClick={() => handleDelete(c.id)} title="Delete" className="rounded p-1.5 text-textMuted hover:bg-red-500/10 hover:text-red-400"><Trash2 size={14} /></button>
                 </div>
