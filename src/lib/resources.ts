@@ -178,6 +178,7 @@ export async function getAdvertisingSettings(): Promise<AdvertisingSettings | nu
   const { data } = await supabase
     .from('advertising_settings')
     .select('*')
+    .order('id', { ascending: true })   // deterministic — always returns row id=1
     .limit(1)
     .maybeSingle();
   return data as AdvertisingSettings | null;
