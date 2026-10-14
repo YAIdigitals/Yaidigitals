@@ -161,7 +161,7 @@ export async function getRelatedResources(resourceId: number, categoryId: number
   }
 
   const { data } = await query;
-  return (data ?? []) as Array<Pick<Resource, 'id' | 'title' | 'slug' | 'summary' | 'cover_image'> & { category: { name: string; slug: string } | null }>;
+  return (data ?? []) as unknown as Array<Pick<Resource, 'id' | 'title' | 'slug' | 'summary' | 'cover_image'> & { category: { name: string; slug: string } | null }>;
 }
 
 export async function getResourceCategories(): Promise<ResourceCategory[]> {
