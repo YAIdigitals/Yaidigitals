@@ -9,7 +9,9 @@ export type AnalyticsEvent =
   | 'contact_form_success'
   | 'contact_form_error'
   | 'case_study_view'
-  | 'service_view';
+  | 'service_view'
+  | 'resource_view'
+  | 'resource_download_click';
 
 type SafeParameters = Record<string, string | number | boolean | undefined>;
 
