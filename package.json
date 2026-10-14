@@ -19,7 +19,8 @@
     "seed": "tsx scripts/seed.ts",
     "seed:travel-projects": "tsx scripts/seed-content.ts --travel-projects-only",
     "seed:project-images": "tsx scripts/seed-content.ts --project-images-only",
-    "seed:sparkx-playstore": "tsx scripts/seed-content.ts --sparkx-playstore-only"
+    "seed:sparkx-playstore": "tsx scripts/seed-content.ts --sparkx-playstore-only",
+    "seed:resource-hub": "tsx scripts/seed-resource-hub.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
