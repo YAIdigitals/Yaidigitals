@@ -16,13 +16,22 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function ResourcesPage() {
-  const [{ data: resources }, categories] = await Promise.all([
-    getPublishedResources({ limit: 24 }),
-    getResourceCategories(),
-  ]).catch(() => [{ data: [], count: 0 }, []]);
+  let resources: import('@/lib/resources').Resource[] = [];
+  let categories: import('@/lib/resources').ResourceCategory[] = [];
 
-  const featured = resources.filter(r => r.featured);
-  const rest = resources.filter(r => !r.featured);
+  try {
+    const [resourcesResult, categoriesResult] = await Promise.all([
+      getPublishedResources({ limit: 24 }),
+      getResourceCategories(),
+    ]);
+    resources = resourcesResult.data ?? [];
+    categories = categoriesResult ?? [];
+  } catch {
+    // Graceful degradation — show empty state
+  }
+
+  const featured = resources.filter((r) => r.featured);
+  const rest = resources.filter((r) => !r.featured);
 
   return (
     <>
