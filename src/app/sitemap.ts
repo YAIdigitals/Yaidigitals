@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/creator-resources',
     '/industries',
     '/courses',
+    '/resources',
     '/privacy-policy',
     '/terms-conditions',
     '/refund-policy',
@@ -30,13 +31,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const supabase = createServerSupabase();
-    const [services, projects, industries, courses, products, posts] = await Promise.all([
+    const [services, projects, industries, courses, products, posts, resources] = await Promise.all([
       supabase.from('services').select('slug, updated_at').eq('active', true),
       supabase.from('projects').select('slug, updated_at').eq('status', 'published'),
       supabase.from('industries').select('slug, updated_at').eq('published', true),
       supabase.from('courses').select('slug, updated_at').eq('published', true),
       supabase.from('products').select('slug').eq('active', true),
       supabase.from('blog_posts').select('slug, updated_at, published_at, created_at').eq('status', 'published'),
+      supabase.from('resources').select('slug, updated_at, published_at').eq('status', 'published'),
     ]);
 
     return [
@@ -65,6 +67,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/insights/${b.slug}`,
         ...(validDate(b.updated_at || b.published_at || b.created_at)
           ? { lastModified: validDate(b.updated_at || b.published_at || b.created_at) }
+          : {}),
+      })),
+      ...(resources.data ?? []).map((r) => ({
+        url: `${BASE_URL}/resources/${r.slug}`,
+        ...(validDate(r.updated_at || r.published_at)
+          ? { lastModified: validDate(r.updated_at || r.published_at) }
           : {}),
       })),
     ];
