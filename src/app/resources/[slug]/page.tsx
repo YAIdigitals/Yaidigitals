@@ -100,7 +100,7 @@ export default async function ResourceDetailPage({ params, searchParams }: Props
         utmCampaign={utmCampaign}
       />
 
-      <article>
+      <article className="pb-[52px] lg:pb-0">
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section className="relative overflow-hidden border-b border-border bg-bgDark">
           <div className="pointer-events-none absolute inset-0 bg-grid-faint bg-grid opacity-40" />
