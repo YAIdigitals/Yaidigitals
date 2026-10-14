@@ -68,12 +68,12 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
         <div className="mt-auto flex items-center justify-between pt-4">
           <div className="flex items-center gap-3 text-xs text-textMuted">
-            {resource.view_count > 0 && (
+            {(resource.view_count ?? 0) > 0 && (
               <span className="flex items-center gap-1">
                 <Eye size={11} /> {resource.view_count}
               </span>
             )}
-            {resource.download_count > 0 && (
+            {(resource.download_count ?? 0) > 0 && (
               <span className="flex items-center gap-1">
                 <Download size={11} /> {resource.download_count}
               </span>
