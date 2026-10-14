@@ -15,7 +15,7 @@ import { ResourceViewTracker, DownloadButton } from '@/components/resources/Reso
 import { ResourceCard } from '@/components/resources/ResourceCard';
 import {
   FileText, Download, CheckCircle2, ChevronRight,
-  Instagram, ExternalLink, HelpCircle
+  MessageCircle, ExternalLink, HelpCircle
 } from 'lucide-react';
 
 export const revalidate = 300;
@@ -275,7 +275,7 @@ export default async function ResourceDetailPage({ params, searchParams }: Props
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-medium text-textMuted transition-colors hover:border-primary/40 hover:text-primary"
                     >
-                      <Instagram size={16} /> Follow on Instagram
+                      <MessageCircle size={16} /> Follow on Instagram
                     </a>
                   </div>
                 )}
