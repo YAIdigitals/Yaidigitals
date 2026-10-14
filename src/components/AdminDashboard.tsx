@@ -18,11 +18,16 @@ import AdminCourses from '@/components/admin/AdminCourses';
 import AdminProjects from '@/components/admin/AdminProjects';
 import AdminLeads from '@/components/admin/AdminLeads';
 import AdminUsers from '@/components/admin/AdminUsers';
+import AdminResources from '@/components/admin/AdminResources';
+import AdminCampaigns from '@/components/admin/AdminCampaigns';
+import AdminAdvertising from '@/components/admin/AdminAdvertising';
+import AdminResourceAnalytics from '@/components/admin/AdminResourceAnalytics';
 
 type Tab =
   | 'homepage' | 'settings-site' | 'seo' | 'redirects'
   | 'services' | 'industries' | 'technologies' | 'projects' | 'testimonials' | 'team' | 'blog'
   | 'leads' | 'products' | 'bundles' | 'courses'
+  | 'resources' | 'campaigns' | 'advertising' | 'resource-analytics'
   | 'media' | 'settings-legacy' | 'access';
 
 const GROUPS: { label: string; tabs: { id: Tab; label: string }[] }[] = [
@@ -45,6 +50,15 @@ const GROUPS: { label: string; tabs: { id: Tab; label: string }[] }[] = [
       { id: 'testimonials', label: 'Testimonials' },
       { id: 'team', label: 'Team' },
       { id: 'blog', label: 'Insights' },
+    ],
+  },
+  {
+    label: 'Resource Hub',
+    tabs: [
+      { id: 'resources', label: 'Resources' },
+      { id: 'campaigns', label: 'Campaigns' },
+      { id: 'advertising', label: 'Advertising' },
+      { id: 'resource-analytics', label: 'Analytics' },
     ],
   },
   {
@@ -117,10 +131,26 @@ export default function AdminDashboard({ initialTab }: { initialTab: string }) {
         {tab === 'products' && <AdminProducts />}
         {tab === 'bundles' && <AdminBundles />}
         {tab === 'courses' && <AdminCourses />}
+        {tab === 'resources' && <AdminResources />}
+        {tab === 'campaigns' && <AdminCampaigns />}
+        {tab === 'advertising' && <AdminAdvertising />}
+        {tab === 'resource-analytics' && <AdminResourceAnalytics />}
         {tab === 'media' && <AdminMedia />}
         {tab === 'settings-legacy' && <AdminSettings />}
         {tab === 'access' && <AdminUsers />}
       </div>
+
+      <p className="mt-10 border-t border-border pt-4 text-xs text-textMuted">
+        WhatsApp delivery infrastructure powered by{' '}
+        <a
+          href="https://github.com/evolution-foundation/evolution-go"
+          target="_blank"
+          rel="noreferrer"
+          className="underline underline-offset-4 hover:text-textMain"
+        >
+          Evolution Go
+        </a>.
+      </p>
     </div>
   );
 }
