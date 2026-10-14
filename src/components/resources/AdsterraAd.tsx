@@ -23,17 +23,11 @@ interface BannerProps {
 }
 
 export function AdsterraBanner({ adKey, width, height, format, className }: BannerProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-
-    // Write the ad into an isolated iframe to prevent atOptions global conflicts
-    const doc = iframe.contentDocument || iframe.contentWindow?.document;
-    if (!doc) return;
-
-    const html = `<!DOCTYPE html>
+  // srcdoc gives the iframe the SAME origin as the parent (yaidigitals.co.in),
+  // fixing the null-origin block that prevented Adsterra scripts from serving ads.
+  // No useEffect needed — React sets srcdoc as a direct DOM attribute, avoiding
+  // the Strict Mode double-invoke that was wiping the iframe content.
+  const srcdoc = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -57,14 +51,8 @@ export function AdsterraBanner({ adKey, width, height, format, className }: Bann
 </body>
 </html>`;
 
-    doc.open();
-    doc.write(html);
-    doc.close();
-  }, [adKey, width, height]);
-
   return (
     <iframe
-      ref={iframeRef}
       title={`Advertisement ${format}`}
       aria-label="Advertisement"
       width={width}
@@ -73,6 +61,8 @@ export function AdsterraBanner({ adKey, width, height, format, className }: Bann
       scrolling="no"
       className={className}
       style={{ display: 'block', maxWidth: '100%' }}
+      srcDoc={srcdoc}
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
     />
   );
 }
@@ -84,13 +74,15 @@ export function AdsterraBanner({ adKey, width, height, format, className }: Bann
  */
 export function AdsterraNative({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  // Survives Strict Mode mount→unmount→remount — prevents double injection
+  const injectedRef = useRef(false);
 
   useEffect(() => {
+    if (injectedRef.current) return;
+    injectedRef.current = true;
+
     const container = ref.current;
     if (!container) return;
-
-    // Only inject once
-    if (container.querySelector('script')) return;
 
     const script = document.createElement('script');
     script.async = true;
@@ -102,11 +94,8 @@ export function AdsterraNative({ className }: { className?: string }) {
 
     container.appendChild(targetDiv);
     container.appendChild(script);
-
-    return () => {
-      // Cleanup if component unmounts
-      container.innerHTML = '';
-    };
+    // No cleanup: clearing innerHTML removed the injected script, causing
+    // the injectedRef guard to be bypassed on remount.
   }, []);
 
   return (
