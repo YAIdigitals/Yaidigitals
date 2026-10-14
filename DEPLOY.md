@@ -93,6 +93,22 @@ npx tsx scripts/seed-content.ts   # services, projects, industries, technologies
 
 Seed content is idempotent and only fills what the admin panel can later edit.
 
+### Resource Hub
+
+Apply the Resource Hub migration in the Supabase SQL editor:
+
+`supabase/migrations/202610140001_create_resource_hub.sql`
+
+After applying, seed the initial resource and advertising settings:
+
+```bash
+npm run seed:resource-hub
+```
+
+This creates the "6 Documents Before Vibe Coding" resource as a **draft** and initializes advertising settings with `global_enabled: false`. Go to Admin → Resource Hub → Resources to add the PDF URL and publish.
+
+Full Resource Hub documentation: `docs/resource-hub/`
+
 ## Environment variables
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
