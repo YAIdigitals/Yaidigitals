@@ -16,6 +16,7 @@ const SERVICE_LINKS = [
 ] as const;
 
 const PRODUCT_LINKS = [
+  { href: '/resources', label: 'Free Resources', desc: 'Free developer guides & tools' },
   { href: '/store', label: 'Digital Products', desc: 'Instant-delivery assets' },
   { href: '/courses', label: 'Courses', desc: 'Practical tech & content skills' },
   { href: '/creator-resources', label: 'Creator Resources', desc: 'Content tools and practical guides' },
