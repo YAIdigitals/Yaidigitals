@@ -25,3 +25,8 @@ cannot_get_response.html
 # typescript
 tsconfig.tsbuildinfo
 next-env.d.ts
+
+# Prevent tokens and secrets
+*accesstoken*
+*token*
+*.env*
